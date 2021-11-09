@@ -1,25 +1,16 @@
 import type { NextPage } from 'next';
 import React, { useState } from 'react';
 import Head from 'next/head';
-import Request from '../lib/Request';
+import { Button, ButtonGroup } from "@chakra-ui/react";
 
 const Home: NextPage = () => {
-  const [obj, setObj] = useState('Hello, Mars');
-
-  const handleClick = async () => {
-    let response = await Request();
-    console.log({ response });
-    setObj(response.phrase);
-  };
-
   return (
     <div>
       <Head>
-        <title>Greeting API!</title>
-        <meta name='description' content='Our nice description' />
-        <link rel='icon' href='/favicon.ico' />
+        <title>Instacommunity</title>
       </Head>
-      <button onClick={handleClick}>{obj}</button>
+      <h1>este é o index</h1>
+      <Button colorScheme="blue">Seguir</Button>
     </div>
   );
 };
