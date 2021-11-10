@@ -21,14 +21,21 @@ const Community: NextPage = () => {
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    
-    fetch(`communities/${id}/followers`, {
+
+    // fetch(`https://requestinspector.com/inspect/01fm5wm5hk740z2ms0e7kqz7kj`, {
+    fetch(`http://localhost:8080/communities/${id}/followers`, {
       method: 'POST',
+      headers: [
+        ['Content-Type', 'application/json']
+      ],
       body: JSON.stringify({
-        user_id: userId
+        id: userId,
+        name: "Ada"
       }),
-    }).then((res) => {
-      alert(res)
+
+    }).then(res => res.json())
+    .then(res => {
+
     })
   };
   

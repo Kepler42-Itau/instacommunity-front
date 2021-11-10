@@ -10,7 +10,6 @@ const Home: NextPage = () => {
         <title>Instacommunity</title>
       </Head>
       <h1>este é o index</h1>
-      <Button colorScheme="blue">Seguir</Button>
     </div>
   );
 };
