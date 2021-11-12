@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import React, { useState } from 'react';
 import Head from 'next/head';
-import { Button, ButtonGroup, Input } from "@chakra-ui/react";
+import { Button, ButtonGroup, Input, HStack, Center } from "@chakra-ui/react";
 
 const Register: NextPage = () => {
   const [name, setName] = React.useState("")
@@ -22,15 +22,19 @@ const Register: NextPage = () => {
     }
 
   return (
-	<div>
-	  <Head>
-		  <title>Instacommunity</title>
-	  </Head>
-	  <form onSubmit={handleSubmit}>
-		  <Input placeholder="Fausto Silva" size="sm" value={name} onChange={handleChange}/>
-		  <Button colorScheme="blue" type="submit">Cadastrar</Button>
-	  </form>
-	</div>
+    <div>
+      <Head>
+        <title>Instacommunity</title>
+      </Head>
+      <form onSubmit={handleSubmit}>
+        <Center h="100px">
+          <HStack spacing="24px">
+            <Input placeholder="Fausto Silva" width="300px" size="sm" value={name} onChange={handleChange} />
+            <Button colorScheme="blue" type="submit">Cadastrar</Button>
+          </HStack>
+        </Center>
+      </form>
+    </div>
   );
 };
 

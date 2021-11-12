@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { Button, ButtonGroup } from "@chakra-ui/react"
 import { Flex, Spacer } from "@chakra-ui/react"
 import { Box } from "@chakra-ui/react"
-import { HStack } from "@chakra-ui/react"
+import { HStack, Center, Heading } from "@chakra-ui/react"
 
 const Community: NextPage = () => {
   const router = useRouter();
@@ -44,11 +44,14 @@ const Community: NextPage = () => {
       <Head>
         <title>Kotlin</title>
       </Head>
-      <HStack spacing="24px">
-        <p>Kotlin</p>
+      <Center w="100px">
+<HStack spacing="24px">
+        <Heading>Kotlin</Heading>
         <Button isDisabled={isFollowing} colorScheme="blue" onClick={handleClick}>Seguir</Button>
       </HStack>
-    </Box>
+
+      </Center>
+          </Box>
   );
 };
 

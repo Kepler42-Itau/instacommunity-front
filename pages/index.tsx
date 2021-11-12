@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import React, { useState } from 'react';
 import Head from 'next/head';
-import { Button, ButtonGroup } from "@chakra-ui/react";
+import { Button, ButtonGroup, Heading, Center } from "@chakra-ui/react";
 
 const Home: NextPage = () => {
   return (
@@ -9,7 +9,9 @@ const Home: NextPage = () => {
       <Head>
         <title>Instacommunity</title>
       </Head>
-      <h1>este é o index</h1>
+      <Center>
+        <Heading>Instacommunity</Heading>
+      </Center>
     </div>
   );
 };
