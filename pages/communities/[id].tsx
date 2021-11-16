@@ -5,7 +5,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Button, ButtonGroup } from "@chakra-ui/react"
 import { Box } from "@chakra-ui/react"
@@ -35,7 +35,7 @@ const Community: NextPage = (props: any) => {
         id: userId,
         name: "Ada"
       }),
-    })
+    }).then(res => setIsFollowing(res.ok))
   };
 
   const handleFollowerClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -43,7 +43,9 @@ const Community: NextPage = (props: any) => {
     setShowFollowers(!showFollowers)
   }
 
-  setIsFollowing(followers.some((follower: any) => follower.id === userId))
+  useEffect(() => {
+    setIsFollowing(followers.some((follower: any) => follower.id === userId))
+  },[])
 
   return (
     <Box>
@@ -61,7 +63,11 @@ const Community: NextPage = (props: any) => {
       </Center>
       <Button colorScheme="blue" onClick={handleFollowerClick}>Mostrar membros</Button>
       <Center>{showFollowers && <List>
-        {followers.map((follower: any, index: any) => <ListItem key={index}> {follower.name}</ListItem>)}
+        {followers.map((follower: any, index: any) => {
+          return <ListItem key={follower.id}>
+            {follower.name}
+            </ListItem>
+        })}
       </List>}
       </Center>
     </Box>
