@@ -8,9 +8,11 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 
 import { Button, ButtonGroup } from "@chakra-ui/react"
-import { Box } from "@chakra-ui/react"
+import { Box, Link } from "@chakra-ui/react"
 import { HStack, Center, Heading, Text } from "@chakra-ui/react"
 import { List, ListItem, ListIcon, OrderedList, UnorderedList } from "@chakra-ui/react"
+import { Avatar, AvatarBadge, AvatarGroup } from "@chakra-ui/react"
+import { LinkIcon } from "@chakra-ui/icons";
 
 const Community: NextPage = (props: any) => {
   const followers = props.list;
@@ -52,6 +54,9 @@ const Community: NextPage = (props: any) => {
       <Head>
         <title>{props.data.name}</title>
       </Head>
+      <Center>
+        <Avatar name={props.data.name} size="2xl"/>
+      </Center>
       <Center h="100px">
         <HStack spacing="24px">
           <Text fontSize="3xl">{props.data.name}</Text>
@@ -61,6 +66,16 @@ const Community: NextPage = (props: any) => {
       <Center>
         <Text fontSize="3xl">{props.data.description}</Text>
       </Center>
+      <Center>
+        <Link href={props.data.contact} isExternal>
+          <Button isDisabled={!props.data.contact} colorScheme="blue">Contato</Button>
+        </Link>
+      </Center>
+      <Center>
+        <Button rightIcon={<LinkIcon />} colorScheme="blue" onClick={() => router.push(`/communities/${id}/settings`)}>
+          Alterar Contato
+        </Button>
+		  </Center>
       <Button colorScheme="blue" onClick={handleFollowerClick}>Mostrar membros</Button>
       <Center>{showFollowers && <List>
         {followers.map((follower: any, index: any) => {
