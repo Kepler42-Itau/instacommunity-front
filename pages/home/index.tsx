@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 
 
 const Home: NextPage = () => {
+	const userId = 1;
 	const router = useRouter()
 	return (
 		<div>
