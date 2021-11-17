@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import { Button, ButtonGroup, Input, HStack, Center } from "@chakra-ui/react";
 import { useRouter } from 'next/router';
+import { useToast } from "@chakra-ui/react";
 
 const Settings: NextPage = () => {
   const [name, setName] = React.useState("")
+  const toast = useToast()
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)
 
   const router = useRouter();
@@ -34,7 +36,17 @@ const Settings: NextPage = () => {
         <Center h="100px">
           <HStack spacing="24px">
             <Input placeholder="Ex: Discord" width="300px" size="sm" value={name} onChange={handleChange} />
-            <Button colorScheme="blue" type="submit">Cadastrar</Button>
+            <Button colorScheme="blue" type="submit" onClick={() =>
+                toast({
+                  title: "Contato adicionado.",
+                  description: "O Contato foi adicionado na comunidade.",
+                  status: "success",
+                  duration: 9000,
+                  isClosable: true,
+                })
+              }>
+             Cadastrar
+            </Button>
           </HStack>
         </Center>
       </form>
