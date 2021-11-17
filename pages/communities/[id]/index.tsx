@@ -12,9 +12,11 @@ import { Box, Link } from "@chakra-ui/react"
 import { HStack, Center, Heading, Text } from "@chakra-ui/react"
 import { List, ListItem, ListIcon, OrderedList, UnorderedList } from "@chakra-ui/react"
 import { Avatar, AvatarBadge, AvatarGroup } from "@chakra-ui/react"
-import { LinkIcon } from "@chakra-ui/icons";
+import { LinkIcon, TriangleUpIcon } from "@chakra-ui/icons";
+import { useToast } from "@chakra-ui/react";
 
 const Community: NextPage = (props: any) => {
+  const toast = useToast()
   const followers = props.list;
   const [showFollowers, setShowFollowers] = useState(false)
   const [isFollowing, setIsFollowing] = useState(false)
@@ -54,6 +56,9 @@ const Community: NextPage = (props: any) => {
       <Head>
         <title>{props.data.name}</title>
       </Head>
+      <Button rightIcon={<TriangleUpIcon />} colorScheme="blue" onClick={() => router.push(`/home`)}>
+        Home
+      </Button>
       <Center>
         <Avatar name={props.data.name} size="2xl"/>
       </Center>
@@ -67,7 +72,7 @@ const Community: NextPage = (props: any) => {
         <Text fontSize="3xl">{props.data.description}</Text>
       </Center>
       <Center>
-        <Link href={props.data.contact} isExternal>
+        <Link  href={props.data.contact} isExternal>
           <Button isDisabled={!props.data.contact} colorScheme="blue">Contato</Button>
         </Link>
       </Center>
