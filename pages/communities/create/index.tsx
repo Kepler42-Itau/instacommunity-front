@@ -18,12 +18,15 @@ import { LinkIcon, TriangleUpIcon } from "@chakra-ui/icons";
 
 const Create: NextPage = () => {
   const [name, setName] = React.useState("");
+  const [contact, setContact] = React.useState("");
+  const [description, setDescription] = React.useState("");
   const toast = useToast();
   const router = useRouter();
-  const [description, setDescription] = React.useState("");
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
+  const handleContactChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setContact(event.target.value);
   const handleDescriptionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => setDescription(event.target.value);
@@ -37,14 +40,15 @@ const Create: NextPage = () => {
         duration: 9000,
         isClosable: true,
       });
-    else toast({
+    else
+      toast({
         title: "Comunidade criada!",
         description: "A comunidade foi criada com êxito.",
         status: "success",
         duration: 9000,
         isClosable: true,
       });
-  }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
@@ -63,9 +67,11 @@ const Create: NextPage = () => {
       body: JSON.stringify({
         name: trimmedName,
         description: trimmedDescription,
+        contact
       }),
-    }).then(res => res.json())
-      .then(res => handleToast(res.error))
+    })
+      .then((res) => res.json())
+      .then((res) => handleToast(res.error));
   };
 
   return (
@@ -76,7 +82,7 @@ const Create: NextPage = () => {
       <Button
         rightIcon={<TriangleUpIcon />}
         colorScheme="blue"
-        onClick={() => router.push(`/home`)}
+        onClick={() => router.push(`/`)}
       >
         Home
       </Button>
@@ -92,6 +98,14 @@ const Create: NextPage = () => {
                 value={name}
                 onChange={handleNameChange}
               />
+              <Text mb="8px">Contato</Text>
+              <Input
+                placeholder="Ex: https://canalTelegram.com"
+                width="300px"
+                size="sm"
+                value={contact}
+                onChange={handleContactChange}
+              />
             </>
             <>
               <Text mb="8px">Descrição</Text>
@@ -103,18 +117,7 @@ const Create: NextPage = () => {
                 onChange={handleDescriptionChange}
               />
             </>
-            <Button
-              colorScheme="blue"
-              type="submit"
-              onClick={() =>
-                toast({
-                  title: "Comunidade adicionada.",
-                  status: "success",
-                  duration: 9000,
-                  isClosable: true,
-                })
-              }
-            >
+            <Button colorScheme="blue" type="submit">
               Criar Comunidade
             </Button>
           </VStack>

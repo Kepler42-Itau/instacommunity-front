@@ -56,7 +56,7 @@ const Community: NextPage = (props: any) => {
       <Head>
         <title>{props.data.name}</title>
       </Head>
-      <Button rightIcon={<TriangleUpIcon />} colorScheme="blue" onClick={() => router.push(`/home`)}>
+      <Button rightIcon={<TriangleUpIcon />} colorScheme="blue" onClick={() => router.push(`/`)}>
         Home
       </Button>
       <Center>
