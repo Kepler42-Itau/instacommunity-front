@@ -28,6 +28,24 @@ const Create: NextPage = () => {
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => setDescription(event.target.value);
 
+  const handleToast = (ret: String) => {
+    if (ret)
+      toast({
+        title: "Este nome já existe",
+        description: "A comunidade não pôde ser criada.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    else toast({
+        title: "Comunidade criada!",
+        description: "A comunidade foi criada com êxito.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+  }
+
   const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
     let trimmedName = name.trim();
@@ -46,7 +64,8 @@ const Create: NextPage = () => {
         name: trimmedName,
         description: trimmedDescription,
       }),
-    });
+    }).then(res => res.json())
+      .then(res => handleToast(res.error))
   };
 
   return (
