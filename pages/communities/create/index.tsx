@@ -25,11 +25,12 @@ const Create: NextPage = () => {
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
+
   const handleContactChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setContact(event.target.value);
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => setDescription(event.target.value);
+
+  const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
+    setDescription(event.target.value);
 
   const handleToast = (ret: String) => {
     if (ret)

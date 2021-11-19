@@ -56,20 +56,17 @@ const Community: NextPage = (props: any) => {
       <Head>
         <title>{props.data.name}</title>
       </Head>
-      <Button rightIcon={<TriangleUpIcon />} colorScheme="blue" onClick={() => router.push(`/`)}>
-        Home
-      </Button>
-      <Center>
+      <Center mt="2%">
         <Avatar name={props.data.name} size="2xl"/>
       </Center>
       <Center h="100px">
         <HStack spacing="24px">
-          <Text fontSize="3xl">{props.data.name}</Text>
+          <Text fontSize="4xl">{props.data.name}</Text>
           <Button isDisabled={isFollowing} colorScheme="blue" onClick={handleClick}>Seguir</Button>
         </HStack>
       </Center>
       <Center>
-        <Text fontSize="3xl">{props.data.description}</Text>
+        <Text fontSize="2xl">{props.data.description}</Text>
       </Center>
       <Center>
         <Link  href={props.data.contact} isExternal>
@@ -81,7 +78,9 @@ const Community: NextPage = (props: any) => {
           Alterar Contato
         </Button>
 		  </Center>
-      <Button colorScheme="blue" onClick={handleFollowerClick}>Mostrar membros</Button>
+      <Center>
+        <Button colorScheme="blue" onClick={handleFollowerClick}>Mostrar membros</Button>
+      </Center>
       <Center>{showFollowers && <List>
         {followers.map((follower: any, index: any) => {
           return <ListItem key={follower.id}>

@@ -1,4 +1,4 @@
-import { Box, Center, Button, ButtonGroup, Heading, Link, Flex, Spacer, Input } from '@chakra-ui/react';
+import { Box, Button, Flex, Spacer, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/router'
 import React, { useState } from "react";
 
@@ -12,13 +12,19 @@ export default function NavBar() {
 
   return (
     <Box>
-      {/* TODO: Profile Button  */}
-      <Flex>
+      <Flex pr="2%" pl="2%" pt="1%">
+        <Button colorScheme="orange" onClick={() => router.push("/user/1")} >
+          Perfil
+        </Button>
+        <Spacer />
+        <Flex>
         <Input
           placeholder="Buscar comunidade"
-          size="sm"
+          size="md"
           value={searchTerm}
           onChange={handleChange}
+          borderRadius="md"
+          mr="2%"
         />
         <Button
           colorScheme="blue"
@@ -27,11 +33,13 @@ export default function NavBar() {
             pathname: `/communities/search`,
             query: {
               searchTerm: searchTerm,
-            }})}>
+            }
+          })}>
           Pesquisar
         </Button>
+        </Flex>
         <Spacer />
-        <Button colorscheme="blue" onClick={() => router.push("/communities/create")}  >
+        <Button colorScheme="orange" onClick={() => router.push("/communities/create")} >
           Criar comunidade
         </Button>
       </Flex>
