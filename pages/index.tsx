@@ -5,7 +5,7 @@ import NavBar from "../components/NavBar";
 const Home: NextPage = () => {
   const userId = 1;
   return (
-    <NavBar />
+    <NavBar profile={true} home={false} />
   );
 };
 

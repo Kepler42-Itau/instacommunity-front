@@ -1,45 +1,65 @@
-import { Box, Button, Flex, Spacer, Input } from '@chakra-ui/react';
-import { useRouter } from 'next/router'
+import { Box, Button, Flex, Spacer, Input } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 
+interface NavBarProps {
+  profile: Boolean;
+  home: Boolean;
+}
 
-export default function NavBar() {
+export default function NavBar({ profile = false, home = false }: NavBarProps) {
   const [searchTerm, setSearchTerm] = React.useState("");
   const router = useRouter();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setSearchTerm(event.target.value)
+    setSearchTerm(event.target.value);
 
   return (
     <Box>
       <Flex pr="2%" pl="2%" pt="1%">
-        <Button colorScheme="orange" onClick={() => router.push("/user/1")} >
-          Perfil
-        </Button>
+        {profile && (
+          <Button colorScheme="orange" onClick={() => router.push("/user/1")}>
+            Perfil
+          </Button>
+        )}
+        {home && (
+          <Button colorScheme="orange" onClick={() => router.push("/")}>
+            Home
+          </Button>
+        )}
         <Spacer />
-        <Flex>
         <Input
           placeholder="Buscar comunidade"
           size="md"
           value={searchTerm}
           onChange={handleChange}
           borderRadius="md"
-          mr="2%"
+          w="40%"
+          mr="0.5%"
+          ml="2%"
         />
         <Button
           colorScheme="blue"
           type="submit"
-          onClick={() => router.push({
-            pathname: `/communities/search`,
-            query: {
-              searchTerm: searchTerm,
-            }
-          })}>
+          mr="2%"
+          onClick={() =>
+            router.push({
+              pathname: `/communities/search`,
+              query: {
+                searchTerm: searchTerm,
+              },
+            })
+          }
+        >
           Pesquisar
         </Button>
-        </Flex>
         <Spacer />
-        <Button colorScheme="orange" onClick={() => router.push("/communities/create")} >
+        <Button
+          colorScheme="orange"
+          onClick={() => router.push("/communities/create")}
+          pl="1%"
+          pr="1%"
+        >
           Criar comunidade
         </Button>
       </Flex>

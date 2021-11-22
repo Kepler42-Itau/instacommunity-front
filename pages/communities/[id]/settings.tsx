@@ -16,9 +16,12 @@ const Settings: NextPage = () => {
   const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
       event.preventDefault()
       let trimmedName = name.trim()
+      if (!trimmedName.match(/^https?:\/\//gi)) {
+        trimmedName = "http://" + trimmedName
+      }
 
-      if (trimmedName.length < 2 || trimmedName.length > 200)
-        return alert("Invalid Name")
+      if (trimmedName.length < 8 || trimmedName.length > 200)
+        return alert("Invalid URL")
 
       fetch(`http://localhost:8080/communities/${id}`, {
       	method: 'PATCH',

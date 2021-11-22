@@ -14,8 +14,9 @@ import {
   useToast,
   Text,
 } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
+import { SearchIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
+import NavBar from "../../../components/NavBar";
 
 const Search: NextPage = () => {
   const router = useRouter();
@@ -72,6 +73,7 @@ const Search: NextPage = () => {
 
   return (
     <Box>
+      <NavBar profile={false} home={true} />
       <form onSubmit={handleSubmit}>
         <Center h="100px">
           <Flex>

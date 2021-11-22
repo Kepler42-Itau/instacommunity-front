@@ -15,6 +15,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { LinkIcon, TriangleUpIcon } from "@chakra-ui/icons";
+import NavBar from "../../../components/NavBar";
 
 const Create: NextPage = () => {
   const [name, setName] = React.useState("");
@@ -60,7 +61,13 @@ const Create: NextPage = () => {
       return alert("Invalid Name");
 
     if (trimmedDescription.length < 2 || trimmedDescription.length > 300)
-      return alert("Invalid Description");
+      return toast({
+        title: "Adicione uma descrição!",
+        description: "Uma descrição é necessária para a criação de sua comunidade.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
 
     fetch("http://localhost:8080/communities", {
       method: "POST",
@@ -80,18 +87,19 @@ const Create: NextPage = () => {
       <Head>
         <title>Criar Comunidade</title>
       </Head>
-      <Button
+      {/* <Button
         rightIcon={<TriangleUpIcon />}
         colorScheme="blue"
         onClick={() => router.push(`/`)}
       >
         Home
-      </Button>
+      </Button> */}
+      <NavBar profile={false} home={true} />
       <form onSubmit={handleSubmit}>
         <Center h="324px">
           <VStack spacing="24px">
             <>
-              <Text mb="8px">Nome</Text>
+              <Text mb="8px" mt="150px">Nome</Text>
               <Input
                 placeholder="Ex: Amigos do Cobol"
                 width="300px"
