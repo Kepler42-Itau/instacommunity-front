@@ -75,30 +75,6 @@ const Search: NextPage = () => {
   return (
     <Box>
       <NavBar profile={false} home={true} searchFunction={(searchTerm: String) => requestSearch(searchTerm)} />
-      <form onSubmit={handleSubmit}>
-        <Center h="100px">
-          <Flex>
-            <Input
-              placeholder="Ex: Kotlin"
-              size="xm"
-              value={name}
-              onChange={handleChange}
-              mr="2%"
-              pl="2%"
-              borderRadius="md"
-              isInvalid={!isValid}
-            />
-            <Spacer />
-            <Button
-              rightIcon={<SearchIcon />}
-              colorScheme="blue"
-              type="submit"
-            >
-              Buscar
-            </Button>
-          </Flex>
-        </Center>
-      </form>
       <Center>
         {
           <List w="40%">

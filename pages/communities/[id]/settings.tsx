@@ -37,7 +37,7 @@ const Settings: NextPage = () => {
       </Head>
       <form onSubmit={handleSubmit}>
         <Center h="100px">
-          <HStack spacing="24px">
+         <HStack spacing="24px">
             <Input placeholder="Ex: Discord" width="300px" size="sm" value={name} onChange={handleChange} />
             <Button colorScheme="blue" type="submit" onClick={() =>
                 toast({

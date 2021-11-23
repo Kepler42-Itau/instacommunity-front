@@ -1,7 +1,19 @@
-import { Box, Button, Flex, Spacer, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Spacer,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  InputRightAddon,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import React, { useState } from "react";
+
+import { SearchIcon } from "@chakra-ui/icons";
 
 interface NavBarProps {
   profile: Boolean;
@@ -9,12 +21,30 @@ interface NavBarProps {
   searchFunction?: Function;
 }
 
-export default function NavBar({ profile = false, home = false, searchFunction = undefined}: NavBarProps) {
+export default function NavBar({
+  profile = false,
+  home = false,
+  searchFunction = undefined,
+}: NavBarProps) {
   const [searchTerm, setSearchTerm] = React.useState("");
   const router = useRouter();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(event.target.value);
+
+  const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
+    event.preventDefault();
+    if (searchFunction) {
+      searchFunction(searchTerm);
+    } else {
+      router.push({
+        pathname: `/communities/search`,
+        query: {
+          searchTerm: searchTerm,
+        },
+      });
+    }
+  };
 
   return (
     <Box>
@@ -30,35 +60,29 @@ export default function NavBar({ profile = false, home = false, searchFunction =
           </Button>
         )}
         <Spacer />
-        <Input
-          placeholder="Buscar comunidade"
-          size="md"
-          value={searchTerm}
-          onChange={handleChange}
-          borderRadius="md"
-          w="40%"
-          mr="0.5%"
-          ml="2%"
-        />
-        <Button
-          colorScheme="blue"
-          type="submit"
-          mr="2%"
-          onClick={() => {
-            if (searchFunction) {
-              searchFunction(searchTerm)
-            } else {
-              router.push({
-                pathname: `/communities/search`,
-                query: {
-                  searchTerm: searchTerm,
-                },
-              });
-            }
-          }}
+        <form
+          onSubmit={handleSubmit}
+          style={{ width: "100%", marginLeft: "5%" }}
         >
-          Pesquisar
-        </Button>
+          <Center>
+            <InputGroup width="40%" size="md">
+              <Input
+                placeholder="Buscar comunidade"
+                size="md"
+                value={searchTerm}
+                onChange={handleChange}
+                borderRadius="md"
+              />
+              <InputRightElement
+                children={
+                  <Button type="submit" size="md">
+                    <SearchIcon />
+                  </Button>
+                }
+              />
+            </InputGroup>
+          </Center>
+        </form>
         <Spacer />
         <Button
           colorScheme="orange"
