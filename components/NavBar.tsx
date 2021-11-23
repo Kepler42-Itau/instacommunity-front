@@ -1,13 +1,15 @@
 import { Box, Button, Flex, Spacer, Input } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import React, { useState } from "react";
 
 interface NavBarProps {
   profile: Boolean;
   home: Boolean;
+  searchFunction?: Function;
 }
 
-export default function NavBar({ profile = false, home = false }: NavBarProps) {
+export default function NavBar({ profile = false, home = false, searchFunction = undefined}: NavBarProps) {
   const [searchTerm, setSearchTerm] = React.useState("");
   const router = useRouter();
 
@@ -42,14 +44,18 @@ export default function NavBar({ profile = false, home = false }: NavBarProps) {
           colorScheme="blue"
           type="submit"
           mr="2%"
-          onClick={() =>
-            router.push({
-              pathname: `/communities/search`,
-              query: {
-                searchTerm: searchTerm,
-              },
-            })
-          }
+          onClick={() => {
+            if (searchFunction) {
+              searchFunction(searchTerm)
+            } else {
+              router.push({
+                pathname: `/communities/search`,
+                query: {
+                  searchTerm: searchTerm,
+                },
+              });
+            }
+          }}
         >
           Pesquisar
         </Button>

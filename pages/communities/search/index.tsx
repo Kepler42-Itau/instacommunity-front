@@ -32,6 +32,7 @@ const Search: NextPage = () => {
       requestSearch(searchTerm);
     }
   }, [])
+
   function requestSearch(searchTerm: String) {
     const trimmedName = searchTerm.trim();
 
@@ -73,7 +74,7 @@ const Search: NextPage = () => {
 
   return (
     <Box>
-      <NavBar profile={false} home={true} />
+      <NavBar profile={false} home={true} searchFunction={(searchTerm: String) => requestSearch(searchTerm)} />
       <form onSubmit={handleSubmit}>
         <Center h="100px">
           <Flex>
