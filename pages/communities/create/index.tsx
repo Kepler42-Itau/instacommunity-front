@@ -10,17 +10,22 @@ import {
   Input,
   VStack,
   Center,
+  FormControl,
+  FormLabel,
   Textarea,
   useToast,
   Text,
 } from "@chakra-ui/react";
 import { LinkIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import NavBar from "../../../components/NavBar";
+import Community from "../../../models/Community";
+import ErrorResponse from "../../../models/ErrorResponse";
 
 const Create: NextPage = () => {
   const [name, setName] = React.useState("");
   const [contact, setContact] = React.useState("");
   const [description, setDescription] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
   const toast = useToast();
   const router = useRouter();
 
@@ -30,11 +35,12 @@ const Create: NextPage = () => {
   const handleContactChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setContact(event.target.value);
 
-  const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
-    setDescription(event.target.value);
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => setDescription(event.target.value);
 
-  const handleToast = (ret: String) => {
-    if (ret)
+  const handleResponse = (res: Community | ErrorResponse) => {
+    if ("error" in res) {
       toast({
         title: "Este nome já existe",
         description: "A comunidade não pôde ser criada.",
@@ -42,14 +48,10 @@ const Create: NextPage = () => {
         duration: 9000,
         isClosable: true,
       });
-    else
-      toast({
-        title: "Comunidade criada!",
-        description: "A comunidade foi criada com êxito.",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
+      setIsLoading(false);
+    } else {
+      router.push(`/communities/${res.id}`);
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
@@ -63,23 +65,24 @@ const Create: NextPage = () => {
     if (trimmedDescription.length < 2 || trimmedDescription.length > 300)
       return toast({
         title: "Adicione uma descrição!",
-        description: "Uma descrição é necessária para a criação de sua comunidade.",
+        description:
+          "Uma descrição é necessária para a criação de sua comunidade.",
         status: "error",
         duration: 9000,
         isClosable: true,
       });
-
+    setIsLoading(true);
     fetch("http://localhost:8080/communities", {
       method: "POST",
       headers: [["Content-Type", "application/json"]],
       body: JSON.stringify({
         name: trimmedName,
         description: trimmedDescription,
-        contact
+        contact,
       }),
     })
       .then((res) => res.json())
-      .then((res) => handleToast(res.error));
+      .then((res: Community) => handleResponse(res));
   };
 
   return (
@@ -96,37 +99,45 @@ const Create: NextPage = () => {
       </Button> */}
       <NavBar profile={false} home={true} />
       <form onSubmit={handleSubmit}>
-        <Center h="324px">
+        <Center mt="2%">
           <VStack spacing="24px">
-            <>
-              <Text mb="8px" mt="150px">Nome</Text>
+            <FormControl id="nome" isRequired>
+              <FormLabel>Nome</FormLabel>
               <Input
-                placeholder="Ex: Amigos do Cobol"
+                placeholder="ex: Amigos do Cobol"
                 width="300px"
                 size="sm"
                 value={name}
                 onChange={handleNameChange}
               />
-              <Text mb="8px">Contato</Text>
+            </FormControl>
+            <FormControl id="contato">
+              <FormLabel>Contato</FormLabel>
               <Input
-                placeholder="Ex: https://canalTelegram.com"
+                placeholder="ex: https://aka.ms/COBOL"
                 width="300px"
                 size="sm"
                 value={contact}
                 onChange={handleContactChange}
               />
-            </>
-            <>
-              <Text mb="8px">Descrição</Text>
+            </FormControl>
+            <FormControl id="descricao" isRequired>
+              <FormLabel>Descrição</FormLabel>
               <Textarea
-                placeholder="Ex: Amigos desde 1876"
+                placeholder="ex: Amigos desde 1876"
                 width="300px"
                 size="sm"
                 value={description}
                 onChange={handleDescriptionChange}
               />
-            </>
-            <Button colorScheme="blue" type="submit">
+            </FormControl>
+            <Button
+              colorScheme="blue"
+              type="submit"
+              isLoading={isLoading}
+              loadingText="Criando Comunidade"
+              variant="outline"
+            >
               Criar Comunidade
             </Button>
           </VStack>

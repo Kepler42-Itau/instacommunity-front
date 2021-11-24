@@ -1,6 +1,3 @@
-// localhost/commumities/1
-// POST http://localhost:8080/commumities/1/followers
-
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -22,6 +19,7 @@ import { LinkIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
 
 import NavBar from "../../../components/NavBar";
+import TestModal from "../../../components/TestModal";
 
 const Community: NextPage = (props: any) => {
   const toast = useToast();
@@ -31,9 +29,8 @@ const Community: NextPage = (props: any) => {
 
   const router = useRouter();
   const { id } = router.query;
-  const userId = 1;
-
-  console.log({ props });
+  const userId = router.query.userId || 1;
+  const name = "Ada";
 
   const handleToast = (ok: Boolean) => {
     let title, status: "success" | "error";
@@ -59,8 +56,7 @@ const Community: NextPage = (props: any) => {
       method: "POST",
       headers: [["Content-Type", "application/json"]],
       body: JSON.stringify({
-        id: userId,
-        name: "Ada",
+        id: router.query.userId || 1,
       }),
     }).then((res) => {
       setIsFollowing(res.ok);
@@ -103,22 +99,15 @@ const Community: NextPage = (props: any) => {
       </Center>
       <Center>
         <VStack spacing="4%">
-        <Link href={props.data.contact} isExternal>
-          <Button md="1%" isDisabled={!props.data.contact} colorScheme="blue">
-            Contato
+          <Link href={props.data.contact} isExternal>
+            <Button md="1%" isDisabled={!props.data.contact} colorScheme="blue">
+              Contato
+            </Button>
+          </Link>
+          <TestModal id={id} initialContact={props.data.contact} />
+          <Button md="1%" colorScheme="blue" onClick={handleFollowerClick}>
+            Mostrar membros
           </Button>
-        </Link>
-        <Button
-          md="1%"
-          rightIcon={<LinkIcon />}
-          colorScheme="blue"
-          onClick={() => router.push(`/communities/${id}/settings`)}
-        >
-          Alterar Contato
-        </Button>
-        <Button md="1%" colorScheme="blue" onClick={handleFollowerClick}>
-          Mostrar membros
-        </Button>
         </VStack>
       </Center>
       <Center>
