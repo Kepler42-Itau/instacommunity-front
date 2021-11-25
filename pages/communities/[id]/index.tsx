@@ -19,13 +19,14 @@ import { LinkIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
 
 import NavBar from "../../../components/NavBar";
-import TestModal from "../../../components/TestModal";
+import ContactModal from "../../../components/ContactModal";
 
 const Community: NextPage = (props: any) => {
   const toast = useToast();
   const followers = props.list;
   const [showFollowers, setShowFollowers] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(false);
+  const [isFollowing, setIsFollowing] = useState("Seguir");
+  const [btnVariant, setBtnVariant] = useState("solid");
 
   const router = useRouter();
   const { id } = router.query;
@@ -59,7 +60,10 @@ const Community: NextPage = (props: any) => {
         id: router.query.userId || 1,
       }),
     }).then((res) => {
-      setIsFollowing(res.ok);
+      if (res.ok) {
+        setIsFollowing("Seguindo");
+        setBtnVariant("outline");
+      }
       handleToast(res.ok);
     });
   };
@@ -70,7 +74,10 @@ const Community: NextPage = (props: any) => {
   };
 
   useEffect(() => {
-    setIsFollowing(followers.some((follower: any) => follower.id === userId));
+    if (followers.some((follower: any) => follower.id === userId)) {
+      setIsFollowing("Seguindo");
+      setBtnVariant("outline");
+    }
   }, []);
 
   return (
@@ -86,11 +93,12 @@ const Community: NextPage = (props: any) => {
         <HStack spacing="24px">
           <Text fontSize="4xl">{props.data.name}</Text>
           <Button
-            isDisabled={isFollowing}
+            title="Deixar de seguir"
             colorScheme="blue"
+            variant={btnVariant}
             onClick={handleClick}
           >
-            Seguir
+            {isFollowing}
           </Button>
         </HStack>
       </Center>
@@ -104,7 +112,7 @@ const Community: NextPage = (props: any) => {
               Contato
             </Button>
           </Link>
-          <TestModal id={id} initialContact={props.data.contact} />
+          <ContactModal id={id} initialContact={props.data.contact} />
           <Button md="1%" colorScheme="blue" onClick={handleFollowerClick}>
             Mostrar membros
           </Button>
