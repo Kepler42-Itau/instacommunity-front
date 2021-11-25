@@ -3,8 +3,10 @@ import {
   Button,
   Center,
   Flex,
+  Grid,
   Spacer,
   Input,
+  Text,
   InputGroup,
   InputLeftElement,
   InputRightElement,
@@ -48,30 +50,35 @@ export default function NavBar({
 
   return (
     <Box>
-      <Flex pr="2%" pl="2%" pt="1%">
-        {profile && (
-          <Button colorScheme="orange" onClick={() => router.push("/user/1")}>
-            Perfil
-          </Button>
-        )}
-        {home && (
-          <Button colorScheme="orange" onClick={() => router.push("/")}>
-            Home
-          </Button>
-        )}
-        <Spacer />
-        <form
-          onSubmit={handleSubmit}
-          style={{ width: "100%", marginLeft: "5%" }}
-        >
-          <Center>
-            <InputGroup width="40%" size="md">
+      <Flex p="1%" justifyContent="center">
+        <Flex flex="1" justifyContent="start" ml="auto">
+          <Text fontSize="xl" align="center" as="b" mr="5%">
+            InstaCommunity
+          </Text>
+          {profile && (
+            <Button colorScheme="orange" onClick={() => router.push("/user/1")}>
+              Perfil
+            </Button>
+          )}
+          {home && (
+            <Button colorScheme="orange" onClick={() => router.push("/")}>
+              Home
+            </Button>
+          )}
+        </Flex>
+        <Center flex="5" justifyContent="center" alignSelf="center">
+          <form
+            style={{ width: "50%", margin: "0 auto" }}
+            onSubmit={handleSubmit}
+          >
+            <InputGroup width="100%" size="md">
               <Input
                 placeholder="Buscar comunidade"
                 size="md"
                 value={searchTerm}
                 onChange={handleChange}
                 borderRadius="md"
+                border="1px"
               />
               <InputRightElement
                 children={
@@ -81,17 +88,18 @@ export default function NavBar({
                 }
               />
             </InputGroup>
-          </Center>
-        </form>
-        <Spacer />
-        <Button
-          colorScheme="orange"
-          onClick={() => router.push("/communities/create")}
-          pl="1%"
-          pr="1%"
-        >
-          Criar comunidade
-        </Button>
+          </form>
+        </Center>
+        <Flex flex="1" justifyContent="end" mr="auto">
+          <Button
+            colorScheme="orange"
+            onClick={() => router.push("/communities/create")}
+            pl="1%"
+            pr="1%"
+          >
+            Criar comunidade
+          </Button>
+        </Flex>
       </Flex>
     </Box>
   );
