@@ -92,7 +92,12 @@ const Community: NextPage = (props: any) => {
       <Center h="100px">
         <HStack spacing="24px">
           <Text fontSize="4xl">{props.data.name}</Text>
-          <Button colorScheme="blue" variant={btnVariant} onClick={handleClick}>
+          <Button
+            title="Deixar de seguir"
+            colorScheme="blue"
+            variant={btnVariant}
+            onClick={handleClick}
+          >
             {isFollowing}
           </Button>
         </HStack>
