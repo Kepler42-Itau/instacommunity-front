@@ -138,7 +138,7 @@ const Create: NextPage = () => {
               loadingText="Criando Comunidade"
               variant="outline"
             >
-              Criar Comunidade
+             Enviar
             </Button>
           </VStack>
         </Center>
