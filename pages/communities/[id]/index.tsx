@@ -25,8 +25,7 @@ const Community: NextPage = (props: any) => {
   const toast = useToast();
   const followers = props.list;
   const [showFollowers, setShowFollowers] = useState(false);
-  const [isFollowing, setIsFollowing] = useState("Seguir");
-  const [btnVariant, setBtnVariant] = useState("solid");
+  const [isFollowing, setIsFollowing] = useState(false);
 
   const router = useRouter();
   const { id } = router.query;
@@ -34,23 +33,18 @@ const Community: NextPage = (props: any) => {
   const name = "Ada";
 
   const handleToast = (ok: Boolean) => {
-    let title, status: "success" | "error";
-    if (ok) {
-      title = "Seguindo com sucesso!";
-      status = "success";
-    } else {
-      title = "Erro ao seguir";
-      status = "error";
-    }
+    if (!ok) {
     toast({
-      title,
-      status,
+      title: "Erro",
+      description: "Contate um administrador.",
+      status: "error",
       duration: 9000,
       isClosable: true,
     });
+    }
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+  const handleFollowClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     fetch(`http://localhost:8080/communities/${id}/followers`, {
@@ -61,8 +55,25 @@ const Community: NextPage = (props: any) => {
       }),
     }).then((res) => {
       if (res.ok) {
-        setIsFollowing("Seguindo");
-        setBtnVariant("outline");
+        setIsFollowing(true);
+      }
+      handleToast(res.ok);
+    });
+  };
+
+  const handleUnfollowClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+
+    fetch(`http://localhost:8080/communities/${id}/followers`, {
+      method: "DELETE",
+      headers: [["Content-Type", "application/json"]],
+      body: JSON.stringify({
+        id: router.query.userId || 1,
+      }),
+    }).then((res) => {
+      console.log({res})
+      if (res.ok) {
+        setIsFollowing(false);
       }
       handleToast(res.ok);
     });
@@ -75,8 +86,7 @@ const Community: NextPage = (props: any) => {
 
   useEffect(() => {
     if (followers.some((follower: any) => follower.id === userId)) {
-      setIsFollowing("Seguindo");
-      setBtnVariant("outline");
+      setIsFollowing(true);
     }
   }, []);
 
@@ -92,14 +102,21 @@ const Community: NextPage = (props: any) => {
       <Center h="100px">
         <HStack spacing="24px">
           <Text fontSize="4xl">{props.data.name}</Text>
-          <Button
+          {isFollowing && <Button
             title="Deixar de seguir"
             colorScheme="blue"
-            variant={btnVariant}
-            onClick={handleClick}
+            variant="outline"
+            onClick={handleUnfollowClick}
           >
-            {isFollowing}
-          </Button>
+            Seguindo
+          </Button>}
+          {!isFollowing && <Button
+            title="Seguir comunidade"
+            colorScheme="blue"
+            onClick={handleFollowClick}
+          >
+            Seguir
+          </Button>}
         </HStack>
       </Center>
       <Center>
@@ -107,11 +124,9 @@ const Community: NextPage = (props: any) => {
       </Center>
       <Center>
         <VStack spacing="4%">
-          <Link href={props.data.contact} isExternal>
-            <Button md="1%" isDisabled={!props.data.contact} colorScheme="blue">
-              Contato
+            <Button md="1%" isDisabled={!props.data.contact} colorScheme="blue" onClick={() => window.open (`${props.data.contact}`, '_blank')}>
+                Contato
             </Button>
-          </Link>
           <ContactModal id={id} initialContact={props.data.contact} />
           <Button md="1%" colorScheme="blue" onClick={handleFollowerClick}>
             Mostrar membros
