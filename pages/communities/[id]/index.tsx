@@ -21,6 +21,8 @@ import { useToast } from "@chakra-ui/react";
 import NavBar from "../../../components/NavBar";
 import ContactModal from "../../../components/ContactModal";
 
+import User from "../../../models/User";
+
 const Community: NextPage = (props: any) => {
   const toast = useToast();
   const followers = props.list;
@@ -34,13 +36,13 @@ const Community: NextPage = (props: any) => {
 
   const handleToast = (ok: Boolean) => {
     if (!ok) {
-    toast({
-      title: "Erro",
-      description: "Contate um administrador.",
-      status: "error",
-      duration: 9000,
-      isClosable: true,
-    });
+      toast({
+        title: "Erro",
+        description: "Contate um administrador.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
@@ -71,7 +73,7 @@ const Community: NextPage = (props: any) => {
         id: router.query.userId || 1,
       }),
     }).then((res) => {
-      console.log({res})
+      console.log({ res });
       if (res.ok) {
         setIsFollowing(false);
       }
@@ -85,7 +87,8 @@ const Community: NextPage = (props: any) => {
   };
 
   useEffect(() => {
-    if (followers.some((follower: any) => follower.id === userId)) {
+    console.log("User id is ", userId);
+    if (followers.some((follower: User) => follower.id === userId)) {
       setIsFollowing(true);
     }
   }, []);
@@ -102,21 +105,25 @@ const Community: NextPage = (props: any) => {
       <Center h="100px">
         <HStack spacing="24px">
           <Text fontSize="4xl">{props.data.name}</Text>
-          {isFollowing && <Button
-            title="Deixar de seguir"
-            colorScheme="blue"
-            variant="outline"
-            onClick={handleUnfollowClick}
-          >
-            Seguindo
-          </Button>}
-          {!isFollowing && <Button
-            title="Seguir comunidade"
-            colorScheme="blue"
-            onClick={handleFollowClick}
-          >
-            Seguir
-          </Button>}
+          {isFollowing && (
+            <Button
+              title="Deixar de seguir"
+              colorScheme="blue"
+              variant="outline"
+              onClick={handleUnfollowClick}
+            >
+              Seguindo
+            </Button>
+          )}
+          {!isFollowing && (
+            <Button
+              title="Seguir comunidade"
+              colorScheme="blue"
+              onClick={handleFollowClick}
+            >
+              Seguir
+            </Button>
+          )}
         </HStack>
       </Center>
       <Center>
@@ -124,10 +131,43 @@ const Community: NextPage = (props: any) => {
       </Center>
       <Center>
         <VStack spacing="4%">
-            <Button md="1%" isDisabled={!props.data.contact} colorScheme="blue" onClick={() => window.open (`${props.data.contact}`, '_blank')}>
-                Contato
-            </Button>
-          <ContactModal id={id} initialContact={props.data.contact} />
+          <HStack spacing="4%">
+            {props.data.contact &&
+              <Button
+                md="1%"
+                colorScheme="blue"
+                onClick={() => window.open(`${props.data.contact}`, "_blank")}
+              >
+                Contato 1
+              </Button>
+            }
+            {props.data.contact2 &&
+              <Button
+                md="1%"
+                colorScheme="blue"
+                onClick={() => window.open(`${props.data.contact2}`, "_blank")}
+              >
+                Contato 2
+              </Button>
+            }
+            {props.data.contact3 &&
+              <Button
+                md="1%"
+                colorScheme="blue"
+                onClick={() => window.open(`${props.data.contact3}`, "_blank")}
+              >
+                Contato 3
+              </Button>
+            }
+          </HStack>
+          <ContactModal
+            id={id}
+            contacts={[
+              props.data.contact,
+              props.data.contact2,
+              props.data.contact3,
+            ]}
+          />
           <Button md="1%" colorScheme="blue" onClick={handleFollowerClick}>
             Mostrar membros
           </Button>

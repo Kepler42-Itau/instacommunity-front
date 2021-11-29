@@ -102,7 +102,7 @@ export default function NavBar({
           <Button
             colorScheme="orange"
             onClick={() => router.push("/communities/create")}
-            pl="1%"
+            pl="4%"
             pr="4%"
           >
             Criar comunidade

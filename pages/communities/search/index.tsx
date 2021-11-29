@@ -8,6 +8,7 @@ import {
   Spacer,
   Center,
   Input,
+  Image,
   List,
   ListItem,
   VStack,
@@ -25,6 +26,7 @@ const Search: NextPage = () => {
   const [name, setName] = React.useState("");
   const [list, setList] = React.useState([]);
   const [isValid, setIsValid] = React.useState(true);
+  const [isClown, setIsClown] = React.useState(false);
 
   useEffect(() => {
     if (router.query.searchTerm) {
@@ -59,8 +61,10 @@ const Search: NextPage = () => {
             isClosable: true,
           });
           setList([]);
+          setIsClown(true);
         } else {
           setList(data);
+          setIsClown(false);
         }
       });
   }
@@ -77,6 +81,7 @@ const Search: NextPage = () => {
     <Box>
       <NavBar profile={false} home={true} searchFunction={(searchTerm: String) => requestSearch(searchTerm)} />
       <CommunityList list={list} />
+      {/* {isClown && <Center> <Image src='/clown.svg' alt='Clown' /></Center>} */}
     </Box>
   );
 };

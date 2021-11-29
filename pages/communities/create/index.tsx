@@ -24,6 +24,8 @@ import ErrorResponse from "../../../models/ErrorResponse";
 const Create: NextPage = () => {
   const [name, setName] = React.useState("");
   const [contact, setContact] = React.useState("");
+  const [contact2, setContact2] = React.useState("");
+  const [contact3, setContact3] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const toast = useToast();
@@ -34,6 +36,12 @@ const Create: NextPage = () => {
 
   const handleContactChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setContact(event.target.value);
+
+  const handleContact2Change = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setContact2(event.target.value);
+
+  const handleContact3Change = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setContact3(event.target.value);
 
   const handleDescriptionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -58,6 +66,9 @@ const Create: NextPage = () => {
     event.preventDefault();
     let trimmedName = name.trim();
     let trimmedDescription = description.trim();
+    let trimmedContact = contact.trim()
+    let trimmedContact2 = contact.trim()
+    let trimmedContact3 = contact.trim()
 
     if (trimmedName.length < 1 || trimmedName.length > 200)
       return alert("Invalid Name");
@@ -70,7 +81,28 @@ const Create: NextPage = () => {
         status: "error",
         duration: 9000,
         isClosable: true,
-      });
+    });
+
+    if (trimmedContact.length < 2 || trimmedContact.length > 300)
+      return toast({
+        title: "Adicione um contato!",
+        description:
+          "Um contato é necessário para a criação de sua comunidade.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+    });
+
+    if (trimmedContact.length < 8 || trimmedContact.length > 200) {
+      trimmedContact = "http://" + trimmedContact;
+    }
+    if (trimmedContact2.length < 8 || trimmedContact2.length > 200) {
+      trimmedContact2 = "http://" + trimmedContact2;
+    }
+    if (trimmedContact3.length < 8 || trimmedContact3.length > 200) {
+      trimmedContact3 = "http://" + trimmedContact3;
+    }
+
     setIsLoading(true);
     fetch("http://localhost:8080/communities", {
       method: "POST",
@@ -79,6 +111,8 @@ const Create: NextPage = () => {
         name: trimmedName,
         description: trimmedDescription,
         contact,
+        contact2,
+        contact3,
       }),
     })
       .then((res) => res.json())
@@ -111,7 +145,7 @@ const Create: NextPage = () => {
                 onChange={handleNameChange}
               />
             </FormControl>
-            <FormControl id="contato">
+            <FormControl id="contato" isRequired>
               <FormLabel>Contato</FormLabel>
               <Input
                 placeholder="ex: https://aka.ms/COBOL"
@@ -119,6 +153,26 @@ const Create: NextPage = () => {
                 size="sm"
                 value={contact}
                 onChange={handleContactChange}
+              />
+            </FormControl>
+            <FormControl id="contato2">
+              <FormLabel>Contato 2</FormLabel>
+              <Input
+                placeholder="opcional"
+                width="300px"
+                size="sm"
+                value={contact2}
+                onChange={handleContact2Change}
+              />
+            </FormControl>
+            <FormControl id="contato3">
+              <FormLabel>Contato 3</FormLabel>
+              <Input
+                placeholder="opcional"
+                width="300px"
+                size="sm"
+                value={contact3}
+                onChange={handleContact3Change}
               />
             </FormControl>
             <FormControl id="descricao" isRequired>
