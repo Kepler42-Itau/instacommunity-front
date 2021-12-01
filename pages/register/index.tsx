@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import React, { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Button, Input, Flex, Center, useToast} from "@chakra-ui/react";
+import { Button, Input, Flex, Center, useToast } from "@chakra-ui/react";
 import { TriangleUpIcon } from "@chakra-ui/icons";
 
 const Register: NextPage = () => {
@@ -29,23 +29,22 @@ const Register: NextPage = () => {
       method: "POST",
       headers: [["Content-Type", "application/json"]],
       body: JSON.stringify({ name: trimmedName }),
-    })
-      .then((res) => {
-        let title, status: "success" | "error";
-        if (res.ok) {
-          title = "Usuário criado com sucesso!"
-          status = "success"
-        } else {
-          title = "Erro ao criar usuário"
-          status = "error"
-        }
-        toast({
-          title,
-          status,
-          duration: 9000,
-          isClosable: true,
-        })
+    }).then((res) => {
+      let title, status: "success" | "error";
+      if (res.ok) {
+        title = "Usuário criado com sucesso!";
+        status = "success";
+      } else {
+        title = "Erro ao criar usuário";
+        status = "error";
+      }
+      toast({
+        title,
+        status,
+        duration: 9000,
+        isClosable: true,
       });
+    });
   };
 
   return (

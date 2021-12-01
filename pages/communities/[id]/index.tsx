@@ -132,7 +132,7 @@ const Community: NextPage = (props: any) => {
       <Center>
         <VStack spacing="4%">
           <HStack spacing="4%">
-            {props.data.contact &&
+            {props.data.contact && (
               <Button
                 md="1%"
                 colorScheme="blue"
@@ -140,8 +140,8 @@ const Community: NextPage = (props: any) => {
               >
                 Contato 1
               </Button>
-            }
-            {props.data.contact2 &&
+            )}
+            {props.data.contact2 && (
               <Button
                 md="1%"
                 colorScheme="blue"
@@ -149,8 +149,8 @@ const Community: NextPage = (props: any) => {
               >
                 Contato 2
               </Button>
-            }
-            {props.data.contact3 &&
+            )}
+            {props.data.contact3 && (
               <Button
                 md="1%"
                 colorScheme="blue"
@@ -158,7 +158,7 @@ const Community: NextPage = (props: any) => {
               >
                 Contato 3
               </Button>
-            }
+            )}
           </HStack>
           <ContactModal
             id={id}

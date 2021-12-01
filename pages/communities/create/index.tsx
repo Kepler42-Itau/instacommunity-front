@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 
 import {
   Button,
-  ButtonGroup,
   Input,
   VStack,
   Center,
@@ -14,7 +13,6 @@ import {
   FormLabel,
   Textarea,
   useToast,
-  Text,
 } from "@chakra-ui/react";
 import { LinkIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import NavBar from "../../../components/NavBar";
@@ -66,9 +64,9 @@ const Create: NextPage = () => {
     event.preventDefault();
     let trimmedName = name.trim();
     let trimmedDescription = description.trim();
-    let trimmedContact = contact.trim()
-    let trimmedContact2 = contact.trim()
-    let trimmedContact3 = contact.trim()
+    let trimmedContact = contact.trim();
+    let trimmedContact2 = contact.trim();
+    let trimmedContact3 = contact.trim();
 
     if (trimmedName.length < 1 || trimmedName.length > 200)
       return alert("Invalid Name");
@@ -81,7 +79,7 @@ const Create: NextPage = () => {
         status: "error",
         duration: 9000,
         isClosable: true,
-    });
+      });
 
     if (trimmedContact.length < 2 || trimmedContact.length > 300)
       return toast({
@@ -91,7 +89,7 @@ const Create: NextPage = () => {
         status: "error",
         duration: 9000,
         isClosable: true,
-    });
+      });
 
     if (trimmedContact.length < 8 || trimmedContact.length > 200) {
       trimmedContact = "http://" + trimmedContact;
@@ -192,7 +190,7 @@ const Create: NextPage = () => {
               loadingText="Criando Comunidade"
               variant="outline"
             >
-             Enviar
+              Enviar
             </Button>
           </VStack>
         </Center>

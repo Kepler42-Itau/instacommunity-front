@@ -34,7 +34,7 @@ const Search: NextPage = () => {
       const searchTerm = router.query.searchTerm.toString();
       requestSearch(searchTerm);
     }
-  }, [])
+  }, []);
 
   function requestSearch(searchTerm: String) {
     const trimmedName = searchTerm.trim();
@@ -79,7 +79,11 @@ const Search: NextPage = () => {
 
   return (
     <Box>
-      <NavBar profile={false} home={true} searchFunction={(searchTerm: String) => requestSearch(searchTerm)} />
+      <NavBar
+        profile={false}
+        home={true}
+        searchFunction={(searchTerm: String) => requestSearch(searchTerm)}
+      />
       <CommunityList list={list} />
       {/* {isClown && <Center> <Image src='/clown.svg' alt='Clown' /></Center>} */}
     </Box>

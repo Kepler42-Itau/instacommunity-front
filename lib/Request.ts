@@ -1,6 +1,6 @@
 export default function Request() {
   const ops: RequestInit = {
-    method: 'GET',
+    method: "GET",
   };
 
   let id = Math.round(Math.random() * (5 - 1) + 1);
@@ -9,9 +9,9 @@ export default function Request() {
     .then((resp) => {
       console.log(resp);
       if (resp.status === 200) return resp.json();
-      else return { id: -1, phrase: 'Bad id!' };
+      else return { id: -1, phrase: "Bad id!" };
     })
     .catch((error) => {
-      console.error('There is an error!!!', error);
+      console.error("There is an error!!!", error);
     });
 }

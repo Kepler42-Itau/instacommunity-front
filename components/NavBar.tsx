@@ -2,19 +2,12 @@ import {
   Box,
   Button,
   Center,
-  Switch,
   Flex,
-  Grid,
-  Spacer,
   Input,
   Text,
   InputGroup,
-  InputLeftElement,
   InputRightElement,
-  InputRightAddon,
   useColorMode,
-  ColorModeScript,
-  IconButton,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -34,7 +27,7 @@ export default function NavBar({
 }: NavBarProps) {
   const [searchTerm, setSearchTerm] = React.useState("");
   const router = useRouter();
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(event.target.value);
@@ -96,8 +89,8 @@ export default function NavBar({
           </form>
         </Center>
         <Flex flex="1" justifyContent="end" mr="auto">
-          <Button mr="5%" onClick={() => toggleColorMode()} >
-            {colorMode === "light" ? (<MoonIcon />) : (<SunIcon />)}
+          <Button mr="5%" onClick={() => toggleColorMode()}>
+            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
           <Button
             colorScheme="orange"

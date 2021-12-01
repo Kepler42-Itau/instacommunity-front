@@ -1,34 +1,35 @@
-import type { NextPage } from 'next';
-import React, { useState } from 'react';
-import Head from 'next/head';
+import type { NextPage } from "next";
+import React, { useState } from "react";
+import Head from "next/head";
 import { Button, ButtonGroup, Input, HStack, Center } from "@chakra-ui/react";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
 
 const Settings: NextPage = () => {
-  const [name, setName] = React.useState("")
-  const toast = useToast()
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)
+  const [name, setName] = React.useState("");
+  const toast = useToast();
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setName(event.target.value);
 
   const router = useRouter();
   const { id } = router.query;
 
   const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
-      event.preventDefault()
-      let trimmedContact = name.trim()
-      if (!trimmedContact.match(/^https?:\/\//gi)) {
-        trimmedContact = "http://" + trimmedContact
-      }
-
-      if (trimmedContact.length < 8 || trimmedContact.length > 200)
-        return alert("Invalid URL")
-
-      fetch(`http://localhost:8080/communities/${id}`, {
-      	method: 'PATCH',
-      	headers: [['Content-Type', 'application/json']],
-      	body: JSON.stringify({ contact: trimmedContact }),
-      })
+    event.preventDefault();
+    let trimmedContact = name.trim();
+    if (!trimmedContact.match(/^https?:\/\//gi)) {
+      trimmedContact = "http://" + trimmedContact;
     }
+
+    if (trimmedContact.length < 8 || trimmedContact.length > 200)
+      return alert("Invalid URL");
+
+    fetch(`http://localhost:8080/communities/${id}`, {
+      method: "PATCH",
+      headers: [["Content-Type", "application/json"]],
+      body: JSON.stringify({ contact: trimmedContact }),
+    });
+  };
 
   return (
     <div>
@@ -37,9 +38,18 @@ const Settings: NextPage = () => {
       </Head>
       <form onSubmit={handleSubmit}>
         <Center h="100px">
-         <HStack spacing="24px">
-            <Input placeholder="Ex: Discord" width="300px" size="sm" value={name} onChange={handleChange} />
-            <Button colorScheme="blue" type="submit" onClick={() =>
+          <HStack spacing="24px">
+            <Input
+              placeholder="Ex: Discord"
+              width="300px"
+              size="sm"
+              value={name}
+              onChange={handleChange}
+            />
+            <Button
+              colorScheme="blue"
+              type="submit"
+              onClick={() =>
                 toast({
                   title: "Contato adicionado.",
                   description: "O Contato foi adicionado na comunidade.",
@@ -47,8 +57,9 @@ const Settings: NextPage = () => {
                   duration: 9000,
                   isClosable: true,
                 })
-              }>
-             Cadastrar
+              }
+            >
+              Cadastrar
             </Button>
           </HStack>
         </Center>

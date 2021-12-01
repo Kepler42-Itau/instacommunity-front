@@ -1,3 +1,3 @@
 export default interface ErrorResponse {
-  error: String
+  error: String;
 }
