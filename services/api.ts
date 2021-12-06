@@ -6,17 +6,16 @@ const makeUrl = (path = "/") => {
 };
 
 class API {
-  async getFollowedCommunities(userId: String): Promise<Community[]> {
-    const communities: Community[] = await fetch(
+  async getFollowedCommunities(userId: string): Promise<Community[]> {
+    return fetch(
       makeUrl(`/users/${userId}/communities`)
     ).then((res) => {
       if (res.ok) return res.json();
       else {
-        console.error({ res });
+        console.error({res});
         return new Promise(() => []);
       }
     });
-    return communities;
   }
 }
 

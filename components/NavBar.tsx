@@ -5,11 +5,13 @@ import {
   Flex,
   Input,
   Text,
+  Link as Link2,
   InputGroup,
   InputRightElement,
   useColorMode,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import React, { useState } from "react";
 
 import { SearchIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
@@ -50,9 +52,13 @@ export default function NavBar({
     <Box>
       <Flex p="1%" justifyContent="center">
         <Flex flex="1" justifyContent="start" ml="auto">
-          <Text fontSize="xl" align="center" as="b" mr="5%">
-            InstaCommunity
-          </Text>
+          {/*<Text fontSize="xl" align="center" as="b" mr="5%">*/}
+          <Link2 fontSize="xl" align="center" mr="5%" isExternal>
+            <Link href='/'>
+              <a>InstaCommunity</a>
+            </Link>
+          </Link2>
+          {/*</Text>*/}
           {profile && (
             <Button colorScheme="orange" onClick={() => router.push("/user/1")}>
               Perfil

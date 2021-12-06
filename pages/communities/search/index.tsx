@@ -26,24 +26,22 @@ const Search: NextPage = () => {
   const [name, setName] = React.useState("");
   const [list, setList] = React.useState([]);
   const [isValid, setIsValid] = React.useState(true);
-  const [isClown, setIsClown] = React.useState(false);
 
   useEffect(() => {
-    if (router.query.searchTerm) {
-      // fazer a busca já
-      const searchTerm = router.query.searchTerm.toString();
-      requestSearch(searchTerm);
-    }
-  }, []);
+    if (!router.isReady) return;
 
-  function requestSearch(searchTerm: String) {
+    const searchTerm = router.query.searchTerm?.toString() || "";
+    requestSearch(searchTerm);
+  }, [router.isReady]);
+
+  function requestSearch(searchTerm: string) {
     const trimmedName = searchTerm.trim();
 
-    if (trimmedName === "") {
-      setIsValid(false);
-      setList([]);
-      return;
-    }
+    // if (trimmedName === "") {
+    //   setIsValid(false);
+    //   setList([]);
+    //   return;
+    // }
     setIsValid(true);
     const search = new URLSearchParams({ name: trimmedName });
 
@@ -61,10 +59,8 @@ const Search: NextPage = () => {
             isClosable: true,
           });
           setList([]);
-          setIsClown(true);
         } else {
           setList(data);
-          setIsClown(false);
         }
       });
   }
@@ -82,10 +78,9 @@ const Search: NextPage = () => {
       <NavBar
         profile={false}
         home={true}
-        searchFunction={(searchTerm: String) => requestSearch(searchTerm)}
+        searchFunction={(searchTerm: string) => requestSearch(searchTerm)}
       />
       <CommunityList list={list} />
-      {/* {isClown && <Center> <Image src='/clown.svg' alt='Clown' /></Center>} */}
     </Box>
   );
 };
