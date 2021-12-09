@@ -210,11 +210,11 @@ import { GetServerSideProps } from "next";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id;
   if (id == null) return { props: {} };
-  const data = await fetch(`http://localhost:8080/communities/${id}`).then(
+  const data = await fetch(`http://ic-backend:8080/communities/${id}`).then(
     (res) => res.json()
   );
   const list = await fetch(
-    `http://localhost:8080/communities/${id}/followers`
+    `http://ic-backend:8080/communities/${id}/followers`
   ).then((res) => res.json());
 
   return {
