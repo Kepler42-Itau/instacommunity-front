@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Button, Input, Flex, Center, useToast } from "@chakra-ui/react";
-import { TriangleUpIcon } from "@chakra-ui/icons";
+import api from "../../services/api"
 
 const Register: NextPage = () => {
   const [name, setName] = React.useState("");
@@ -25,13 +25,9 @@ const Register: NextPage = () => {
         isClosable: true,
       });
 
-    fetch("http://localhost:8080/users", {
-      method: "POST",
-      headers: [["Content-Type", "application/json"]],
-      body: JSON.stringify({ name: trimmedName }),
-    }).then((res) => {
+    api.createNewUser(trimmedName).then((res) => {
       let title, status: "success" | "error";
-      if (res.ok) {
+      if (res) {
         title = "Usuário criado com sucesso!";
         status = "success";
       } else {

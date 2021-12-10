@@ -22,6 +22,8 @@ import NavBar from "../../../components/NavBar";
 import ContactModal from "../../../components/ContactModal";
 
 import User from "../../../models/User";
+import UserCommunity from "../../../models/UserCommunity";
+import api from "../../../services/api";
 
 const Community: NextPage = (props: any) => {
   const toast = useToast();
@@ -49,35 +51,27 @@ const Community: NextPage = (props: any) => {
   const handleFollowClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
-    fetch(`http://localhost:8080/communities/${id}/followers`, {
-      method: "POST",
-      headers: [["Content-Type", "application/json"]],
-      body: JSON.stringify({
-        id: router.query.userId || 1,
-      }),
-    }).then((res) => {
-      if (res.ok) {
-        setIsFollowing(true);
-      }
-      handleToast(res.ok);
-    });
+    const userId = router.query.userId?.toString()!
+    const communityId = id?.toString()!
+    api
+      .followCommunity(communityId, userId)
+      .then((res) => {
+        const ok = "id" in res
+        if (ok) setIsFollowing(true);
+        handleToast(ok);
+      });
   };
 
   const handleUnfollowClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-
-    fetch(`http://localhost:8080/communities/${id}/followers`, {
-      method: "DELETE",
-      headers: [["Content-Type", "application/json"]],
-      body: JSON.stringify({
-        id: router.query.userId || 1,
-      }),
-    }).then((res) => {
-      console.log({ res });
-      if (res.ok) {
-        setIsFollowing(false);
-      }
-      handleToast(res.ok);
+    const userId = router.query.userId?.toString()!
+    const communityId = id?.toString()!
+    api
+      .unFollowCommunity(communityId, userId)
+      .then((res) => {
+      const ok = "id" in res
+      if (ok) setIsFollowing(false);
+      handleToast(false);
     });
   };
 
@@ -210,12 +204,8 @@ import { GetServerSideProps } from "next";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id;
   if (id == null) return { props: {} };
-  const data = await fetch(`http://ic-backend:8080/communities/${id}`).then(
-    (res) => res.json()
-  );
-  const list = await fetch(
-    `http://ic-backend:8080/communities/${id}/followers`
-  ).then((res) => res.json());
+  const data = await api.getCommunityPage(id as string);
+  const list = await api.getCommunitiesFollowers(id as string);
 
   return {
     props: {

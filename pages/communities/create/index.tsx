@@ -19,6 +19,8 @@ import NavBar from "../../../components/NavBar";
 import Community from "../../../models/Community";
 import ErrorResponse from "../../../models/ErrorResponse";
 
+import api from '../../../services/api'
+
 const Create: NextPage = () => {
   const [name, setName] = React.useState("");
   const [contact, setContact] = React.useState("");
@@ -102,19 +104,15 @@ const Create: NextPage = () => {
     }
 
     setIsLoading(true);
-    fetch("http://localhost:8080/communities", {
-      method: "POST",
-      headers: [["Content-Type", "application/json"]],
-      body: JSON.stringify({
-        name: trimmedName,
-        description: trimmedDescription,
-        contact,
-        contact2,
-        contact3,
-      }),
-    })
-      .then((res) => res.json())
-      .then((res: Community) => handleResponse(res));
+    const community: Community = {
+      name: trimmedName,
+      description: trimmedDescription,
+      contact,
+      contact2,
+      contact3,
+    }
+    api.createCommunity(community)
+      .then(handleResponse);
   };
 
   return (
