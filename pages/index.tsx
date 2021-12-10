@@ -17,9 +17,9 @@ const Home: NextPage = () => {
 
     api
       .getFollowedCommunities(userId)
-      .then(communities => setCommunitiesList(communities));
+      .then(setCommunitiesList);
 
-  }, [router.isReady]);
+  }, [router.isReady, userId]);
 
   return (
     <>
