@@ -1,7 +1,8 @@
 import Community from "../models/Community";
 
 const makeUrl = (path = "/") => {
-  const defaultUrl = "http://localhost:8080";
+  const host = process.env.DB_SERVER || "localhost";
+  const defaultUrl = `http://${host}:8080`;
   return `${defaultUrl}${path}`;
 };
 
