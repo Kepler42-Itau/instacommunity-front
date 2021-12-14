@@ -19,12 +19,14 @@ import { SearchIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 import NavBar from "../../../components/NavBar";
 import CommunityList from "../../../components/CommunityList";
+import api from "../../../services/api"
+import Community from "../../../models/Community";
 
 const Search: NextPage = () => {
   const router = useRouter();
   const toast = useToast();
   const [name, setName] = React.useState("");
-  const [list, setList] = React.useState([]);
+  const [list, setList] = React.useState<Community[]>([]);
   const [isValid, setIsValid] = React.useState(true);
 
   useEffect(() => {
@@ -45,11 +47,7 @@ const Search: NextPage = () => {
     setIsValid(true);
     const search = new URLSearchParams({ name: trimmedName });
 
-    fetch(`http://localhost:8080/communities?${search}`, {
-      method: "GET",
-      headers: [["Content-Type", "application/json"]],
-    })
-      .then((res) => res.json())
+    api.searchCommunity(trimmedName)
       .then((data) => {
         if (data.length == 0) {
           toast({

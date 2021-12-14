@@ -4,7 +4,7 @@ import UserCommunity from "../models/UserCommunity";
 import ErrorResponse from "../models/ErrorResponse";
 
 const makeUrl = (path = "/") => {
-  const host = process.env.DB_SERVER || "localhost";
+  const host = process.env.DB_SERVER;
   const defaultUrl = `http://${host}:8080`;
   return `${defaultUrl}${path}`;
 };
@@ -32,7 +32,7 @@ class API {
 
   async followCommunity(communityId: string, userId: string): Promise<UserCommunity|ErrorResponse> {
     return fetch(
-      makeUrl(`communities/${communityId}/followers`), {
+      makeUrl(`/communities/${communityId}/followers`), {
         method: "POST",
         headers: [["Content-Type", "application/json"]],
         body: JSON.stringify({
@@ -43,7 +43,7 @@ class API {
 
   async unFollowCommunity(communityId: string, userId: string): Promise<UserCommunity|ErrorResponse> {
     return fetch(
-      makeUrl(`communities/${communityId}/followers`), {
+      makeUrl(`/communities/${communityId}/followers`), {
         method: "DELETE",
         headers: [["Content-Type", "application/json"]],
         body: JSON.stringify({
@@ -72,13 +72,25 @@ class API {
 
   async getCommunitiesFollowers(communityId: String): Promise<User[]|ErrorResponse> {
       const res = await fetch(
-        makeUrl(`communities/${communityId}/followers`)
+        makeUrl(`/communities/${communityId}/followers`)
       )
       if (res.ok) return res.json();
       else {
         console.error({res});
         return new Promise(() => []);
       }
+  }
+
+  async searchCommunity(searchTerm: String): Promise<Community[]> {
+    const res = await fetch(makeUrl(`/communities?${searchTerm}`), {
+      method: "GET",
+      headers: [["Content-Type", "application/json"]],
+    })
+    if (res.ok) return res.json();
+    else {
+      console.error({res});
+      return new Promise(() => []);
+    }
   }
 
 }
