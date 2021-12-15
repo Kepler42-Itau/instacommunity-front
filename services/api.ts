@@ -4,7 +4,7 @@ import UserCommunity from "../models/UserCommunity";
 import ErrorResponse from "../models/ErrorResponse";
 
 const makeUrl = (path = "/") => {
-  const host = process.env.DB_SERVER;
+  const host = process.env.NEXT_PUBLIC_BACKEND_ADDRESS;
   const defaultUrl = `http://${host}:8080`;
   return `${defaultUrl}${path}`;
 };
