@@ -7,14 +7,15 @@ import {
   Text,
   Link as Link2,
   InputGroup,
+  Avatar,
   InputRightElement,
-  useColorMode,
+  useColorMode, ScaleFade, Slide, SlideFade
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import React, { useState } from "react";
 
-import { SearchIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import {SearchIcon, MoonIcon, SunIcon, AddIcon} from "@chakra-ui/icons";
 
 interface NavBarProps {
   profile: Boolean;
@@ -53,22 +54,26 @@ export default function NavBar({
       <Flex p="1%" justifyContent="center">
         <Flex flex="1" justifyContent="start" ml="auto">
           {/*<Text fontSize="xl" align="center" as="b" mr="5%">*/}
-          <Link2 fontSize="xl" align="center" mr="5%" isExternal>
+          <Link2 fontSize="xl" align="center" mr="5%" isExternal >
             <Link href='/'>
-              <a>InstaCommunity</a>
+              <Text
+                bgGradient='linear(to-r, #FF7900, #9D4EDD)'
+                bgClip='text'
+                fontSize='2xl'
+                fontWeight='extrabold'
+                userSelect="none"
+                _hover={{
+                  bgGradient: "linear(to-r, #ff6d00, #7B2CBF)",
+                }}
+                _active={{
+                  transform: 'scale(0.98)',
+                }}
+                transition='all 0.2s ease-in-out'
+              >
+                <a>InstaCommunity</a>
+              </Text>
             </Link>
           </Link2>
-          {/*</Text>*/}
-          {profile && (
-            <Button colorScheme="orange" onClick={() => router.push("/user/1")}>
-              Perfil
-            </Button>
-          )}
-          {home && (
-            <Button colorScheme="orange" onClick={() => router.push("/")}>
-              Home
-            </Button>
-          )}
         </Flex>
         <Center flex="5" justifyContent="center" alignSelf="center">
           <form
@@ -101,11 +106,12 @@ export default function NavBar({
           <Button
             colorScheme="orange"
             onClick={() => router.push("/communities/create")}
-            pl="4%"
-            pr="4%"
+            pd="5%"
+            width="100%"
           >
-            Criar comunidade
+            Criar Comunidade
           </Button>
+          <Avatar name='Ada' size="md" ml="4%" mr="4%" cursor="pointer" userSelect="none" onClick={() => router.push("/user/1") }/>
         </Flex>
       </Flex>
     </Box>
