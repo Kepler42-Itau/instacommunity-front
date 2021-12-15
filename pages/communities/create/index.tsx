@@ -71,19 +71,14 @@ const Create: NextPage = () => {
     let trimmedContact3 = contact.trim();
 
     if (trimmedName.length < 1 || trimmedName.length > 200)
-      return alert("Invalid Name");
-
-    if (trimmedDescription.length < 2 || trimmedDescription.length > 300)
       return toast({
-        title: "Adicione uma descrição!",
-        description:
-          "Uma descrição é necessária para a criação de sua comunidade.",
+        title: "Nome é inválido",
         status: "error",
         duration: 9000,
         isClosable: true,
       });
 
-    if (trimmedContact.length < 2 || trimmedContact.length > 300)
+    if (trimmedContact.length < 1 || trimmedContact.length > 300)
       return toast({
         title: "Adicione um contato!",
         description:
@@ -93,13 +88,23 @@ const Create: NextPage = () => {
         isClosable: true,
       });
 
-    if (trimmedContact.length < 8 || trimmedContact.length > 200) {
+    if (trimmedDescription.length < 1 || trimmedDescription.length > 300)
+      return toast({
+        title: "Adicione uma descrição!",
+        description:
+          "Uma descrição é necessária para a criação de sua comunidade.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+
+    if (!trimmedContact.match(/^https?:\/\//gi)) {
       trimmedContact = "http://" + trimmedContact;
     }
-    if (trimmedContact2.length < 8 || trimmedContact2.length > 200) {
+    if (trimmedContact2 != "" && !trimmedContact2.match(/^https?:\/\//gi)) {
       trimmedContact2 = "http://" + trimmedContact2;
     }
-    if (trimmedContact3.length < 8 || trimmedContact3.length > 200) {
+    if (trimmedContact3 != "" && !trimmedContact3.match(/^https?:\/\//gi)) {
       trimmedContact3 = "http://" + trimmedContact3;
     }
 
@@ -120,15 +125,7 @@ const Create: NextPage = () => {
       <Head>
         <title>Criar Comunidade</title>
       </Head>
-      {/* <Button
-        rightIcon={<TriangleUpIcon />}
-        colorScheme="blue"
-        onClick={() => router.push(`/`)}
-      >
-        Home
-      </Button> */}
       <NavBar profile={false} home={true} />
-      <form onSubmit={handleSubmit}>
         <Center mt="2%">
           <VStack spacing="24px">
             <FormControl id="nome" isRequired>
@@ -142,7 +139,7 @@ const Create: NextPage = () => {
               />
             </FormControl>
             <FormControl id="contato" isRequired>
-              <FormLabel>Contato</FormLabel>
+              <FormLabel>Canal de comunicação I</FormLabel>
               <Input
                 placeholder="ex: https://aka.ms/COBOL"
                 width="300px"
@@ -152,7 +149,7 @@ const Create: NextPage = () => {
               />
             </FormControl>
             <FormControl id="contato2">
-              <FormLabel>Contato 2</FormLabel>
+              <FormLabel>Canal de comunicação II</FormLabel>
               <Input
                 placeholder="opcional"
                 width="300px"
@@ -162,7 +159,7 @@ const Create: NextPage = () => {
               />
             </FormControl>
             <FormControl id="contato3">
-              <FormLabel>Contato 3</FormLabel>
+              <FormLabel>Canal de comunicação III</FormLabel>
               <Input
                 placeholder="opcional"
                 width="300px"
@@ -187,12 +184,12 @@ const Create: NextPage = () => {
               isLoading={isLoading}
               loadingText="Criando Comunidade"
               variant="outline"
+              onClick={handleSubmit}
             >
               Enviar
             </Button>
           </VStack>
         </Center>
-      </form>
     </div>
   );
 };
