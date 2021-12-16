@@ -158,23 +158,31 @@ const Create: NextPage = () => {
             </FormControl>
             <FormControl id="contato2">
               <FormLabel>Canal de comunicação II</FormLabel>
-              <Input
-                placeholder="Opcional"
-                width="100%"
-                size="sm"
-                value={contact2}
-                onChange={handleContact2Change}
-              />
+              <InputGroup size="sm">
+                <InputLeftAddon children='https://' />
+                <Input
+                  placeholder="Opcional"
+                  width="100%"
+                  size="sm"
+                  value={contact2}
+                  onChange={handleContact2Change}
+                />
+              </InputGroup>
+
             </FormControl>
             <FormControl id="contato3">
               <FormLabel>Canal de comunicação III</FormLabel>
-              <Input
-                placeholder="Opcional"
-                width="100%"
-                size="sm"
-                value={contact3}
-                onChange={handleContact3Change}
-              />
+              <InputGroup size="sm">
+                <InputLeftAddon children='https://' />
+                <Input
+                                                                      placeholder="Opcional"
+                                                                      width="100%"
+                                                                      size="sm"
+                                                                      value={contact3}
+                                                                      onChange={handleContact3Change}
+                                                                    />
+              </InputGroup>
+
             </FormControl>
             <FormControl id="descricao" isRequired>
               <FormLabel>Descrição</FormLabel>
