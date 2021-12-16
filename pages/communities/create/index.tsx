@@ -9,10 +9,13 @@ import {
   Input,
   VStack,
   Center,
+  Flex,
+  InputLeftAddon,
+  Box,
   FormControl,
   FormLabel,
   Textarea,
-  useToast,
+  useToast, InputGroup,
 } from "@chakra-ui/react";
 import { LinkIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import NavBar from "../../../components/NavBar";
@@ -98,7 +101,7 @@ const Create: NextPage = () => {
         isClosable: true,
       });
 
-    if (!trimmedContact.match(/^https?:\/\//gi)) {
+    if (trimmedContact != "" && !trimmedContact.match(/^https?:\/\//gi)) {
       trimmedContact = "http://" + trimmedContact;
     }
     if (trimmedContact2 != "" && !trimmedContact2.match(/^https?:\/\//gi)) {
@@ -121,18 +124,19 @@ const Create: NextPage = () => {
   };
 
   return (
-    <div>
+    <Box>
       <Head>
         <title>Criar Comunidade</title>
       </Head>
       <NavBar profile={false} home={true} />
-        <Center mt="2%">
-          <VStack spacing="24px">
+      <Flex>
+        <Center mt="2%" width="100%">
+          <VStack spacing="24px" width="40%">
             <FormControl id="nome" isRequired>
               <FormLabel>Nome</FormLabel>
               <Input
                 placeholder="ex: Amigos do Cobol"
-                width="300px"
+                width="100%"
                 size="sm"
                 value={name}
                 onChange={handleNameChange}
@@ -140,19 +144,23 @@ const Create: NextPage = () => {
             </FormControl>
             <FormControl id="contato" isRequired>
               <FormLabel>Canal de comunicação I</FormLabel>
-              <Input
-                placeholder="ex: https://aka.ms/COBOL"
-                width="300px"
-                size="sm"
-                value={contact}
-                onChange={handleContactChange}
-              />
+              <InputGroup  size="sm">
+                <InputLeftAddon children='https://' />
+                <Input
+                                                                      placeholder="ex: aka.ms/COBOL"
+                                                                      width="100%"
+                                                                      size="sm"
+                                                                      value={contact}
+                                                                      onChange={handleContactChange}
+                                                                    />
+              </InputGroup>
+
             </FormControl>
             <FormControl id="contato2">
               <FormLabel>Canal de comunicação II</FormLabel>
               <Input
-                placeholder="opcional"
-                width="300px"
+                placeholder="Opcional"
+                width="100%"
                 size="sm"
                 value={contact2}
                 onChange={handleContact2Change}
@@ -161,8 +169,8 @@ const Create: NextPage = () => {
             <FormControl id="contato3">
               <FormLabel>Canal de comunicação III</FormLabel>
               <Input
-                placeholder="opcional"
-                width="300px"
+                placeholder="Opcional"
+                width="100%"
                 size="sm"
                 value={contact3}
                 onChange={handleContact3Change}
@@ -172,25 +180,32 @@ const Create: NextPage = () => {
               <FormLabel>Descrição</FormLabel>
               <Textarea
                 placeholder="ex: Amigos desde 1876"
-                width="300px"
+                width="100%"
                 size="sm"
                 value={description}
                 onChange={handleDescriptionChange}
               />
             </FormControl>
-            <Button
-              colorScheme="blue"
-              type="submit"
-              isLoading={isLoading}
-              loadingText="Criando Comunidade"
-              variant="outline"
-              onClick={handleSubmit}
-            >
-              Enviar
-            </Button>
+            <Center flexDirection="row" width="100%">
+              <Button
+                colorScheme="blue"
+                type="submit"
+                isLoading={isLoading}
+                loadingText="Criando Comunidade"
+                variant="outline"
+                onClick={handleSubmit}
+                mr="5%"
+              >
+                Enviar
+              </Button>
+              <Button colorScheme="red" onClick={() => router.push('/')}>
+                Cancelar
+              </Button>
+            </Center>
           </VStack>
         </Center>
-    </div>
+      </Flex>
+    </Box>
   );
 };
 
