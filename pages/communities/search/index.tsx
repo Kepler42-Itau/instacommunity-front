@@ -75,7 +75,9 @@ const Search: NextPage = () => {
       <NavBar
         searchFunction={(searchTerm: string) => requestSearch(searchTerm)}
       />
-      <CommunityList list={list} />
+      <Box pt="5%">
+          <CommunityList list={list} />
+      </Box>
     </Box>
   );
 };

@@ -15,6 +15,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (!router.isReady) return;
 
+    localStorage.setItem('userId', userId);
     api.getFollowedCommunities(userId).then(setCommunitiesList);
   }, [router.isReady, userId]);
 
@@ -22,7 +23,7 @@ const Home: NextPage = () => {
     <>
       <NavBar />
       <Center>
-        <Text mt="1%">Comunidades que você está seguindo: </Text>
+        <Text mt="6%">Comunidades que você está seguindo: </Text>
       </Center>
       <CommunityList list={communitiesList} />
     </>
