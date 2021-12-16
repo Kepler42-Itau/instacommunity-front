@@ -52,30 +52,28 @@ export default function NavBar({
   return (
     <Box>
       <Flex p="1%" justifyContent="center">
-        <Flex flex="1" justifyContent="start" ml="auto">
-          {/*<Text fontSize="xl" align="center" as="b" mr="5%">*/}
-          <Link2 fontSize="xl" align="center" mr="5%" isExternal >
-            <Link href='/'>
-              <Text
-                bgGradient='linear(to-r, #FF7900, #9D4EDD)'
-                bgClip='text'
-                fontSize='2xl'
-                fontWeight='extrabold'
-                userSelect="none"
-                _hover={{
-                  bgGradient: "linear(to-r, #ff6d00, #7B2CBF)",
-                }}
-                _active={{
-                  transform: 'scale(0.98)',
-                }}
-                transition='all 0.2s ease-in-out'
-              >
-                <a>InstaCommunity</a>
-              </Text>
-            </Link>
-          </Link2>
+          <Flex flex="1" justifyContent="start" ml="auto">
+            <Text
+                  bgGradient='linear(to-r, #FF7900, #9D4EDD)'
+                  bgClip='text'
+                  height="100%"
+                  fontSize='3xl'
+                  fontWeight='extrabold'
+                  userSelect="none"
+                  cursor="pointer"
+                  _hover={{
+                    bgGradient: "linear(to-r, #ff6d00, #7B2CBF)",
+                  }}
+                  _active={{
+                    transform: 'scale(0.98)',
+                  }}
+                  transition='all 0.2s ease-in-out'
+                  onClick={() => router.push('/')}
+                >
+                  InstaCommunity
+                </Text>
         </Flex>
-        <Center flex="5" justifyContent="center" alignSelf="center">
+       <Center flex="5" justifyContent="center" alignSelf="center">
           <form
             style={{ width: "50%", margin: "0 auto" }}
             onSubmit={handleSubmit}
@@ -99,20 +97,24 @@ export default function NavBar({
             </InputGroup>
           </form>
         </Center>
-        <Flex flex="1" justifyContent="end" mr="auto">
-          <Button mr="5%" onClick={() => toggleColorMode()}>
-            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-          </Button>
-          <Button
-            colorScheme="orange"
-            onClick={() => router.push("/communities/create")}
-            pd="5%"
-            width="100%"
-          >
-            Criar Comunidade
-          </Button>
-          <Avatar name='Ada' size="md" ml="4%" mr="4%" cursor="pointer" userSelect="none" onClick={() => router.push("/user/1") }/>
-        </Flex>
+          <Flex flex="1" justifyContent="end" mr="auto">
+            <Center mr="5%">
+                  <Button onClick={() => toggleColorMode()} width="100%">
+                    {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+                  </Button>
+            </Center>
+            <Center mr="5%">
+              <Button
+                colorScheme="orange"
+                onClick={() => router.push("/communities/create")}
+                pd="5%"
+                width="100%"
+              >
+                Criar Comunidade
+              </Button>
+            </Center>
+            <Avatar name='Ada' size="md" cursor="pointer" userSelect="none" onClick={() => router.push("/user/1") }/>
+          </Flex>
       </Flex>
     </Box>
   );
