@@ -1,12 +1,13 @@
-import type { NextPage } from "next";
-import React, { useEffect } from "react";
-
+import { useEffect } from "react";
 import {
   Avatar,
   Box,
   Flex,
   Center,
   List,
+  Heading,
+  useColorMode,
+  useColorModeValue,
   ListItem,
   Text,
 } from "@chakra-ui/react";
@@ -19,6 +20,8 @@ interface ListProps {
 
 export default function CommunityList({ list }: ListProps) {
   const router = useRouter();
+  const { toggleColorMode } = useColorMode()
+  const bg = useColorModeValue('white', 'gray.800')
 
   return (
     <Center>
@@ -36,16 +39,26 @@ export default function CommunityList({ list }: ListProps) {
                 }}
               >
                 <Flex
-                  border="1px"
-                  borderColor="gray.600"
-                  borderRadius="md"
+                  borderRadius="lg"
+                  p="2%"
+                  pb="3%"
                   m="3%"
+                  bg={bg}
+                  boxShadow="lg"
+                  rounded="lg"
+                  _hover={{
+                    boxShadow: "xl"
+                  }}
                 >
-                  <Avatar name={community.name} size="md" m="4%" />
-                  <Box ml="0%" m="4%">
-                    <Text fontSize="md">{community.name}</Text>
-                    <Text fontSize="xs">{community.description}</Text>
-                  </Box>
+                  <Center flexDirection="row" width="100%">
+                    <Box>
+                      <Avatar name={community.name} size="lg" m="4%"/>
+                    </Box>
+                    <Flex flexDirection="column" ml="0%" m="3%" width="80%" maxwidth="70%" height="70%" maxHeight="70%">
+                      <Heading textAlign="left" fontSize="lg" pb="2%">{community.name}</Heading>
+                      <Text fontSize="xs">{community.description}</Text>
+                    </Flex>
+                  </Center>
                 </Flex>
               </ListItem>
             );
@@ -55,3 +68,6 @@ export default function CommunityList({ list }: ListProps) {
     </Center>
   );
 }
+
+
+
