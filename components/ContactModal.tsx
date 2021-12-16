@@ -8,6 +8,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalCloseButton,
+  IconButton,
   FormControl,
   FormLabel,
   ModalBody,
@@ -15,7 +16,7 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import { LinkIcon } from "@chakra-ui/icons";
+import { EditIcon } from "@chakra-ui/icons";
 
 export default function ContactModal(props: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -86,14 +87,7 @@ export default function ContactModal(props: any) {
 
   return (
     <>
-      <Button
-        md="1%"
-        rightIcon={<LinkIcon />}
-        colorScheme="blue"
-        onClick={onOpen}
-      >
-        Modificar Contatos
-      </Button>
+      <IconButton aria-label='Configurações da comunidade' colorScheme="blue" size="lg" onClick={onOpen} icon={<EditIcon />} />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
