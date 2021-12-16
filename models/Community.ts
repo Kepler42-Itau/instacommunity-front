@@ -5,4 +5,5 @@ export default interface Community {
   contact: String;
   contact2: String;
   contact3: String;
+  creator: number;
 }
