@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -6,8 +5,6 @@ import {
   Center,
   List,
   Heading,
-  useColorMode,
-  useColorModeValue,
   ListItem,
   Text,
 } from "@chakra-ui/react";
@@ -20,8 +17,6 @@ interface ListProps {
 
 export default function CommunityList({ list }: ListProps) {
   const router = useRouter();
-  const { toggleColorMode } = useColorMode()
-  const bg = useColorModeValue('white', 'gray.800')
 
   return (
     <Center>
@@ -30,7 +25,7 @@ export default function CommunityList({ list }: ListProps) {
           {list.map((community: any, index: any) => {
             return (
               <ListItem
-                key={community.id}
+                key={index}
                 onClick={() => router.push(`/communities/${community.id}`)}
                 cursor="pointer"
                 w="100%"
@@ -43,7 +38,6 @@ export default function CommunityList({ list }: ListProps) {
                   p="2%"
                   pb="3%"
                   m="3%"
-                  bg={bg}
                   boxShadow="lg"
                   rounded="lg"
                   _hover={{
