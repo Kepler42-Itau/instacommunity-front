@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import {
@@ -28,9 +28,14 @@ const Create: NextPage = () => {
   const [contact2, setContact2] = useState("");
   const [contact3, setContact3] = useState("");
   const [description, setDescription] = useState("");
+  const [creator, setCreator] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const router = useRouter();
+
+  useEffect(() => {
+    setCreator(Number(localStorage.getItem('userId')));
+  }, [])
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
@@ -158,6 +163,7 @@ const Create: NextPage = () => {
       contact: trimmedContact,
       contact2: trimmedContact2,
       contact3: trimmedContact3,
+      creator: creator
     };
     api.createCommunity(community).then(handleResponse);
   };
@@ -169,7 +175,7 @@ const Create: NextPage = () => {
       </Head>
       <NavBar />
       <Flex>
-        <Center mt="2%" width="100%">
+        <Center mt="6%" width="100%">
           <VStack spacing="24px" width="40%">
             <FormControl id="nome" isRequired>
               <FormLabel>Nome</FormLabel>
