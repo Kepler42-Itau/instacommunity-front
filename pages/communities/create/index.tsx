@@ -1,36 +1,34 @@
 import type { NextPage } from "next";
-import React, { useState } from "react";
+import { useState } from "react";
 import Head from "next/head";
-
 import { useRouter } from "next/router";
-
 import {
   Button,
   Input,
   VStack,
   Center,
   Flex,
+  Text,
   InputLeftAddon,
   Box,
   FormControl,
   FormLabel,
   Textarea,
-  useToast, InputGroup,
+  useToast,
+  InputGroup,
 } from "@chakra-ui/react";
-import { LinkIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import NavBar from "../../../components/NavBar";
 import Community from "../../../models/Community";
 import ErrorResponse from "../../../models/ErrorResponse";
-
-import api from '../../../services/api'
+import api from "../../../services/api";
 
 const Create: NextPage = () => {
-  const [name, setName] = React.useState("");
-  const [contact, setContact] = React.useState("");
-  const [contact2, setContact2] = React.useState("");
-  const [contact3, setContact3] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [name, setName] = useState("");
+  const [contact, setContact] = useState("");
+  const [contact2, setContact2] = useState("");
+  const [contact3, setContact3] = useState("");
+  const [description, setDescription] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const router = useRouter();
 
@@ -73,25 +71,57 @@ const Create: NextPage = () => {
     let trimmedContact2 = contact.trim();
     let trimmedContact3 = contact.trim();
 
-    if (trimmedName.length < 1 || trimmedName.length > 200)
+    if (trimmedName.length < 1 || trimmedName.length > 400)
       return toast({
-        title: "Nome é inválido",
+        title: "Nome inválido",
+        description: "O nome da comunidade deve ter entre 1 e 400 caracteres.",
         status: "error",
         duration: 9000,
         isClosable: true,
       });
 
-    if (trimmedContact.length < 1 || trimmedContact.length > 300)
+    if (trimmedContact.length < 1) {
       return toast({
-        title: "Adicione um contato!",
+        title: "Adicione um canal de comunicação!",
+        description: "Um canal é necessário para a criação de sua comunidade.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else if (trimmedContact.length > 300) {
+      return toast({
+        title: "Canal de comunição inválido",
         description:
-          "Um contato é necessário para a criação de sua comunidade.",
+          "O link do canal de comunicação deve ter entre 1 e 400 caracteres.",
         status: "error",
         duration: 9000,
         isClosable: true,
       });
+    }
 
-    if (trimmedDescription.length < 1 || trimmedDescription.length > 300)
+    if (trimmedContact2 != "" && trimmedContact2.length > 300) {
+      return toast({
+        title: "Canal de comunição II inválido",
+        description:
+          "O link do canal de comunicação deve ter entre 1 e 400 caracteres.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+
+    if (trimmedContact3 != "" && trimmedContact3.length > 300) {
+      return toast({
+        title: "Canal de comunição II inválido",
+        description:
+          "O link do canal de comunicação deve ter entre 1 e 400 caracteres.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+
+    if (trimmedDescription.length < 1) {
       return toast({
         title: "Adicione uma descrição!",
         description:
@@ -100,6 +130,16 @@ const Create: NextPage = () => {
         duration: 9000,
         isClosable: true,
       });
+    } else if (trimmedDescription.length > 300) {
+      return toast({
+        title: "Descrição inválida",
+        description:
+          "A descrição da comunidade deve ter entre 1 e 300 caracteres.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
 
     if (trimmedContact != "" && !trimmedContact.match(/^https?:\/\//gi)) {
       trimmedContact = "http://" + trimmedContact;
@@ -115,12 +155,11 @@ const Create: NextPage = () => {
     const community: Community = {
       name: trimmedName,
       description: trimmedDescription,
-      contact,
-      contact2,
-      contact3,
-    }
-    api.createCommunity(community)
-      .then(handleResponse);
+      contact: trimmedContact,
+      contact2: trimmedContact2,
+      contact3: trimmedContact3,
+    };
+    api.createCommunity(community).then(handleResponse);
   };
 
   return (
@@ -137,77 +176,78 @@ const Create: NextPage = () => {
               <Input
                 placeholder="ex: Amigos do Cobol"
                 width="100%"
-                size="sm"
                 value={name}
                 onChange={handleNameChange}
               />
             </FormControl>
             <FormControl id="contato" isRequired>
               <FormLabel>Canal de comunicação I</FormLabel>
-              <InputGroup  size="sm">
-                <InputLeftAddon children='https://' />
+              <InputGroup>
+                <InputLeftAddon>
+                  <Text>{"https://"}</Text>
+                </InputLeftAddon>
                 <Input
-                                                                      placeholder="ex: aka.ms/COBOL"
-                                                                      width="100%"
-                                                                      size="sm"
-                                                                      value={contact}
-                                                                      onChange={handleContactChange}
-                                                                    />
+                  placeholder="ex: aka.ms/COBOL"
+                  width="100%"
+                  value={contact}
+                  onChange={handleContactChange}
+                />
               </InputGroup>
-
             </FormControl>
             <FormControl id="contato2">
               <FormLabel>Canal de comunicação II</FormLabel>
-              <InputGroup size="sm">
-                <InputLeftAddon children='https://' />
+              <InputGroup>
+                <InputLeftAddon>
+                  <Text>{"https://"}</Text>
+                </InputLeftAddon>
                 <Input
                   placeholder="Opcional"
                   width="100%"
-                  size="sm"
                   value={contact2}
                   onChange={handleContact2Change}
                 />
               </InputGroup>
-
             </FormControl>
             <FormControl id="contato3">
               <FormLabel>Canal de comunicação III</FormLabel>
-              <InputGroup size="sm">
-                <InputLeftAddon children='https://' />
+              <InputGroup>
+                <InputLeftAddon>
+                  <Text>{"https://"}</Text>
+                </InputLeftAddon>
                 <Input
-                                                                      placeholder="Opcional"
-                                                                      width="100%"
-                                                                      size="sm"
-                                                                      value={contact3}
-                                                                      onChange={handleContact3Change}
-                                                                    />
+                  placeholder="Opcional"
+                  width="100%"
+                  value={contact3}
+                  onChange={handleContact3Change}
+                />
               </InputGroup>
-
             </FormControl>
             <FormControl id="descricao" isRequired>
               <FormLabel>Descrição</FormLabel>
               <Textarea
                 placeholder="ex: Amigos desde 1876"
                 width="100%"
-                size="sm"
                 value={description}
                 onChange={handleDescriptionChange}
               />
             </FormControl>
             <Center flexDirection="row" width="100%">
               <Button
+                colorScheme="red"
+                mr="5%"
+                variant="outline"
+                onClick={() => router.push("/")}
+              >
+                Cancelar
+              </Button>{" "}
+              <Button
                 colorScheme="blue"
                 type="submit"
                 isLoading={isLoading}
                 loadingText="Criando Comunidade"
-                variant="outline"
                 onClick={handleSubmit}
-                mr="5%"
               >
                 Enviar
-              </Button>
-              <Button colorScheme="red" onClick={() => router.push('/')}>
-                Cancelar
               </Button>
             </Center>
           </VStack>
