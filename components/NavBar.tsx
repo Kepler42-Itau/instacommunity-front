@@ -6,6 +6,7 @@ import {
   Input,
   Text,
   InputGroup,
+  useColorModeValue,
   Avatar,
   InputRightElement,
   useColorMode,
@@ -22,6 +23,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
   const { colorMode, toggleColorMode } = useColorMode();
+  const bg = useColorModeValue('white', 'gray.800');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(event.target.value);
@@ -42,7 +44,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
 
   return (
     <Box>
-      <Flex p="1%" justifyContent="center">
+      <Flex p="1%" justifyContent="center" position="fixed" w="100%" bg={bg} zIndex={5}>
         <Flex flex="1" justifyContent="start" ml="auto">
           <Text
             bgGradient="linear(to-r, #FF7900, #9D4EDD)"
