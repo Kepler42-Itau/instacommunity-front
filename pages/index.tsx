@@ -25,7 +25,7 @@ const Home: NextPage = () => {
     <>
       <NavBar />
       <Center>
-        <Text mt="8px" >Comunidades que você está seguindo: </Text>
+        <Text mt="1%" >Comunidades que você está seguindo: </Text>
       </Center>
       <CommunityList list={communitiesList} />
     </>
