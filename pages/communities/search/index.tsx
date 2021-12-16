@@ -74,8 +74,6 @@ const Search: NextPage = () => {
   return (
     <Box>
       <NavBar
-        profile={false}
-        home={true}
         searchFunction={(searchTerm: string) => requestSearch(searchTerm)}
       />
       <CommunityList list={list} />

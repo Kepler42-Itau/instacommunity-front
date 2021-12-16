@@ -128,7 +128,7 @@ const Create: NextPage = () => {
       <Head>
         <title>Criar Comunidade</title>
       </Head>
-      <NavBar profile={false} home={true} />
+      <NavBar />
       <Flex>
         <Center mt="2%" width="100%">
           <VStack spacing="24px" width="40%">

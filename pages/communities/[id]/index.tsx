@@ -92,7 +92,7 @@ const Community: NextPage = (props: any) => {
       <Head>
         <title>{props.data.name}</title>
       </Head>
-      <NavBar profile={false} home={true} />
+      <NavBar />
       <Center mt="2%">
         <Avatar name={props.data.name} size="2xl" />
       </Center>

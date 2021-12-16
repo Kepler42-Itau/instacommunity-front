@@ -23,7 +23,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <NavBar profile={true} home={false} />
+      <NavBar />
       <Center>
         <Text mt="8px" >Comunidades que você está seguindo: </Text>
       </Center>
