@@ -1,6 +1,5 @@
 import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 
-
 const config: ThemeConfig = {
   initialColorMode: "light",
   useSystemColorMode: false,
@@ -15,9 +14,11 @@ const theme = extendTheme({
   components: {
     Button: {
       baseStyle: {
-        fontWeight: '500',
-        letterSpacing:"0.4px"
-      }}}
- });
+        fontWeight: "500",
+        letterSpacing: "0.4px",
+      },
+    },
+  },
+});
 
 export default theme;

@@ -9,7 +9,6 @@ import "@fontsource/rubik/600.css";
 import "@fontsource/rubik/500.css";
 import "@fontsource/rubik/400.css";
 
-
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>

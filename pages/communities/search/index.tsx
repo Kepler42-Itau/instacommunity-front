@@ -19,7 +19,7 @@ import { SearchIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 import NavBar from "../../../components/NavBar";
 import CommunityList from "../../../components/CommunityList";
-import api from "../../../services/api"
+import api from "../../../services/api";
 import Community from "../../../models/Community";
 
 const Search: NextPage = () => {
@@ -47,20 +47,19 @@ const Search: NextPage = () => {
     setIsValid(true);
     const search = new URLSearchParams({ name: trimmedName });
 
-    api.searchCommunity(trimmedName)
-      .then((data) => {
-        if (data.length == 0) {
-          toast({
-            title: "Nenhum resultado encontrado",
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-          });
-          setList([]);
-        } else {
-          setList(data);
-        }
-      });
+    api.searchCommunity(trimmedName).then((data) => {
+      if (data.length == 0) {
+        toast({
+          title: "Nenhum resultado encontrado",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+        setList([]);
+      } else {
+        setList(data);
+      }
+    });
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>

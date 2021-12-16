@@ -51,25 +51,21 @@ const Community: NextPage = (props: any) => {
   const handleFollowClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
-    const userId = router.query.userId?.toString()!
-    const communityId = id?.toString()!
-    api
-      .followCommunity(communityId, userId)
-      .then((res) => {
-        const ok = "id" in res
-        if (ok) setIsFollowing(true);
-        handleToast(ok);
-      });
+    const userId = router.query.userId?.toString()!;
+    const communityId = id?.toString()!;
+    api.followCommunity(communityId, userId).then((res) => {
+      const ok = "id" in res;
+      if (ok) setIsFollowing(true);
+      handleToast(ok);
+    });
   };
 
   const handleUnfollowClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    const userId = router.query.userId?.toString()!
-    const communityId = id?.toString()!
-    api
-      .unFollowCommunity(communityId, userId)
-      .then((res) => {
-      const ok = "id" in res
+    const userId = router.query.userId?.toString()!;
+    const communityId = id?.toString()!;
+    api.unFollowCommunity(communityId, userId).then((res) => {
+      const ok = "id" in res;
       if (ok) setIsFollowing(false);
       handleToast(false);
     });

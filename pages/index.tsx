@@ -5,7 +5,7 @@ import CommunityList from "../components/CommunityList";
 import NavBar from "../components/NavBar";
 import Community from "../models/Community";
 import api from "../services/api";
-import {Center, Text} from "@chakra-ui/react";
+import { Center, Text } from "@chakra-ui/react";
 
 const Home: NextPage = () => {
   const [communitiesList, setCommunitiesList] = React.useState<Community[]>([]);
@@ -15,17 +15,14 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (!router.isReady) return;
 
-    api
-      .getFollowedCommunities(userId)
-      .then(setCommunitiesList);
-
+    api.getFollowedCommunities(userId).then(setCommunitiesList);
   }, [router.isReady, userId]);
 
   return (
     <>
       <NavBar />
       <Center>
-        <Text mt="1%" >Comunidades que você está seguindo: </Text>
+        <Text mt="1%">Comunidades que você está seguindo: </Text>
       </Center>
       <CommunityList list={communitiesList} />
     </>
