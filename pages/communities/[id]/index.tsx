@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import { Box, Link } from "@chakra-ui/react";
-import { HStack, VStack, Center, Heading, Text, Flex } from "@chakra-ui/react";
+import { HStack, VStack, Center, Heading, Text, Grid, GridItem, Flex } from "@chakra-ui/react";
 import {
   List,
   ListItem,
@@ -35,6 +35,11 @@ const Community: NextPage = (props: any) => {
   const { id } = router.query;
   const userId = router.query.userId || 1;
   const name = "Ada";
+  const contacts = [
+    props.data.contact,
+    props.data.contact2,
+    props.data.contact3,
+  ];
 
   const handleToast = (ok: Boolean) => {
     if (!ok) {
@@ -88,109 +93,98 @@ const Community: NextPage = (props: any) => {
       <Head>
         <title>{props.data.name}</title>
       </Head>
-      <NavBar />
-      <Center mt="2%">
-        <Avatar name={props.data.name} size="2xl" />
-      </Center>
-      <Center h="100px">
-        <HStack spacing="24px">
-          <Text fontSize="4xl">{props.data.name}</Text>
-          {isFollowing && (
-            <Button
-              title="Deixar de seguir"
-              colorScheme="blue"
-              variant="outline"
-              onClick={handleUnfollowClick}
+      <Flex flexDirection="column" height="100vh">
+        <NavBar />
+        <Box
+          mt="5%"
+          p="10%"
+          pt="2%"
+          pb="0%"
+          justifyContent="end"
+          border="px"
+          borderColor="gray.100"
+        >
+          <Box>
+            <Flex
+              boxShadow="xl"
+              p="6%"
+              pt="2%"
+              pb="2%"
+              bg="white"
+              rounded="lg"
+              borderRadius="lg"
+              flexDirection="column"
             >
-              Seguindo
-            </Button>
-          )}
-          {!isFollowing && (
-            <Button
-              title="Seguir comunidade"
-              colorScheme="blue"
-              onClick={handleFollowClick}
-            >
-              Seguir
-            </Button>
-          )}
-        </HStack>
-      </Center>
-      <Center>
-        <Text fontSize="2xl">{props.data.description}</Text>
-      </Center>
-      <Center>
-        <VStack spacing="4%">
-          <HStack spacing="4%">
-            {props.data.contact && (
-              <Button
-                md="1%"
-                colorScheme="blue"
-                onClick={() => window.open(`${props.data.contact}`, "_blank")}
-              >
-                Contato 1
-              </Button>
-            )}
-            {props.data.contact2 && (
-              <Button
-                md="1%"
-                colorScheme="blue"
-                onClick={() => window.open(`${props.data.contact2}`, "_blank")}
-              >
-                Contato 2
-              </Button>
-            )}
-            {props.data.contact3 && (
-              <Button
-                md="1%"
-                colorScheme="blue"
-                onClick={() => window.open(`${props.data.contact3}`, "_blank")}
-              >
-                Contato 3
-              </Button>
-            )}
-          </HStack>
-          <ContactModal
-            id={id}
-            contacts={[
-              props.data.contact,
-              props.data.contact2,
-              props.data.contact3,
-            ]}
-          />
-          <Button md="1%" colorScheme="blue" onClick={handleFollowerClick}>
-            Mostrar membros
-          </Button>
-        </VStack>
-      </Center>
-      <Center>
-        {showFollowers && (
-          <List w="20%">
-            {followers.map((follower: any, index: any) => {
-              return (
-                <ListItem
-                  key={follower.id}
-                  onClick={() => router.push(`/user/${follower.id}`)}
-                  cursor="pointer"
-                  w="100%"
-                >
-                  <Flex
-                    border="1px"
-                    borderColor="gray.200"
-                    borderRadius="md"
-                    m="3%"
+              <Center width="100%">
+                <Avatar mr="auto" name={props.data.name} size="2xl" />
+                <Heading fontSize="6xl" ml="auto" mr="auto">
+                  {props.data.name}
+                </Heading>
+                <ContactModal id={id} ml="auto" contacts={contacts} />
+                {isFollowing ? (
+                  <Button
+                    title="Deixar de seguir"
+                    colorScheme="blue"
+                    variant="outline"
+                    ml="1%"
+                    size="lg"
+                    onClick={handleUnfollowClick}
                   >
-                    <Avatar name={follower.name} size="sm" m="4%" />
-                    <Box ml="0%" m="4%">
-                      <Text fontSize="md">{follower.name}</Text>
-                    </Box>
-                  </Flex>
-                </ListItem>
-              );
-            })}
-          </List>
-        )}
-      </Center>
+                    Seguindo
+                  </Button>
+                ) : (
+                  <Button
+                    title="Seguir comunidade"
+                    colorScheme="blue"
+                    size="lg"
+                    ml="1%"
+                    onClick={handleFollowClick}
+                  >
+                    Seguir
+                  </Button>
+                )}
+              </Center>
+              <Box
+                mt="3%"
+                p="10%"
+                pt="2%"
+                pb="2%"
+                justifyContent="end"
+                boxShadow="base"
+                bg="gray.50"
+                rounded="lg"
+                borderRadius="lg"
+              >
+                <Text textAlign="center" fontSize="2xl">
+                  {props.data.description}
+                </Text>
+              </Box>
+              <Flex>
+                <Box flex="2" mt="2%" mr="auto">
+                  {contacts.filter((contact) => {return contact != ""}).map((contact: string, index: number) => (
+                    <Button
+                      key={index}
+                      colorScheme="blue"
+                      size="lg"
+                      mr="2%"
+                      onClick={() => window.open(`${contact}`, "_blank")}
+                    >
+                      Contato {index + 1}
+                    </Button>
+                  ))}
+                </Box>
+                {/* <Grid templateColumns="repeat(4, 1fr)" columnGap="1%" rowGap="1%" bg="gray" flex="1" m="auto" ml="auto">
+                  {followers.map((follower: User, index: number) => (
+                    <Grid key={index}>
+                      <Avatar name={follower.name} size="md" />
+                    </Grid>
+                  ))}
+                </Grid> */}
+              </Flex>
+            </Flex>
+          </Box>
+        </Box>
+      </Flex>
     </Box>
   );
 };
