@@ -1,14 +1,17 @@
 import type { NextPage } from "next";
-import React, { useState } from "react";
+import React, { useState, useContext  } from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { useRouter, } from "next/router";
 import { Button, Input, Flex, Center, useToast } from "@chakra-ui/react";
 import api from "../../services/api"
+import { loginWithGoogle, logoutFromGoogle } from "../../services/firebase"
+import { UserContext } from "../../lib/UserContext"
 
 const Register: NextPage = () => {
   const [name, setName] = React.useState("");
   const router = useRouter();
   const toast = useToast();
+  const {user, userBackend} = useContext(UserContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
@@ -44,28 +47,17 @@ const Register: NextPage = () => {
   };
 
   return (
-    <div>
+    <>
       <Head>
         <title>Instacommunity</title>
       </Head>
-      <form onSubmit={handleSubmit}>
-        <Center h="100px" p="4%">
+        <Center>
           <Flex>
-            <Input
-              placeholder="Ex: Fausto Silva"
-              size="md"
-              borderRadius="md"
-              value={name}
-              onChange={handleChange}
-              mr="2%"
-            />
-            <Button colorScheme="blue" type="submit">
-              Cadastrar
-            </Button>
+            { !user && <Button onClick={() => loginWithGoogle()}>Login With Google</Button>}
+            { user && <Button onClick={() => logoutFromGoogle()}>Logout</Button>}
           </Flex>
         </Center>
-      </form>
-    </div>
+    </>
   );
 };
 

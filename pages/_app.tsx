@@ -8,15 +8,34 @@ import "@fontsource/rubik/700.css";
 import "@fontsource/rubik/600.css";
 import "@fontsource/rubik/500.css";
 import "@fontsource/rubik/400.css";
+import { UserContext } from "../lib/UserContext"
+import {useEffect, useState}  from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from "../services/firebase"
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [user] = useAuthState(auth);
+  const [userBackend, setUserBackend] = useState(null);
+
+  useEffect(() => {
+    if (user != null) {
+      console.log("Deslogado")
+      {/* Fetch user information on backend and set to userBackend and return */}
+    }
+    setUserBackend(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+
+  // @ts-ignore
   return (
     <ChakraProvider theme={theme}>
       <ColorModeScript
         initialColorMode={theme.config.initialColorMode}
-        nonce={theme.config.initialColorMode}
       />
-      <Component {...pageProps} />
+      <UserContext.Provider value={{ user, userBackend}}>
+         <Component {...pageProps} />
+      </UserContext.Provider>
     </ChakraProvider>
   );
 }
