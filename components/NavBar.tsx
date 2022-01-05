@@ -12,8 +12,9 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { SearchIcon, MoonIcon, SunIcon, AddIcon } from "@chakra-ui/icons";
+import {UserContext} from "../lib/UserContext";
 
 interface NavBarProps {
   searchFunction?: Function;
@@ -24,6 +25,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
   const router = useRouter();
   const { colorMode, toggleColorMode } = useColorMode();
   const bg = useColorModeValue('white', 'gray.800');
+  const { user, userBackend } = useContext(UserContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(event.target.value);
@@ -44,7 +46,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
 
   return (
     <Box>
-      <Flex p="1%" justifyContent="center" position="fixed" w="100%" bg={bg} zIndex={5}>
+      <Flex p="1%" justifyContent="center" w="100%" bg={bg}>
         <Flex flex="1" justifyContent="start" ml="auto">
           <Text
             bgGradient="linear(to-r, #FF7900, #9D4EDD)"

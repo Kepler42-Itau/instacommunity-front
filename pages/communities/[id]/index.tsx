@@ -96,7 +96,7 @@ const Community: NextPage = (props: any) => {
       <Flex flexDirection="column" height="100vh">
         <NavBar />
         <Box
-          mt="5%"
+          mt="3%"
           p="10%"
           pt="2%"
           pb="0%"

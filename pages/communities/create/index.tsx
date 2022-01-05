@@ -175,7 +175,7 @@ const Create: NextPage = () => {
       </Head>
       <NavBar />
       <Flex>
-        <Center mt="6%" width="100%">
+        <Center mt="3%" width="100%">
           <VStack spacing="24px" width="40%">
             <FormControl id="nome" isRequired>
               <FormLabel>Nome</FormLabel>

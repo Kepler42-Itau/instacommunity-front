@@ -75,7 +75,7 @@ const Search: NextPage = () => {
       <NavBar
         searchFunction={(searchTerm: string) => requestSearch(searchTerm)}
       />
-      <Box pt="5%">
+      <Box mt="3%">
           <CommunityList list={list} />
       </Box>
     </Box>

@@ -10,6 +10,7 @@ const theme = extendTheme({
   fonts: {
     heading: "Rubik",
     body: "Rubik",
+    google: "Roboto",
   },
   components: {
     Button: {
