@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import React, { useState, useContext, useEffect  } from "react";
 import Head from "next/head";
 import { useRouter, } from "next/router";
-import {Button, Icon, Flex, Center, useToast, Text, useColorModeValue} from "@chakra-ui/react";
+import {Button, Icon, Flex, Center, useToast, Text, useColorModeValue, useColorMode} from "@chakra-ui/react";
 import api from "../../services/api"
 import { loginWithGoogle, logoutFromGoogle } from "../../services/firebase"
 import { UserContext } from "../../lib/UserContext"
@@ -10,12 +10,15 @@ import NavBar from "../../components/NavBar";
 import { AiOutlineGoogle } from "react-icons/ai"
 import {FcGoogle} from "react-icons/fc"
 import { GoogleButton } from "../../components/GoogleButton";
+import {MoonIcon, SunIcon} from "@chakra-ui/icons";
 
 const Register: NextPage = () => {
   const [name, setName] = React.useState("");
   const router = useRouter();
   const toast = useToast();
   const {user, userBackend} = useContext(UserContext);
+  const { colorMode, toggleColorMode } = useColorMode();
+  const bg = useColorModeValue('white', 'gray.800');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
@@ -37,7 +40,14 @@ const Register: NextPage = () => {
       <Head>
         <title>InstaCommunity</title>
       </Head>
-      <Flex flexDirection="column" justifyContent="Center" pr="20%" pl="20%" pt="auto" height="100vh" width="100vw">
+      <Flex flex="1" justifyContent="end">
+        <Center mt="1%" mr="1%">
+          <Button onClick={() => toggleColorMode()} width="100%">
+            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          </Button>
+        </Center>
+      </Flex>
+      <Flex flexDirection="column" justifyContent="Center" pr="20%" pl="20%" pt="auto" height="100vh" width="100vw" >
         <Flex flex="3" justifyContent="start" ml="auto">
           <Center flexDirection="column">
             <Text

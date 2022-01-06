@@ -91,7 +91,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
           </form>
         </Center>
         <Flex flex="1" justifyContent="end" mr="auto">
-          <Center mr="5%">
+          <Center mr="1%">
             <Button onClick={() => toggleColorMode()} width="100%">
               {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
             </Button>

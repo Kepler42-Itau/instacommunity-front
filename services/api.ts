@@ -52,11 +52,11 @@ class API {
       }).then(res => res.json());
   }
 
-  async createNewUser(userName: string): Promise<User|ErrorResponse> {
+  async createNewUser(user: User): Promise<User|ErrorResponse> {
     const res = await fetch(makeUrl('/users'), {
       method: "POST",
       headers: [["Content-Type", "application/json"]],
-      body: JSON.stringify({ name: userName }),
+      body: JSON.stringify(user),
     })
     return res.json()
   }
