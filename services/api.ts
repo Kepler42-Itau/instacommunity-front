@@ -52,6 +52,23 @@ class API {
       }).then(res => res.json());
   }
 
+  async getUser(uid: string): Promise<User|ErrorResponse> {
+    const res = await fetch(makeUrl(`/users/${uid}`), {
+      method: "GET",
+      headers: [["Content-Type", "application/json"]],
+    })
+    return res.json()
+  }
+
+  async updateUser(user: User): Promise<User|ErrorResponse> {
+    const res = await fetch(makeUrl('/users'), {
+      method: "PUT",
+      headers: [["Content-Type", "application/json"]],
+      body: JSON.stringify(user),
+    })
+    return res.json()
+  }
+
   async createNewUser(user: User): Promise<User|ErrorResponse> {
     const res = await fetch(makeUrl('/users'), {
       method: "POST",

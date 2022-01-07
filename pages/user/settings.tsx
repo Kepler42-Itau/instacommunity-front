@@ -1,13 +1,30 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { UserContext } from "../../lib/UserContext"
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import NavBar from "../../components/NavBar";
-import {Input, Box, Flex, VStack, Center, FormLabel, FormControl, Avatar, Text, Badge, Switch, ButtonGroup, Button} from "@chakra-ui/react";
+import {
+  Input,
+  Box,
+  Flex,
+  VStack,
+  Center,
+  FormLabel,
+  FormControl,
+  Avatar,
+  Text,
+  Badge,
+  Switch,
+  ButtonGroup,
+  Button,
+  useToast
+} from "@chakra-ui/react";
 import User from "../../models/User"
 import api from "../../services/api";
-import login from "../login";
-import {loginWithGoogle} from "../../services/firebase";
+import {logoutFromGoogle} from "../../services/firebase";
+import {useRouter} from "next/router";
+import Community from "../../models/Community";
+import ErrorResponse from "../../models/ErrorResponse";
 
 const Settings: NextPage  = () => {
   const {user, userBackend} = useContext(UserContext)
@@ -16,39 +33,84 @@ const Settings: NextPage  = () => {
 };
 
 function SettingsForm({ user, userBackend }: any) {
-  const [nickName, setName] = useState(userBackend?.nickName || "");
-  const [firstName, setFirstName] = useState(userBackend?.firstName || "");
-  const [lastName, setLastName] = useState(userBackend?.lastName || "");
-  const [jobPost, setJobPost] = useState(userBackend?.jobPost || "");
-  const [usePhoto, setUsePhoto] = useState(userBackend?.usePhoto || false);
+  const [name, setName] = useState(userBackend?.name || "");
+  const [username, setUsername] = useState(userBackend?.username || "");
+  const [occupation, setOccupation] = useState(userBackend?.occupation || "");
+  const [usePhoto, setUsePhoto] = useState(userBackend?.usePhoto || true);
+  const [loading, setLoading] = useState(false);
 
-  const handleJobPostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setJobPost(e.target.value)
+  useEffect(() => {
+    if (user !== null) {
+      api.getUser(user.uid).then((r) => {
+        if ("error" in r) {
+          return ;
+        }
+        else {
+          setName(r.name);
+          setUsername(r.username);
+          setOccupation(r.occupation);
+          setUsePhoto(r.usePhoto);
+        }
+      })
+    }
+  }, [user])
+
+  const router = useRouter();
+  const toast = useToast();
+
+  const handleOccupationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOccupation(e.target.value)
   }
-  const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(e.target.value)
+  const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value)
   }
-  const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.target.value)
-  }
-  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
   }
   const handlePhotoChange = (e: any) => {
     setUsePhoto(!usePhoto);
   }
+  const handleCancel = () => {
+    if (!userBackend) {
+      logoutFromGoogle();
+      router.push('/login');
+      return ;
+    }
+    router.push(`/user/${userBackend.id}`)
+  }
+
+  const handleResponse = (res: User| ErrorResponse) => {
+    if ("error" in res) {
+      toast({
+        title: "Esse username já existe!",
+        description: "Seu usuário não pôde ser criado.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      setLoading(false);
+    } else {
+      userBackend = res;
+      router.push(`/user/${userBackend.id}`);
+    }
+  };
+
   const handleSubmit = () => {
     const definedUser: User = {
       id: 0,
       googleId: user.uid,
-      firstName: firstName,
-      lastName: lastName,
-      nickName: nickName,
-      jobPost: jobPost,
+      name,
+      username,
+      occupation,
       usePhoto: usePhoto,
       email : user.email,
     }
-    api.createNewUser(definedUser);
+    setLoading(true);
+    if (userBackend) {
+      api.updateUser(definedUser).then(handleResponse);
+    } else {
+      api.createNewUser(definedUser).then(handleResponse);
+    }
   }
 
   return (<>
@@ -57,60 +119,46 @@ function SettingsForm({ user, userBackend }: any) {
     </Head>
     <NavBar/>
     <Flex>
-      <Center mt="3%" width="100%">
-        <VStack spacing="13px" width="40%">
-          <Flex borderRadius="md" pt={2} pb={2} p={6} boxShadow="base">
+      <Center mt="3%" width="100%" flexDirection="column">
+          <Flex borderRadius="md" pt={1} pb={1} p={5} boxShadow="base">
             <Flex mb="3%" >
-              { !usePhoto && <Avatar size='lg' src={user?.photoURL } />}
-              { usePhoto && <Avatar size='lg' name={`${firstName} ${lastName}`} />}
+              { usePhoto && <Avatar size='lg' src={user?.photoURL } />}
+              { !usePhoto && <Avatar size='lg' name={name} />}
               <Box ml='3'>
-                <Text fontWeight='bold'>
-                  {nickName}
-                  <Badge ml='1' colorScheme='green'>
-                    PREVIEW
-                  </Badge>
+                <Text fontWeight='bold' mt="3%">
+                  {name}
                 </Text>
-                <Text fontSize='sm'>{jobPost}</Text>
+                <Text fontSize='sm'>{username}</Text>
               </Box>
             </Flex>
           </Flex>
-
+        <VStack spacing="13px" width="40%" mt="2%">
           {/*<form onSubmit={handleSubmit} width="100%">*/}
-
           <FormControl id="First name" isRequired>
             <FormLabel>Nome</FormLabel>
             <Input
-              placeholder="Nome"
-              value={firstName}
+              placeholder="Nome completo"
+              value={name}
               width="100%"
-              onChange={handleFirstNameChange}
-            />
-          </FormControl>
-          <FormControl id="Last name" isRequired>
-            <FormLabel>Sobrenome</FormLabel>
-            <Input
-              placeholder="Sobrenome"
-              value={lastName}
-              width="100%"
-              onChange={handleLastNameChange}
+              onChange={handleNameChange}
             />
           </FormControl>
           <FormControl id="nickname" isRequired>
-            <FormLabel>Apelido</FormLabel>
+            <FormLabel>Login</FormLabel>
             <Input
-              placeholder="Apelido"
-              value={nickName}
+              placeholder="Login"
+              value={username}
               width="100%"
-              onChange={handleNicknameChange}
+              onChange={handleLoginChange}
             />
           </FormControl>
-          <FormControl id="jobpost" isRequired>
-            <FormLabel>Cargo</FormLabel>
+          <FormControl id="occupation">
+            <FormLabel>Ocupação</FormLabel>
             <Input
-              placeholder="Cargo"
-              value={jobPost}
+              placeholder="Ocupação"
+              value={occupation}
               width="100%"
-              onChange={handleJobPostChange}
+              onChange={handleOccupationChange}
             />
           </FormControl>
           <FormControl>
@@ -120,8 +168,8 @@ function SettingsForm({ user, userBackend }: any) {
             <Switch id="photo" defaultChecked={true} onChange={handlePhotoChange} />
           </FormControl>
           <ButtonGroup spacing='10'>
-            <Button colorScheme='red' variant='outline' >Cancelar</Button>
-            <Button colorScheme='blue' variant='solid' onClick={handleSubmit}>Salvar</Button>
+            <Button colorScheme='red' variant='outline' onClick={handleCancel}>Cancelar</Button>
+            <Button colorScheme='blue' variant='solid' onClick={handleSubmit} isLoading={loading}>Salvar</Button>
           </ButtonGroup>
           {/*</form>*/}
         </VStack>

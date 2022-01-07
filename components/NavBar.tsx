@@ -26,6 +26,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
   const { colorMode, toggleColorMode } = useColorMode();
   const bg = useColorModeValue('white', 'gray.800');
   const { user, userBackend } = useContext(UserContext);
+  console.log({user, userBackend});
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(event.target.value);
@@ -106,13 +107,23 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
               Criar Comunidade
             </Button>
           </Center>
-          <Avatar
-            name="Ada"
-            size="md"
-            cursor="pointer"
-            userSelect="none"
-            onClick={() => router.push("/user/1")}
-          />
+          {userBackend && user && userBackend.usePhoto &&
+            <Avatar
+              name={userBackend?.name}
+              size="md"
+              cursor="pointer"
+              src={user.photoURL}
+              userSelect="none"
+              onClick={() => router.push(`/user/${userBackend.id}`)}
+            />}
+          {userBackend && user && !userBackend.usePhoto &&
+            <Avatar
+              name={userBackend?.name}
+              size="md"
+              cursor="pointer"
+              userSelect="none"
+              onClick={() => router.push(`/user/${userBackend.id}`)}
+            />}
         </Flex>
       </Flex>
     </Box>

@@ -1,9 +1,8 @@
 export default interface User {
   id: number;
-  firstName: string;
-  lastName: string;
-  nickName: string;
-  jobPost: string;
+  name: string;
+  username: string;
+  occupation: string;
   usePhoto: boolean;
   email: string;
   googleId: string;

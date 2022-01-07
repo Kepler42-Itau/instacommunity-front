@@ -40,15 +40,15 @@ const Register: NextPage = () => {
       <Head>
         <title>InstaCommunity</title>
       </Head>
-      <Flex flex="1" justifyContent="end">
-        <Center mt="1%" mr="1%">
-          <Button onClick={() => toggleColorMode()} width="100%">
-            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-          </Button>
-        </Center>
-      </Flex>
-      <Flex flexDirection="column" justifyContent="Center" pr="20%" pl="20%" pt="auto" height="100vh" width="100vw" >
-        <Flex flex="3" justifyContent="start" ml="auto">
+      <Flex flexDirection="column" justifyContent="Center" pt="auto" height="100vh" width="100vw" >
+        <Flex pt="2%" pr="2%" justifyContent="end">
+          <Center>
+            <Button onClick={() => toggleColorMode()} width="100%">
+              {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+            </Button>
+          </Center>
+        </Flex>
+        <Flex flex="3" justifyContent="start" pr="20%" pl="20%" ml="auto">
           <Center flexDirection="column">
             <Text
               bgGradient="linear(to-r, #FF7900, #9D4EDD)"
@@ -91,7 +91,6 @@ const Register: NextPage = () => {
               >
                 <Text color={textValue}>Sign in with Google</Text>
               </GoogleButton>}
-
           </Center>
         </Flex>
         {/* DO NOT DELETE THIS */}
