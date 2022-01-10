@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { useState, useContext } from "react";
 import { SearchIcon, MoonIcon, SunIcon, AddIcon } from "@chakra-ui/icons";
 import {UserContext} from "../lib/UserContext";
+import{ logoutFromGoogle } from "../services/firebase";
 
 interface NavBarProps {
   searchFunction?: Function;
@@ -107,6 +108,16 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
               Criar Comunidade
             </Button>
           </Center>
+          {user && <Center mr="5%">
+            <Button
+              colorScheme="orange"
+              onClick={() => logoutFromGoogle()}
+              pd="5%"
+              width="100%"
+            >
+            Logout
+            </Button>
+          </Center>}
           {userBackend && user && userBackend.usePhoto &&
             <Avatar
               name={userBackend?.name}
@@ -122,7 +133,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
               size="md"
               cursor="pointer"
               userSelect="none"
-              onClick={() => router.push(`/user/${userBackend.id}`)}
+              onClick={() => router.push(`/user/${userBackend.username}`)}
             />}
         </Flex>
       </Flex>

@@ -25,15 +25,9 @@ const Register: NextPage = () => {
 
   const textValue = useColorModeValue("gray.800", "white")
 
-  useEffect(() => {
-    if (user !== null) {
-      if (userBackend !== null) {
-        //router.push('/user/settings');
-      } else {
-        //router.push('/');
-      }
-    }
-  }, [user])
+  const handleLogin = () => {
+    loginWithGoogle().then((r) => router.push('/'));
+  }
 
   return (
     <>
@@ -87,7 +81,7 @@ const Register: NextPage = () => {
                 size="lg"
                 colorScheme="whiteAlpha"
                 leftIcon={<Icon as={FcGoogle} w={8} h={8}/>}
-                onClick={() => loginWithGoogle()}
+                onClick={() => handleLogin()}
               >
                 <Text color={textValue}>Sign in with Google</Text>
               </GoogleButton>}

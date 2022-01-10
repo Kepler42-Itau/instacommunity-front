@@ -38,6 +38,7 @@ function SettingsForm({ user, userBackend }: any) {
   const [occupation, setOccupation] = useState(userBackend?.occupation || "");
   const [usePhoto, setUsePhoto] = useState(userBackend?.usePhoto || true);
   const [loading, setLoading] = useState(false);
+  const [disableUsername, setDisableUsername] = useState(false);
 
   useEffect(() => {
     if (user !== null) {
@@ -50,10 +51,14 @@ function SettingsForm({ user, userBackend }: any) {
           setUsername(r.username);
           setOccupation(r.occupation);
           setUsePhoto(r.usePhoto);
+          setDisableUsername(true);
         }
       })
     }
-  }, [user])
+    if (userBackend !== null) {
+      setUsePhoto(userBackend.usePhoto);
+    }
+  }, [user, userBackend])
 
   const router = useRouter();
   const toast = useToast();
@@ -76,7 +81,7 @@ function SettingsForm({ user, userBackend }: any) {
       router.push('/login');
       return ;
     }
-    router.push(`/user/${userBackend.id}`)
+    router.push(`/user/${userBackend.username}`)
   }
 
   const handleResponse = (res: User| ErrorResponse) => {
@@ -91,14 +96,13 @@ function SettingsForm({ user, userBackend }: any) {
       setLoading(false);
     } else {
       userBackend = res;
-      router.push(`/user/${userBackend.id}`);
+      router.push(`/user/${userBackend.username}`);
     }
   };
 
   const handleSubmit = () => {
     const definedUser: User = {
-      id: 0,
-      googleId: user.uid,
+      id: user.uid,
       name,
       username,
       occupation,
@@ -108,8 +112,10 @@ function SettingsForm({ user, userBackend }: any) {
     setLoading(true);
     if (userBackend) {
       api.updateUser(definedUser).then(handleResponse);
+      router.push(`/user/${userBackend.username}`);
     } else {
       api.createNewUser(definedUser).then(handleResponse);
+      router.push(`/user/${userBackend.username}`);
     }
   }
 
@@ -143,7 +149,7 @@ function SettingsForm({ user, userBackend }: any) {
               onChange={handleNameChange}
             />
           </FormControl>
-          <FormControl id="nickname" isRequired>
+          <FormControl id="nickname" isRequired isDisabled={disableUsername}>
             <FormLabel>Login</FormLabel>
             <Input
               placeholder="Login"
@@ -165,7 +171,7 @@ function SettingsForm({ user, userBackend }: any) {
             <FormLabel>
               Usar a foto do Google?
             </FormLabel>
-            <Switch id="photo" defaultChecked={true} onChange={handlePhotoChange} />
+            <Switch id="photo" isChecked={usePhoto} defaultChecked={usePhoto} onChange={handlePhotoChange} />
           </FormControl>
           <ButtonGroup spacing='10'>
             <Button colorScheme='red' variant='outline' onClick={handleCancel}>Cancelar</Button>
