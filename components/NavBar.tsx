@@ -93,12 +93,12 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
           </form>
         </Center>
         <Flex flex="1" justifyContent="end" mr="auto">
-          <Center mr="1%">
+          <Center mr="2%">
             <Button onClick={() => toggleColorMode()} width="100%">
               {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
             </Button>
           </Center>
-          <Center mr="5%">
+          {user && <Center mr="2%">
             <Button
               colorScheme="orange"
               onClick={() => router.push("/communities/create")}
@@ -107,7 +107,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
             >
               Criar Comunidade
             </Button>
-          </Center>
+          </Center>}
           {user && <Center mr="5%">
             <Button
               colorScheme="orange"
@@ -118,6 +118,18 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
             Logout
             </Button>
           </Center>}
+          { !user &&
+            <Center mr="5%">
+              <Button
+                colorScheme="orange"
+                onClick={() => router.push('/login')}
+                pd="5%"
+                width="100%"
+              >
+                Login
+              </Button>
+            </Center>
+          }
           {userBackend && user && userBackend.usePhoto &&
             <Avatar
               name={userBackend?.name}

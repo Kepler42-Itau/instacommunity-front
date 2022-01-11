@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import {UserContext} from "../../lib/UserContext"
 import {
   Button,
   Input,
@@ -17,10 +18,10 @@ import {
   useToast,
   InputGroup,
 } from "@chakra-ui/react";
-import NavBar from "../../../components/NavBar";
-import Community from "../../../models/Community";
-import ErrorResponse from "../../../models/ErrorResponse";
-import api from "../../../services/api";
+import NavBar from "../../components/NavBar";
+import Community from "../../models/Community";
+import ErrorResponse from "../../models/ErrorResponse";
+import api from "../../services/api";
 
 const Create: NextPage = () => {
   const [name, setName] = useState("");
@@ -28,14 +29,11 @@ const Create: NextPage = () => {
   const [contact2, setContact2] = useState("");
   const [contact3, setContact3] = useState("");
   const [description, setDescription] = useState("");
-  const [creator, setCreator] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const router = useRouter();
-
-  useEffect(() => {
-    setCreator(Number(localStorage.getItem('userId')));
-  }, [])
+  const {user, userBackend} = useContext(UserContext);
+  const [disabled, setDisabled] = useState(false);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
@@ -67,6 +65,12 @@ const Create: NextPage = () => {
       router.push(`/communities/${res.id}`);
     }
   };
+
+  useEffect(() => {
+    if (userBackend == null) {
+      setDisabled(true);
+    }
+  }, [userBackend])
 
   const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
@@ -163,7 +167,7 @@ const Create: NextPage = () => {
       contact: trimmedContact,
       contact2: trimmedContact2,
       contact3: trimmedContact3,
-      creator: creator
+      creator: userBackend.id
     };
     api.createCommunity(community).then(handleResponse);
   };
@@ -250,6 +254,7 @@ const Create: NextPage = () => {
                 colorScheme="blue"
                 type="submit"
                 isLoading={isLoading}
+                isDisabled={disabled}
                 loadingText="Criando Comunidade"
                 onClick={handleSubmit}
               >

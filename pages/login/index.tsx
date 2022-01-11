@@ -1,33 +1,38 @@
 import type { NextPage } from "next";
-import React, { useState, useContext, useEffect  } from "react";
+import React, { useContext, useEffect  } from "react";
 import Head from "next/head";
 import { useRouter, } from "next/router";
-import {Button, Icon, Flex, Center, useToast, Text, useColorModeValue, useColorMode} from "@chakra-ui/react";
+import {Button, Icon, Flex, Center, Text, useColorModeValue, useColorMode} from "@chakra-ui/react";
 import api from "../../services/api"
-import { loginWithGoogle, logoutFromGoogle } from "../../services/firebase"
+import { loginWithGoogle } from "../../services/firebase"
 import { UserContext } from "../../lib/UserContext"
-import NavBar from "../../components/NavBar";
-import { AiOutlineGoogle } from "react-icons/ai"
-import {FcGoogle} from "react-icons/fc"
+import { FcGoogle } from "react-icons/fc"
 import { GoogleButton } from "../../components/GoogleButton";
 import {MoonIcon, SunIcon} from "@chakra-ui/icons";
 
 const Register: NextPage = () => {
-  const [name, setName] = React.useState("");
   const router = useRouter();
-  const toast = useToast();
   const {user, userBackend} = useContext(UserContext);
   const { colorMode, toggleColorMode } = useColorMode();
-  const bg = useColorModeValue('white', 'gray.800');
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setName(event.target.value);
+  const textValue = useColorModeValue("gray.800", "white");
+  const bgValue = useColorModeValue("white", "#4285F4");
 
-  const textValue = useColorModeValue("gray.800", "white")
-
-  const handleLogin = () => {
-    loginWithGoogle().then((r) => router.push('/'));
+  const handleLogin = async () => {
+    await loginWithGoogle();
   }
+
+  useEffect(() => {
+    if (user != null) {
+      api.getUser(user.uid).then((r) => {
+        if ("error" in r) {
+          router.push('/user/settings');
+        } else {
+          router.push('/');
+        }
+      })
+    }
+  }, [user])
 
   return (
     <>
@@ -79,7 +84,7 @@ const Register: NextPage = () => {
                   boxShadow: "lg",
                 }}
                 size="lg"
-                colorScheme="whiteAlpha"
+                bg={bgValue}
                 leftIcon={<Icon as={FcGoogle} w={8} h={8}/>}
                 onClick={() => handleLogin()}
               >

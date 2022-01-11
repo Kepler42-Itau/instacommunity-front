@@ -1,40 +1,25 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-
-import React, { useState, useEffect } from "react";
-
-import { Button, ButtonGroup } from "@chakra-ui/react";
-import { Box, Link } from "@chakra-ui/react";
-import { HStack, VStack, Center, Heading, Text, Grid, GridItem, Flex } from "@chakra-ui/react";
-import {
-  List,
-  ListItem,
-  ListIcon,
-  OrderedList,
-  UnorderedList,
-} from "@chakra-ui/react";
-import { Avatar, AvatarBadge, AvatarGroup } from "@chakra-ui/react";
-import { LinkIcon, TriangleUpIcon } from "@chakra-ui/icons";
+import React, {useState, useEffect, useContext} from "react";
+import { Box, Button, Center, Heading, Text, Flex, Avatar, AvatarGroup } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
-
-import NavBar from "../../../components/NavBar";
-import ContactModal from "../../../components/ContactModal";
-
-import User from "../../../models/User";
-import UserCommunity from "../../../models/UserCommunity";
-import api from "../../../services/api";
+import NavBar from "../../components/NavBar";
+import FollowersModal from "../../components/FollowersModal"
+import ContactModal from "../../components/ContactModal";
+import User from "../../models/User";
+import api from "../../services/api";
 
 const Community: NextPage = (props: any) => {
   const toast = useToast();
   const followers = props.list;
   const [showFollowers, setShowFollowers] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
+  const { user, userBackend } = useContext(UserContext);
 
   const router = useRouter();
   const { id } = router.query;
-  const userId = router.query.userId || 1;
-  const name = "Ada";
+
   const contacts = [
     props.data.contact,
     props.data.contact2,
@@ -82,11 +67,10 @@ const Community: NextPage = (props: any) => {
   };
 
   useEffect(() => {
-    console.log("User id is ", userId);
-    if (followers.some((follower: User) => follower.id === userId)) {
+    if (followers.some((follower: User) => follower.id === userBackend.id)) {
       setIsFollowing(true);
     }
-  }, []);
+  }, [])
 
   return (
     <Box>
@@ -110,7 +94,6 @@ const Community: NextPage = (props: any) => {
               p="6%"
               pt="2%"
               pb="2%"
-              bg="white"
               rounded="lg"
               borderRadius="lg"
               flexDirection="column"
@@ -120,7 +103,9 @@ const Community: NextPage = (props: any) => {
                 <Heading fontSize="6xl" ml="auto" mr="auto">
                   {props.data.name}
                 </Heading>
-                <ContactModal id={id} ml="auto" contacts={contacts} />
+                {
+                  (userBackend.id === props.data.creator) && <ContactModal id={id} ml="auto" contacts={contacts} />
+                }
                 {isFollowing ? (
                   <Button
                     title="Deixar de seguir"
@@ -151,7 +136,6 @@ const Community: NextPage = (props: any) => {
                 pb="2%"
                 justifyContent="end"
                 boxShadow="base"
-                bg="gray.50"
                 rounded="lg"
                 borderRadius="lg"
               >
@@ -173,13 +157,14 @@ const Community: NextPage = (props: any) => {
                     </Button>
                   ))}
                 </Box>
-                {/* <Grid templateColumns="repeat(4, 1fr)" columnGap="1%" rowGap="1%" bg="gray" flex="1" m="auto" ml="auto">
-                  {followers.map((follower: User, index: number) => (
-                    <Grid key={index}>
-                      <Avatar name={follower.name} size="md" />
-                    </Grid>
-                  ))}
-                </Grid> */}
+                <Box>
+                  <AvatarGroup size='md' max={3}>
+                    {followers.map((follower: User, index: number) => (
+                      <Avatar name={follower.name} key={index} />
+                    ))}
+                  </AvatarGroup>
+                  <FollowersModal ml="auto" followers={followers} />
+                </Box>
               </Flex>
             </Flex>
           </Box>
@@ -190,6 +175,8 @@ const Community: NextPage = (props: any) => {
 };
 
 import { GetServerSideProps } from "next";
+import {UserContext} from "../../lib/UserContext";
+import {AiOutlineVerticalAlignTop} from "react-icons/all";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id;

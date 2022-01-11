@@ -1,26 +1,14 @@
 import type { NextPage } from "next";
 import React, { useEffect } from "react";
 import {
-  Avatar,
-  Button,
   Box,
-  Flex,
-  Spacer,
-  Center,
-  Input,
-  Image,
-  List,
-  ListItem,
-  VStack,
-  useToast,
-  Text,
+  useToast
 } from "@chakra-ui/react";
-import { SearchIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
-import NavBar from "../../../components/NavBar";
-import CommunityList from "../../../components/CommunityList";
-import api from "../../../services/api";
-import Community from "../../../models/Community";
+import NavBar from "../../components/NavBar";
+import CommunityList from "../../components/CommunityList";
+import api from "../../services/api";
+import Community from "../../models/Community";
 
 const Search: NextPage = () => {
   const router = useRouter();
