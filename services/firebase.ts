@@ -18,14 +18,17 @@ const provider = new GoogleAuthProvider();
 export async function loginWithGoogle() {
   signInWithPopup(auth, provider)
     .then((result) => {
+      console.log("printando")
       const user = result.user;
+      console.log({ result });
       console.log({ user });
-    }).catch((error) => {
-    const errorCode = error.code;
-    const email = error.email;
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    console.log({errorCode, email, credential});
-  });
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const email = error.email;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      console.log({errorCode, email, credential});
+    });
 }
 
 export async function logoutFromGoogle() {

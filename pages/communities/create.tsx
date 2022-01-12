@@ -167,7 +167,7 @@ const Create: NextPage = () => {
       contact: trimmedContact,
       contact2: trimmedContact2,
       contact3: trimmedContact3,
-      creator: userBackend.id
+      creator: userBackend?.id
     };
     api.createCommunity(community).then(handleResponse);
   };

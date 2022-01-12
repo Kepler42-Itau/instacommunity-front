@@ -41,7 +41,7 @@ const Community: NextPage = (props: any) => {
   const handleFollowClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
-    const userId = router.query.userId?.toString()!;
+    const userId = userBackend?.id;
     const communityId = id?.toString()!;
     api.followCommunity(communityId, userId).then((res) => {
       const ok = "id" in res;
@@ -52,7 +52,7 @@ const Community: NextPage = (props: any) => {
 
   const handleUnfollowClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    const userId = router.query.userId?.toString()!;
+    const userId = userBackend?.id;
     const communityId = id?.toString()!;
     api.unFollowCommunity(communityId, userId).then((res) => {
       const ok = "id" in res;
@@ -67,10 +67,11 @@ const Community: NextPage = (props: any) => {
   };
 
   useEffect(() => {
-    if (followers.some((follower: User) => follower.id === userBackend.id)) {
-      setIsFollowing(true);
-    }
-  }, [])
+    if (userBackend != null)
+      if (followers.some((follower: User) => follower.id === userBackend.id)) {
+        setIsFollowing(true);
+      }
+  }, [userBackend])
 
   return (
     <Box>
@@ -104,7 +105,7 @@ const Community: NextPage = (props: any) => {
                   {props.data.name}
                 </Heading>
                 {
-                  (userBackend.id === props.data.creator) && <ContactModal id={id} ml="auto" contacts={contacts} />
+                  (userBackend?.id === props.data.creator) && <ContactModal id={id} ml="auto" contacts={contacts} />
                 }
                 {isFollowing ? (
                   <Button
