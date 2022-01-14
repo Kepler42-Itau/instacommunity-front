@@ -2,20 +2,21 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, {useState, useEffect, useContext} from "react";
-import { Box, Button, Center, Heading, Text, Flex, Avatar, AvatarGroup } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, Text, Flex, Avatar, AvatarGroup, useDisclosure, Tooltip  } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import NavBar from "../../components/NavBar";
 import FollowersModal from "../../components/FollowersModal"
-import ContactModal from "../../components/ContactModal";
+import SettingsModal from "../../components/SettingsModal";
 import User from "../../models/User";
 import api from "../../services/api";
 
 const Community: NextPage = (props: any) => {
   const toast = useToast();
-  const followers = props.list;
+  const [followers, setFollowers] = useState(props.list);
   const [showFollowers, setShowFollowers] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const { user, userBackend } = useContext(UserContext);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const router = useRouter();
   const { id } = router.query;
@@ -40,13 +41,10 @@ const Community: NextPage = (props: any) => {
 
   const handleFollowClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-
     const userId = userBackend?.id;
     const communityId = id?.toString()!;
     api.followCommunity(communityId, userId).then((res) => {
-      const ok = "id" in res;
-      if (ok) setIsFollowing(true);
-      handleToast(ok);
+      if (res) setIsFollowing(true);
     });
   };
 
@@ -55,17 +53,18 @@ const Community: NextPage = (props: any) => {
     const userId = userBackend?.id;
     const communityId = id?.toString()!;
     api.unFollowCommunity(communityId, userId).then((res) => {
-      const ok = "id" in res;
-      if (ok) setIsFollowing(false);
-      handleToast(false);
+      console.log({res});
+      if (res) setIsFollowing(false);
+      console.log(isFollowing);
+      handleToast(res);
     });
   };
 
-  const handleFollowerClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    setShowFollowers(!showFollowers);
-  };
+  useEffect(() => {
+    api.getCommunitiesFollowers(id as string).then((res) => setFollowers(res));
+  }, [isFollowing]);
 
+  // @ts-ignore
   useEffect(() => {
     if (userBackend != null)
       if (followers.some((follower: User) => follower.id === userBackend.id)) {
@@ -82,7 +81,7 @@ const Community: NextPage = (props: any) => {
         <NavBar />
         <Box
           mt="3%"
-          p="10%"
+          p="12%"
           pt="2%"
           pb="0%"
           justifyContent="end"
@@ -100,27 +99,30 @@ const Community: NextPage = (props: any) => {
               flexDirection="column"
             >
               <Center width="100%">
-                <Avatar mr="auto" name={props.data.name} size="2xl" />
+                <Avatar mr="6%" name={props.data.name} size="2xl" />
                 <Heading fontSize="6xl" ml="auto" mr="auto">
                   {props.data.name}
                 </Heading>
                 {
-                  (userBackend?.id === props.data.creator) && <ContactModal id={id} ml="auto" contacts={contacts} />
+                  (userBackend?.id === props.data.creator) && <SettingsModal id={id} ml="auto" contacts={contacts} community={props.data}/>
                 }
-                {isFollowing ? (
+                {isFollowing &&
+                  <Tooltip label="Deixar de seguir" aria-label="tooltip">
+                    <Button
+                      colorScheme="blue"
+                      variant="outline"
+                      ml="1%"
+                      size="lg"
+                      onClick={handleUnfollowClick}
+                    >
+                      Seguindo
+                    </Button>
+                  </Tooltip>
+
+                }
+                {!isFollowing &&
+                  <Tooltip label="Seguir comunidade" aria-label="tooltip">
                   <Button
-                    title="Deixar de seguir"
-                    colorScheme="blue"
-                    variant="outline"
-                    ml="1%"
-                    size="lg"
-                    onClick={handleUnfollowClick}
-                  >
-                    Seguindo
-                  </Button>
-                ) : (
-                  <Button
-                    title="Seguir comunidade"
                     colorScheme="blue"
                     size="lg"
                     ml="1%"
@@ -128,7 +130,8 @@ const Community: NextPage = (props: any) => {
                   >
                     Seguir
                   </Button>
-                )}
+                  </Tooltip>
+                }
               </Center>
               <Box
                 mt="3%"
@@ -144,7 +147,7 @@ const Community: NextPage = (props: any) => {
                   {props.data.description}
                 </Text>
               </Box>
-              <Flex>
+              <Flex mt="1%">
                 <Box flex="2" mt="2%" mr="auto">
                   {contacts.filter((contact) => {return contact != ""}).map((contact: string, index: number) => (
                     <Button
@@ -158,14 +161,17 @@ const Community: NextPage = (props: any) => {
                     </Button>
                   ))}
                 </Box>
-                <Box>
-                  <AvatarGroup size='md' max={3}>
+                <Flex flex="2" mt="2%" ml="auto" justifyContent="end" flexDirection="row">
+                  <Tooltip label="Seguidores" aria-label='tooltip'>
+                  <AvatarGroup size='md' justifyContent="end" max={5} cursor="pointer" onClick={onOpen}>
                     {followers.map((follower: User, index: number) => (
-                      <Avatar name={follower.name} key={index} />
+                      follower.usePhoto ? (<Avatar name={follower.name} src={follower.photoURL} key={index} /> ) : (<Avatar name={follower.name} key={index} />)
                     ))}
                   </AvatarGroup>
-                  <FollowersModal ml="auto" followers={followers} />
-                </Box>
+                  </Tooltip>
+                  <FollowersModal followers={followers} isOpen={isOpen} onClose={onClose} />
+
+                </Flex>
               </Flex>
             </Flex>
           </Box>
@@ -188,7 +194,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       data,
-      list,
+      list
     },
   };
 };

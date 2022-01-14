@@ -21,7 +21,7 @@ export default function CommunityList({ list }: ListProps) {
   return (
     <Center>
       {
-        <List w="40%">
+        <List w="60%">
           {list.map((community: any, index: any) => {
             return (
               <ListItem

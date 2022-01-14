@@ -4,5 +4,6 @@ export default interface User {
   username: string;
   occupation: string;
   usePhoto: boolean;
+  photoURL: string;
   email: string;
 }

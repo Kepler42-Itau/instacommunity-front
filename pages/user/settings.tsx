@@ -23,7 +23,6 @@ import User from "../../models/User"
 import api from "../../services/api";
 import {logoutFromGoogle} from "../../services/firebase";
 import {useRouter} from "next/router";
-import Community from "../../models/Community";
 import ErrorResponse from "../../models/ErrorResponse";
 
 const Settings: NextPage  = () => {
@@ -103,25 +102,24 @@ function SettingsForm({ user, userBackend }: any) {
   const handleSubmit = () => {
     const definedUser: User = {
       id: user.uid,
-      name,
-      username,
-      occupation,
+      name: name.trim(),
+      username: username.trim(),
+      occupation: occupation.trim(),
       usePhoto: usePhoto,
       email : user.email,
+      photoURL: user.photoURL
     }
     setLoading(true);
     if (userBackend) {
       api.updateUser(definedUser).then(handleResponse);
-      router.push(`/user/${userBackend.username}`);
     } else {
       api.createNewUser(definedUser).then(handleResponse);
-      router.push(`/user/${userBackend.username}`);
     }
   }
 
   return (<>
     <Head>
-      <title>Criar Usuário</title>
+      <title>Configurações do Usuário</title>
     </Head>
     <NavBar/>
     <Flex>
@@ -129,12 +127,12 @@ function SettingsForm({ user, userBackend }: any) {
           <Flex borderRadius="md" pt={1} pb={1} p={5} boxShadow="base">
             <Flex mb="3%" >
               { usePhoto && <Avatar size='lg' src={user?.photoURL } />}
-              { !usePhoto && <Avatar size='lg' name={name} />}
+              { !usePhoto && <Avatar size='lg' name={name.trim()} />}
               <Box ml='3'>
                 <Text fontWeight='bold' mt="3%">
-                  {name}
+                  {name.trim()}
                 </Text>
-                <Text fontSize='sm'>{username}</Text>
+                <Text fontSize='sm'>{username.trim()}</Text>
               </Box>
             </Flex>
           </Flex>

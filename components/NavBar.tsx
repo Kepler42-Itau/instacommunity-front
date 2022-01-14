@@ -12,7 +12,7 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { SearchIcon, MoonIcon, SunIcon, AddIcon } from "@chakra-ui/icons";
 import {UserContext} from "../lib/UserContext";
 import{ logoutFromGoogle } from "../services/firebase";
@@ -27,6 +27,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
   const { colorMode, toggleColorMode } = useColorMode();
   const bg = useColorModeValue('white', 'gray.800');
   const { user, userBackend } = useContext(UserContext);
+  const [usePhoto, setUsePhoto] = useState(userBackend?.usePhoto)
   console.log({user, userBackend});
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -45,6 +46,11 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
       });
     }
   };
+
+  useEffect(() => {
+    if (userBackend != null)
+      setUsePhoto(userBackend.usePhoto)
+  }, [userBackend]);
 
   return (
     <Box>
@@ -111,7 +117,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
           {user && <Center mr="5%">
             <Button
               colorScheme="orange"
-              onClick={() => logoutFromGoogle()}
+              onClick={() => logoutFromGoogle().then(() => router.push('/login'))}
               pd="5%"
               width="100%"
             >
@@ -130,16 +136,16 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
               </Button>
             </Center>
           }
-          {userBackend && user && userBackend.usePhoto &&
+          {userBackend && user && usePhoto &&
             <Avatar
               name={userBackend?.name}
               size="md"
               cursor="pointer"
               src={user.photoURL}
               userSelect="none"
-              onClick={() => router.push(`/user/${userBackend.id}`)}
+              onClick={() => router.push(`/user/${userBackend.username}`)}
             />}
-          {userBackend && user && !userBackend.usePhoto &&
+          {userBackend && user && !usePhoto &&
             <Avatar
               name={userBackend?.name}
               size="md"

@@ -52,28 +52,27 @@ class API {
     }
   }
 
-  async followCommunity(communityId: string, userId: string): Promise<UserCommunity|ErrorResponse> {
+  async followCommunity(communityId: string, userId: string): Promise<Boolean> {
     const idToken = await getToken();
-    return fetch(
+    const res = await fetch(
       makeUrl(`/communities/${communityId}/followers`), {
         method: "POST",
         headers: generateHeaders(idToken),
         body: JSON.stringify({
-          id: userId || 1,
+          id: communityId
         })
-      }).then(res => res.json());
+      })
+    return res.ok
   }
 
-  async unFollowCommunity(communityId: string, userId: string): Promise<UserCommunity|ErrorResponse> {
+  async unFollowCommunity(communityId: string, userId: string): Promise<Boolean> {
     const idToken = await getToken();
-    return fetch(
-      makeUrl(`/communities/${communityId}/followers`), {
+    const res = await fetch(
+      makeUrl(`/communities/${communityId}/followers/${userId}`), {
         method: "DELETE",
         headers: generateHeaders(idToken),
-        body: JSON.stringify({
-          id: userId || 1,
-        })
-      }).then(res => res.json());
+      })
+    return res.ok
   }
 
   async getUser(uid: string): Promise<User|ErrorResponse> {
@@ -85,9 +84,25 @@ class API {
     return res.json()
   }
 
+  async getUserByName(username: string): Promise<User|ErrorResponse> {
+    const res = await fetch(makeUrl(`/users?username=${username}`), {
+      method: "GET",
+      headers: [["Content-Type", "application/json"]]
+    })
+    return res.json()
+  }
+
+  async getFollowedCommunitiesByName(uid: string): Promise<UserCommunity|ErrorResponse> {
+    const res = await fetch(makeUrl(`/users/${uid}/communities`), {
+      method: "GET",
+      headers: [["Content-Type", "application/json"]]
+    })
+    return res.json();
+  }
+
   async updateUser(user: User): Promise<User|ErrorResponse> {
     const idToken = await getToken();
-    const res = await fetch(makeUrl('/users'), {
+    const res = await fetch(makeUrl(`/users/${user.id}`), {
       method: "PUT",
       headers: generateHeaders(idToken),
       body: JSON.stringify(user),
@@ -136,6 +151,20 @@ class API {
     else {
       console.error({res});
       return new Promise(() => []);
+    }
+  }
+
+  async updateCommunity(community: any, id: number) {
+    const idToken = await getToken();
+    const res = await fetch(makeUrl(`/communities/${id}`), {
+      method: "PATCH",
+      headers: generateHeaders(idToken),
+      body: JSON.stringify(community)
+    })
+    if (res.ok) return res.json();
+    else {
+      console.error({res});
+      return new Promise(() => {})
     }
   }
 

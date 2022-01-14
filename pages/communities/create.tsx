@@ -77,8 +77,8 @@ const Create: NextPage = () => {
     let trimmedName = name.trim();
     let trimmedDescription = description.trim();
     let trimmedContact = contact.trim();
-    let trimmedContact2 = contact.trim();
-    let trimmedContact3 = contact.trim();
+    let trimmedContact2 = contact2.trim();
+    let trimmedContact3 = contact3.trim();
 
     if (trimmedName.length < 1 || trimmedName.length > 400)
       return toast({

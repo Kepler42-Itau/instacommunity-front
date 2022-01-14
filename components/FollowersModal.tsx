@@ -16,13 +16,16 @@ import {
   Avatar,
   Box,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 export default function ContactModal(props: any) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const noOfFollowers = props.followers.length;
+  const isOpen = props.isOpen;
+  const onClose = props.onClose;
+  const router = useRouter();
 
   return (
     <>
-      <Text size="lg" onClick={onOpen}> ver mais </Text>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -30,9 +33,11 @@ export default function ContactModal(props: any) {
           <ModalCloseButton />
           <ModalBody pb={6}>
             {props.followers.map((follower: User, index: number) => (
-              <Flex key={index} borderRadius="md" pt={1} pb={1} p={5} boxShadow="base">
+              <Flex key={index} borderRadius="md" pt={1} pb={1} p={5} cursor="pointer" onClick={() => router.push(`/user/${follower.username}`)} boxShadow="base">
                 <Flex mb="3%" >
-                  <Avatar size='lg' name={follower.name} />
+                  {
+                    follower.usePhoto ? (<Avatar size='lg' name={follower.name} src={follower.photoURL} />) : (<Avatar size='lg' name={follower.name} />)
+                  }
                   <Box ml='3'>
                     <Text fontWeight='bold' mt="3%">
                       {follower.name}
@@ -42,10 +47,8 @@ export default function ContactModal(props: any) {
                 </Flex>
               </Flex>
             )) }
-
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Fechar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
