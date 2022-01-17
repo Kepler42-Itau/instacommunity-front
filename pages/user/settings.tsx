@@ -26,12 +26,12 @@ import {useRouter} from "next/router";
 import ErrorResponse from "../../models/ErrorResponse";
 
 const Settings: NextPage  = () => {
-  const {user, userBackend} = useContext(UserContext)
+  const {user, userBackend, setUserBackend} = useContext(UserContext)
   // @ts-ignore
-  return <SettingsForm user={user} userBackend={userBackend} />
+  return <SettingsForm user={user} userBackend={userBackend} setUserBackend={setUserBackend} />
 };
 
-function SettingsForm({ user, userBackend }: any) {
+function SettingsForm({ user, userBackend, setUserBackend }: any) {
   const [name, setName] = useState(userBackend?.name || "");
   const [username, setUsername] = useState(userBackend?.username || "");
   const [occupation, setOccupation] = useState(userBackend?.occupation || "");
@@ -95,6 +95,7 @@ function SettingsForm({ user, userBackend }: any) {
       setLoading(false);
     } else {
       userBackend = res;
+      setUserBackend(res);
       router.push(`/user/${userBackend.username}`);
     }
   };

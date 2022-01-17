@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ColorModeScript
         initialColorMode={theme.config.initialColorMode}
       />
-      <UserContext.Provider value={{ user, userBackend}}>
+      <UserContext.Provider value={{ user, userBackend, setUserBackend}}>
          <Component {...pageProps} />
       </UserContext.Provider>
     </ChakraProvider>

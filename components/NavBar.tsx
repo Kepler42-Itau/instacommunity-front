@@ -52,6 +52,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
       setUsePhoto(userBackend.usePhoto)
   }, [userBackend]);
 
+  console.log({usePhoto});
   return (
     <Box>
       <Flex p="1%" justifyContent="center" w="100%" bg={bg}>
