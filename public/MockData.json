@@ -1,0 +1,38 @@
+{
+  "followedCommunities": [
+    {
+      "id": 1,
+      "name": "Golang",
+      "description": "Build fast, reliable, and efficient software at scale!",
+      "contact1": "https://go.dev/",
+      "contact2": "",
+      "contact3": "",
+      "creator": "user1",
+      "slug": "golang",
+      "photoURL": "https://static.javatpoint.com/go/images/go-tutorial.jpg",
+      "type": "open"
+    },
+    {
+      "id": 2,
+      "name": "Python",
+      "description": "Python is a programming language that lets you work quickly and integrate systems more effectively.",
+      "contact1": "",
+      "contact2": "",
+      "contact3": "",
+      "creator": "user2",
+      "slug": "python",
+      "photoURL": "https://www.pinclipart.com/picdir/big/269-2691398_python-logo-clipart-transparent-background-png-download.png",
+      "type": "open"
+    }
+  ],
+  "user": {
+    "id": "user1",
+    "name": "Winston Churchill",
+    "username": "w_churchill",
+    "occupation": "Prime Minister",
+    "description": "",
+    "email": "w_churchill@gmail.com",
+    "contact": "w_churchill4343",
+    "photoURL": ""
+  }
+}
