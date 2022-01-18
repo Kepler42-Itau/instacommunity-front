@@ -1,13 +1,13 @@
 interface Community {
-  id?: number;
+  id?: number | null;
   name: string;
   description: string;
   contact1: string;
-  contact2?: string;
-  contact3?: string;
+  contact2?: string | null;
+  contact3?: string | null;
   creator: string;
   slug: string;
-  photoURL?: string;
+  photoURL?: string | null;
   type: string;
 }
 
