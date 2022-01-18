@@ -1,33 +1,31 @@
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import UserContext from "../lib/UserContext";
 import CommunityList from "../components/CommunityList";
 import NavBar from "../components/NavBar";
 import Community from "../models/Community";
-import api from "../services/api";
-import { Center, Text } from "@chakra-ui/react";
+import { getFollowedCommunities } from "../lib/MockApi";
+import { Flex, Box } from "@chakra-ui/react";
 
-const Home: NextPage = () => {
-  const [communitiesList, setCommunitiesList] = React.useState<Community[]>([]);
-  const router = useRouter();
-  const userId = router.query.userId?.toString() || "1";
+const HomePage = () => {
+  const { userBackend } = useContext(UserContext);
+  const [communitiesList, setCommunitiesList] = useState<Community[]>([]);
 
   useEffect(() => {
-    if (!router.isReady) return;
-
-    localStorage.setItem('userId', userId);
-    api.getFollowedCommunities(userId).then(setCommunitiesList);
-  }, [router.isReady, userId]);
+    if (userBackend != null) {
+      getFollowedCommunities(userBackend.id).then((res) =>
+        setCommunitiesList(res)
+      );
+    }
+  }, [userBackend]);
 
   return (
-    <>
+    <Box maxW="100vw" mx="auto" px={{ base: 2, sm: 12, md: 17 }}>
       <NavBar />
-      <Center>
-        <Text mt="3%">Comunidades que você está seguindo: </Text>
-      </Center>
-      <CommunityList list={communitiesList} />
-    </>
+      <Flex flexDirection="column" pt="1%" pb="5%">
+        <CommunityList list={communitiesList} />
+      </Flex>
+    </Box>
   );
 };
 
-export default Home;
+export default HomePage;
