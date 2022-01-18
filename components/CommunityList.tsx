@@ -41,15 +41,30 @@ export default function CommunityList({ list }: ListProps) {
                   boxShadow="lg"
                   rounded="lg"
                   _hover={{
-                    boxShadow: "xl"
+                    boxShadow: "xl",
                   }}
                 >
                   <Center flexDirection="row" width="100%">
                     <Box>
-                      <Avatar name={community.name} size="lg" m="4%"/>
+                      <Avatar
+                        name={community.name}
+                        src={community.photoURL}
+                        size="lg"
+                        m="4%"
+                      />
                     </Box>
-                    <Flex flexDirection="column" ml="0%" m="3%" width="80%" maxwidth="70%" height="70%" maxHeight="70%">
-                      <Heading textAlign="left" fontSize="lg" pb="2%">{community.name}</Heading>
+                    <Flex
+                      flexDirection="column"
+                      ml="0%"
+                      m="3%"
+                      width="80%"
+                      maxwidth="70%"
+                      height="70%"
+                      maxHeight="70%"
+                    >
+                      <Heading textAlign="left" fontSize="lg" pb="2%">
+                        {community.name}
+                      </Heading>
                       <Text fontSize="xs">{community.description}</Text>
                     </Flex>
                   </Center>
@@ -62,6 +77,3 @@ export default function CommunityList({ list }: ListProps) {
     </Center>
   );
 }
-
-
-
