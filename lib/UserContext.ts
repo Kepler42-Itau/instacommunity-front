@@ -8,8 +8,10 @@ interface UserCtx {
   setUserBackend: Function;
 }
 
-export const UserContext = createContext({
+const UserContext = createContext({
   user: null,
   userBackend: null,
   setUserBackend: Function,
 } as UserCtx);
+
+export default UserContext;
