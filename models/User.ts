@@ -1,6 +1,7 @@
 interface User {
   id: string;
   name: string;
+  username: string;
   occupation?: string;
   description?: string | null;
   email: string;
