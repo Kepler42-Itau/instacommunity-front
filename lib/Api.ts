@@ -1,6 +1,6 @@
 import Community from "../models/Community";
 import User from "../models/User";
-import UserCommunity from "../models/UserCommunity";
+import FollowRelation from "../models/FollowRelation";
 import ErrorResponse from "../models/ErrorResponse";
 import { makeURL, getToken, generateHeaders } from "./Utils";
 
@@ -17,7 +17,7 @@ export const createCommunity = async (
 
 export const getFollowedCommunities = async (
   userId: string
-): Promise<UserCommunity | ErrorResponse> => {
+): Promise<FollowRelation | ErrorResponse> => {
   const res = await fetch(makeURL(`/users/${userId}/communities`), {
     method: "GET",
     headers: [["Content-Type", "application/json"]],
