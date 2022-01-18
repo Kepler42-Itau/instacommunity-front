@@ -17,12 +17,15 @@ export const createCommunity = async (
 
 export const getFollowedCommunities = async (
   userId: string
-): Promise<FollowRelation | ErrorResponse> => {
+): Promise<Community[]> => {
   const res = await fetch(makeURL(`/users/${userId}/communities`), {
     method: "GET",
     headers: [["Content-Type", "application/json"]],
   });
-  return res.json();
+  if (res.ok) return res.json();
+  else {
+    return new Promise(() => []);
+  }
 };
 
 export const followCommunity = async (
@@ -109,7 +112,6 @@ export const getCommunityFollowers = async (
   const res = await fetch(makeURL(`/communities/${communityId}/followers`));
   if (res.ok) return res.json();
   else {
-    console.error({ res });
     return new Promise(() => []);
   }
 };
@@ -124,7 +126,6 @@ export const searchCommunity = async (
   });
   if (res.ok) return res.json();
   else {
-    console.error({ res });
     return new Promise(() => []);
   }
 };
@@ -138,7 +139,6 @@ export const updateCommunity = async (community: Community, id: number) => {
   });
   if (res.ok) return res.json();
   else {
-    console.error({ res });
     return new Promise(() => {});
   }
 };
