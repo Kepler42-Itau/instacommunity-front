@@ -19,7 +19,7 @@ const HomePage = () => {
   }, [userBackend]);
 
   return (
-    <Box maxW="100vw" mx="auto" px={{ base: 2, sm: 12, md: 17 }}>
+    <Box maxW="100vw" width="100%" mx="auto" px={{ base: 2, sm: 12, md: 17 }}>
       <NavBar />
       <Flex flexDirection="column" pt="1%" pb="5%">
         <CommunityList list={communitiesList} />
