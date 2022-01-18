@@ -13,8 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState, useContext } from "react";
-import { SearchIcon, MoonIcon, SunIcon, AddIcon } from "@chakra-ui/icons";
-import {UserContext} from "../lib/UserContext";
+import { SearchIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import UserContext from "../lib/UserContext";
 
 interface NavBarProps {
   searchFunction?: Function;
@@ -24,7 +24,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
   const { colorMode, toggleColorMode } = useColorMode();
-  const bg = useColorModeValue('white', 'gray.800');
+  const bg = useColorModeValue("white", "gray.800");
   const { user, userBackend } = useContext(UserContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -107,7 +107,7 @@ export default function NavBar({ searchFunction = undefined }: NavBarProps) {
             </Button>
           </Center>
           <Avatar
-            name="Ada"
+            name={userBackend?.name}
             size="md"
             cursor="pointer"
             userSelect="none"
