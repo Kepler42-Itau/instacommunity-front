@@ -1,14 +1,14 @@
 import { ColorModeScript } from "@chakra-ui/react";
-import { UserContext } from "../lib/UserContext";
+import UserContext from "../lib/UserContext";
 import { useEffect, useState } from "react";
-import { NextRouter, useRouter } from "next/router";
+import { NextRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, checkAdmin, logoutFromGoogle } from "../lib/Firebase";
 import Head from "next/head";
 import theme from "../lib/Theme";
 import User from "../models/User";
 import { Box, Container, ScaleFade } from "@chakra-ui/react";
-import API from "../services/api";
+import { getUser } from "../lib/MockApi";
+import { auth } from "../lib/Firebase";
 
 interface MainProps {
   router: NextRouter;
@@ -16,12 +16,16 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = ({ children, router }) => {
   const [user] = useAuthState(auth);
-  const [userBackend, setUserBackend] = useState(null || User);
+  const [userBackend, setUserBackend] = useState<User | null>(null);
 
   useEffect(() => {
     if (user != null) {
-      API.getUser(user.uid).then((res) => {
-        setUserBackend(res);
+      getUser(user.uid).then((res) => {
+        if ("error" in res) {
+          setUserBackend(null);
+        } else {
+          setUserBackend(res);
+        }
       });
     } else {
       setUserBackend(null);
