@@ -1,10 +1,10 @@
+import Contact from "./Contact";
+
 interface Community {
   id?: number | null;
   name: string;
   description: string;
-  contact1: string;
-  contact2?: string | null;
-  contact3?: string | null;
+  contacts: Contact[];
   admin: string;
   slug: string;
   photoURL?: string | null;
