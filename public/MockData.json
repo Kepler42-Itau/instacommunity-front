@@ -7,7 +7,7 @@
       "contact1": "https://go.dev/",
       "contact2": "",
       "contact3": "",
-      "creator": "user1",
+      "admin": "user1",
       "slug": "golang",
       "photoURL": "https://static.javatpoint.com/go/images/go-tutorial.jpg",
       "type": "open"
@@ -19,7 +19,7 @@
       "contact1": "",
       "contact2": "",
       "contact3": "",
-      "creator": "user2",
+      "admin": "user2",
       "slug": "python",
       "photoURL": "https://www.pinclipart.com/picdir/big/269-2691398_python-logo-clipart-transparent-background-png-download.png",
       "type": "open"
