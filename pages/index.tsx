@@ -3,9 +3,10 @@ import UserContext from "../lib/UserContext";
 import CommunityGrid from "../components/CommunityGrid";
 import NavBar from "../components/NavBar";
 import Community from "../models/Community";
-import { getFollowedCommunities } from "../lib/MockApi";
+import { getFollowedCommunities, getCommunities } from "../lib/MockApi";
 import { Flex, Box, Text } from "@chakra-ui/react";
 import { NextRouter, useRouter } from "next/router";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 interface ContentProps {
   flex: number;
@@ -38,15 +39,19 @@ const SideContent = ({ flex, communityList, router }: ContentProps) => {
   );
 };
 
-const HomePage = () => {
+const HomePage = ({
+  communityList,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { userBackend } = useContext(UserContext);
-  const [communityList, setCommunityList] = useState<Community[]>([]);
+  const [followedCommunityList, setFollowedCommunityList] = useState<
+    Community[]
+  >([]);
   const router = useRouter();
 
   useEffect(() => {
     if (userBackend != null) {
       getFollowedCommunities(userBackend.id).then((res) =>
-        setCommunityList(res)
+        setFollowedCommunityList(res)
       );
     }
   }, [userBackend]);
@@ -56,10 +61,24 @@ const HomePage = () => {
       <NavBar />
       <Flex flexDirection={{ base: "column", xl: "row" }} pt="2%" pb="5%">
         <MainContent flex={1} router={router} communityList={communityList} />
-        <SideContent flex={1} router={router} communityList={communityList} />
+        <SideContent
+          flex={1}
+          router={router}
+          communityList={followedCommunityList}
+        />
       </Flex>
     </Box>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const communityList = await getCommunities();
+  // TODO: Remove this later
+  const xpto = communityList.slice(0, 5);
+
+  return {
+    props: { communityList: xpto },
+  };
 };
 
 export default HomePage;
