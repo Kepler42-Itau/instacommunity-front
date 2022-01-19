@@ -19,7 +19,7 @@ const LoginPage = () => {
   const textValue = useColorModeValue("gray.800", "white");
 
   useEffect(() => {
-    if (user !== null) {
+    if (user != null) {
       if (userBackend != null) {
         router.push("/user/settings");
       } else {
