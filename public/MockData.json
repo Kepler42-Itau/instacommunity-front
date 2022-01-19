@@ -1,4 +1,90 @@
 {
+  "communities": [
+    {
+      "id": 1,
+      "name": "Golang",
+      "description": "Build fast, reliable, and efficient software at scale!",
+      "contact1": "https://go.dev/",
+      "contact2": "",
+      "contact3": "",
+      "admin": "user1",
+      "slug": "golang",
+      "photoURL": "https://static.javatpoint.com/go/images/go-tutorial.jpg",
+      "type": "open"
+    },
+    {
+      "id": 2,
+      "name": "Python",
+      "description": "Python is a programming language that lets you work quickly and integrate systems more effectively.",
+      "contact1": "https://www.python.org/",
+      "contact2": "",
+      "contact3": "",
+      "admin": "user2",
+      "slug": "python",
+      "photoURL": "https://www.pinclipart.com/picdir/big/269-2691398_python-logo-clipart-transparent-background-png-download.png",
+      "type": "open"
+    },
+    {
+      "id": 3,
+      "name": "Kotlin",
+      "description": "Faster as a snail, ugly as COBOL and worse than Java!",
+      "contact1": "https://kotlinlang.org/",
+      "contact2": "",
+      "contact3": "",
+      "admin": "user2",
+      "slug": "kotlin",
+      "photoURL": "https://nealsanche.dev/content/images/2020/02/kotlin-logo.jpeg",
+      "type": "open"
+    },
+    {
+      "id": 4,
+      "name": "Ruby",
+      "description": "Unrivaled under the heavens.",
+      "contact1": "https://www.ruby-lang.org/en/",
+      "contact2": "",
+      "contact3": "",
+      "admin": "user1",
+      "slug": "ruby",
+      "photoURL": "https://i.pinimg.com/originals/19/4a/62/194a62daae8b1ad2f6f94e863f2379cc.png",
+      "type": "open"
+    },
+    {
+      "id": 5,
+      "name": "PHP",
+      "description": "PHP is a popular general-purpose scripting language that is especially suited to web development.",
+      "contact1": "https://www.php.net/",
+      "contact2": "",
+      "contact3": "",
+      "admin": "user2",
+      "slug": "php",
+      "photoURL": "https://logos-download.com/wp-content/uploads/2016/09/PHP_logo.png",
+      "type": "open"
+    },
+    {
+      "id": 6,
+      "name": "Lua",
+      "description": "A Lua me traiu.",
+      "contact1": "https://www.lua.org/",
+      "contact2": "",
+      "contact3": "",
+      "admin": "user1",
+      "slug": "lua",
+      "photoURL": "https://media.discordapp.net/attachments/883460825069785158/933355367017107516/Lua_programming_language-Logo.wine.png",
+      "type": "moderate"
+    },
+    {
+      "id": 7,
+      "name": "Rust",
+      "description": "Meme language.",
+      "contact1": "https://www.rust-lang.org/",
+      "contact2": "",
+      "contact3": "",
+      "admin": "user1",
+      "slug": "php",
+      "photoURL": "https://www.nicepng.com/png/full/308-3084680_rust-programming-language-rust-programming-language-logo.png",
+      "type": "managed"
+    }
+  ],
   "followedCommunities": [
     {
       "id": 1,
@@ -16,23 +102,37 @@
       "id": 2,
       "name": "Python",
       "description": "Python is a programming language that lets you work quickly and integrate systems more effectively.",
-      "contact1": "",
+      "contact1": "https://www.python.org/",
       "contact2": "",
       "contact3": "",
       "admin": "user2",
       "slug": "python",
       "photoURL": "https://www.pinclipart.com/picdir/big/269-2691398_python-logo-clipart-transparent-background-png-download.png",
       "type": "open"
+    },
+    {
+      "id": 4,
+      "name": "Ruby",
+      "description": "Unrivaled under the heavens.",
+      "contact1": "https://www.ruby-lang.org/en/",
+      "contact2": "",
+      "contact3": "",
+      "admin": "user1",
+      "slug": "ruby",
+      "photoURL": "https://i.pinimg.com/originals/19/4a/62/194a62daae8b1ad2f6f94e863f2379cc.png",
+      "type": "open"
     }
   ],
-  "user": {
-    "id": "user1",
-    "name": "Winston Churchill",
-    "username": "w_churchill",
-    "occupation": "Prime Minister",
-    "description": "",
-    "email": "w_churchill@gmail.com",
-    "contact": "w_churchill4343",
-    "photoURL": ""
-  }
+  "users": [
+    {
+      "id": "user1",
+      "name": "Winston Churchill",
+      "username": "w_churchill",
+      "occupation": "Prime Minister",
+      "description": "",
+      "email": "w_churchill@gmail.com",
+      "contact": "w_churchill4343",
+      "photoURL": "https://img.search.brave.com/jFq_gZpCVJlyJd6LJwvSA0cTegrf9KzDKcrNYTyOlJ4/rs:fit:1200:900:1/g:ce/aHR0cHM6Ly9pbWFn/ZXMuZ3VsZm5ld3Mu/Y29tLzIwMTkwMi9z/aXItd2luc3Rvbi1j/aHVyY2hpbGwtMzk2/OTczXzE5MjBfcmVz/b3VyY2VzMS5qcGc"
+    }
+  ]
 }
