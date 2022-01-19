@@ -11,6 +11,7 @@ import { NextRouter, useRouter } from "next/router";
 import { useContext } from "react";
 import { MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 import UserContext from "../lib/UserContext";
+import User from "../models/User";
 
 interface LogoProps {
   router: NextRouter;
@@ -18,6 +19,7 @@ interface LogoProps {
 
 interface SideButtonsProps {
   router: NextRouter;
+  userBackend: User;
 }
 
 const Logo = ({ router }: LogoProps) => {
@@ -45,9 +47,8 @@ const Logo = ({ router }: LogoProps) => {
   );
 };
 
-const SideButtons = ({ router }: SideButtonsProps) => {
+const SideButtons = ({ router, userBackend }: SideButtonsProps) => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { userBackend } = useContext(UserContext);
 
   return (
     <Container
@@ -77,7 +78,7 @@ const SideButtons = ({ router }: SideButtonsProps) => {
         <Avatar
           name={userBackend?.name}
           src={userBackend?.photoURL as string}
-          size="md"
+          size="lg"
           cursor="pointer"
           userSelect="none"
           onClick={() => router.push(`/user/${userBackend?.username}`)}
@@ -87,8 +88,27 @@ const SideButtons = ({ router }: SideButtonsProps) => {
   );
 };
 
+interface LoginButtonProps {
+  router: NextRouter;
+}
+
+const LoginButton = ({ router }: LoginButtonProps) => {
+  return (
+    <Flex width="100%" justifyContent={{ base: "center", md: "end" }}>
+      <Button
+        colorScheme="orange"
+        mr={{ base: "1%", xl: "3%" }}
+        onClick={() => router.push("/login")}
+      >
+        Login
+      </Button>
+    </Flex>
+  );
+};
+
 const NavBar = () => {
   const router = useRouter();
+  const { user, userBackend } = useContext(UserContext);
 
   return (
     <Flex
@@ -113,7 +133,11 @@ const NavBar = () => {
         justifyContent="end"
         mr={{ base: "0%", xl: "auto" }}
       >
-        <SideButtons router={router} />
+        {user ? (
+          <SideButtons router={router} userBackend={userBackend as User} />
+        ) : (
+          <LoginButton router={router} />
+        )}
       </Flex>
     </Flex>
   );
