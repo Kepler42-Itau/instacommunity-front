@@ -12,7 +12,7 @@ import UserContext from "../../lib/UserContext";
 import { FcGoogle } from "react-icons/fc";
 import { GoogleButton } from "../../components/GoogleButton";
 
-const Register = () => {
+const LoginPage = () => {
   const router = useRouter();
   const { user, userBackend } = useContext(UserContext);
 
@@ -106,4 +106,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default LoginPage;
