@@ -5,7 +5,7 @@ interface Community {
   contact1: string;
   contact2?: string | null;
   contact3?: string | null;
-  creator: string;
+  admin: string;
   slug: string;
   photoURL?: string | null;
   type: string;
