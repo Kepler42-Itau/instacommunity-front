@@ -180,6 +180,46 @@
   "users": [
     {
       "id": "user1",
+      "name": "Friedrich Nietzsche",
+      "username": "antichrist",
+      "occupation": "Philosopher",
+      "description": "",
+      "email": "antichrist@gmail.com",
+      "contact": "antichrist4343",
+      "photoURL": "https://www.thefamouspeople.com/profiles/images/friedrich-nietzsche-22.jpg"
+    },
+    {
+      "id": "user2",
+      "name": "Otto von Bismarck",
+      "username": "ov_bismarck",
+      "occupation": "Chancellor",
+      "description": "",
+      "email": "ov_bismarck@gmail.com",
+      "contact": "ov_bismarck4343",
+      "photoURL": "https://40.media.tumblr.com/3dd748104a7aac85a17d6e0b484706b8/tumblr_mxq5y29p2u1rwjpnyo2_1280.jpg"
+    },
+    {
+      "id": "user3",
+      "name": "Arthur Schopenhauer",
+      "username": "as_hauer",
+      "occupation": "Philosopher",
+      "description": "",
+      "email": "as_hauer@gmail.com",
+      "contact": "as_hauer4343",
+      "photoURL": "https://www.biosiglos.com/wp-content/uploads/2008/08/arthur-schopenhauer.jpg"
+    },
+    {
+      "id": "user4",
+      "name": "Baruch Spinoza",
+      "username": "spinoza",
+      "occupation": "Philosopher",
+      "description": "",
+      "email": "spinoza@gmail.com",
+      "contact": "spinoza4343",
+      "photoURL": "https://1.bp.blogspot.com/-RoxZtepNzC8/VTZfiLNQieI/AAAAAAAAABc/1eho53Scpbw/s1600/Spinoza.jpg"
+    },
+    {
+      "id": "user5",
       "name": "Winston Churchill",
       "username": "w_churchill",
       "occupation": "Prime Minister",
@@ -192,6 +232,46 @@
   "followers": [
     {
       "id": "user1",
+      "name": "Friedrich Nietzsche",
+      "username": "antichrist",
+      "occupation": "Philosopher",
+      "description": "",
+      "email": "antichrist@gmail.com",
+      "contact": "antichrist4343",
+      "photoURL": "https://www.thefamouspeople.com/profiles/images/friedrich-nietzsche-22.jpg"
+    },
+    {
+      "id": "user2",
+      "name": "Otto von Bismarck",
+      "username": "ov_bismarck",
+      "occupation": "Chancellor",
+      "description": "",
+      "email": "ov_bismarck@gmail.com",
+      "contact": "ov_bismarck4343",
+      "photoURL": "https://40.media.tumblr.com/3dd748104a7aac85a17d6e0b484706b8/tumblr_mxq5y29p2u1rwjpnyo2_1280.jpg"
+    },
+    {
+      "id": "user3",
+      "name": "Arthur Schopenhauer",
+      "username": "as_hauer",
+      "occupation": "Philosopher",
+      "description": "",
+      "email": "as_hauer@gmail.com",
+      "contact": "as_hauer4343",
+      "photoURL": "https://www.biosiglos.com/wp-content/uploads/2008/08/arthur-schopenhauer.jpg"
+    },
+    {
+      "id": "user4",
+      "name": "Baruch Spinoza",
+      "username": "spinoza",
+      "occupation": "Philosopher",
+      "description": "",
+      "email": "spinoza@gmail.com",
+      "contact": "spinoza4343",
+      "photoURL": "https://1.bp.blogspot.com/-RoxZtepNzC8/VTZfiLNQieI/AAAAAAAAABc/1eho53Scpbw/s1600/Spinoza.jpg"
+    },
+    {
+      "id": "user5",
       "name": "Winston Churchill",
       "username": "w_churchill",
       "occupation": "Prime Minister",
