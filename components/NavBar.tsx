@@ -79,6 +79,7 @@ const SideButtons = ({ router, userBackend }: SideButtonsProps) => {
           name={userBackend?.name}
           src={userBackend?.photoURL as string}
           size="lg"
+          bg="white"
           cursor="pointer"
           userSelect="none"
           onClick={() => router.push(`/user/${userBackend?.username}`)}
