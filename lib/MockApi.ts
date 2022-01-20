@@ -32,3 +32,36 @@ export const getCommunities = async (): Promise<Community[]> => {
     return new Promise(() => []);
   }
 };
+
+export const followCommunity = async (
+  communityId: string,
+  userId: string
+): Promise<Boolean> => {
+  return true;
+};
+
+export const unFollowCommunity = async (
+  communityId: string,
+  userId: string
+): Promise<Boolean> => {
+  return true;
+};
+
+export const getCommunity = async (
+  communityId: string
+): Promise<Community | ErrorResponse> => {
+  const res = await fetch(`http://localhost:8080/communities/${communityId}`, {
+    method: "GET",
+  });
+  return res.json();
+};
+
+export const getCommunityFollowers = async (
+  communityId: String
+): Promise<User[] | ErrorResponse> => {
+  const res = await fetch("http://localhost:8080/followers");
+  if (res.ok) return res.json();
+  else {
+    return new Promise(() => []);
+  }
+};

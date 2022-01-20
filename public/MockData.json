@@ -178,5 +178,17 @@
       "contact": "w_churchill4343",
       "photoURL": "https://img.search.brave.com/jFq_gZpCVJlyJd6LJwvSA0cTegrf9KzDKcrNYTyOlJ4/rs:fit:1200:900:1/g:ce/aHR0cHM6Ly9pbWFn/ZXMuZ3VsZm5ld3Mu/Y29tLzIwMTkwMi9z/aXItd2luc3Rvbi1j/aHVyY2hpbGwtMzk2/OTczXzE5MjBfcmVz/b3VyY2VzMS5qcGc"
     }
+  ],
+  "followers": [
+    {
+      "id": "user1",
+      "name": "Winston Churchill",
+      "username": "w_churchill",
+      "occupation": "Prime Minister",
+      "description": "",
+      "email": "w_churchill@gmail.com",
+      "contact": "w_churchill4343",
+      "photoURL": "https://img.search.brave.com/jFq_gZpCVJlyJd6LJwvSA0cTegrf9KzDKcrNYTyOlJ4/rs:fit:1200:900:1/g:ce/aHR0cHM6Ly9pbWFn/ZXMuZ3VsZm5ld3Mu/Y29tLzIwMTkwMi9z/aXItd2luc3Rvbi1j/aHVyY2hpbGwtMzk2/OTczXzE5MjBfcmVz/b3VyY2VzMS5qcGc"
+    }
   ]
 }
