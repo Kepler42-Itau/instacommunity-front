@@ -40,7 +40,7 @@ export const followCommunity = async (
   return true;
 };
 
-export const unFollowCommunity = async (
+export const unfollowCommunity = async (
   communityId: string,
   userId: string
 ): Promise<Boolean> => {
