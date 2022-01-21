@@ -185,7 +185,11 @@
       "occupation": "Philosopher",
       "description": "",
       "email": "antichrist@gmail.com",
-      "contact": "antichrist4343",
+      "contact": {
+        "id": "1",
+        "title": "My Wiki",
+        "link": "https://en.wikipedia.org/wiki/Friedrich_Nietzsche"
+      },
       "photoURL": "https://www.thefamouspeople.com/profiles/images/friedrich-nietzsche-22.jpg"
     },
     {

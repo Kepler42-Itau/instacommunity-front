@@ -22,6 +22,15 @@ export const getUser = async (uid: string): Promise<User | ErrorResponse> => {
   return res.json();
 };
 
+export const getUserByUsername = async (
+  username: string
+): Promise<User | ErrorResponse> => {
+  const res = await fetch(`http://localhost:8080/users/user1`, {
+    method: "GET",
+  });
+  return res.json();
+};
+
 export const getCommunities = async (): Promise<Community[]> => {
   const res = await fetch(`http://localhost:8080/communities`, {
     method: "GET",
