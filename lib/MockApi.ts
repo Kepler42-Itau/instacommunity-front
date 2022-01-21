@@ -25,7 +25,7 @@ export const getUser = async (uid: string): Promise<User | ErrorResponse> => {
 export const getUserByUsername = async (
   username: string
 ): Promise<User | ErrorResponse> => {
-  const res = await fetch(`http://localhost:8080/users/user1`, {
+  const res = await fetch(`http://localhost:8080/users/${username}`, {
     method: "GET",
   });
   return res.json();
