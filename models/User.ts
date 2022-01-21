@@ -1,3 +1,5 @@
+import Contact from "./Contact";
+
 interface User {
   id: string;
   name: string;
@@ -5,7 +7,7 @@ interface User {
   occupation?: string;
   description?: string | null;
   email: string;
-  contact?: string | null;
+  contact?: Contact | null;
   photoURL?: string | null;
 }
 
