@@ -1,9 +1,14 @@
-export default interface Community {
-  id?: Number;
-  name: String;
-  description: String;
-  contact: String;
-  contact2: String;
-  contact3: String;
-  creator: number;
+import Contact from "./Contact";
+
+interface Community {
+  id?: number | null;
+  name: string;
+  description: string;
+  contacts: Contact[];
+  admin: string;
+  slug: string;
+  photoURL?: string | null;
+  type: string;
 }
+
+export default Community;

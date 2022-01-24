@@ -1,3 +1,5 @@
-export default interface ErrorResponse {
+interface ErrorResponse {
   error: String;
 }
+
+export default ErrorResponse;

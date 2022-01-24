@@ -1,0 +1,288 @@
+{
+  "communities": [
+    {
+      "id": 1,
+      "name": "Golang",
+      "description": "Build fast, reliable, and efficient software at scale!",
+      "contacts": [
+        {
+          "id": "1",
+          "title": "Go Website",
+          "link": "https://go.dev/"
+        },
+        {
+          "id": "1",
+          "title": "Go Website",
+          "link": "https://go.dev/"
+        },
+        {
+          "id": "1",
+          "title": "Go Website",
+          "link": "https://go.dev/"
+        }
+      ],
+      "admin": "user1",
+      "slug": "golang",
+      "photoURL": "https://static.javatpoint.com/go/images/go-tutorial.jpg",
+      "type": "open"
+    },
+    {
+      "id": 2,
+      "name": "Python",
+      "description": "Python is a programming language that lets you work quickly and integrate systems more effectively.",
+      "contacts": [
+        {
+          "id": "2",
+          "title": "Python Website",
+          "link": "https://www.python.org/"
+        }
+      ],
+      "admin": "user2",
+      "slug": "python",
+      "photoURL": "https://www.pinclipart.com/picdir/big/269-2691398_python-logo-clipart-transparent-background-png-download.png",
+      "type": "open"
+    },
+    {
+      "id": 3,
+      "name": "Kotlin",
+      "description": "Faster as a snail, ugly as COBOL and worse than Java!",
+      "contacts": [
+        {
+          "id": "3",
+          "title": "Kotlin Website",
+          "link": "https://kotlinlang.org/"
+        }
+      ],
+      "admin": "user2",
+      "slug": "kotlin",
+      "photoURL": "https://nealsanche.dev/content/images/2020/02/kotlin-logo.jpeg",
+      "type": "open"
+    },
+    {
+      "id": 4,
+      "name": "Ruby",
+      "description": "Unrivaled under the heavens.",
+      "contacts": [
+        {
+          "id": "4",
+          "title": "Ruby Website",
+          "link": "https://www.ruby-lang.org/en/"
+        }
+      ],
+      "admin": "user1",
+      "slug": "ruby",
+      "photoURL": "https://i.pinimg.com/originals/19/4a/62/194a62daae8b1ad2f6f94e863f2379cc.png",
+      "type": "open"
+    },
+    {
+      "id": 5,
+      "name": "PHP",
+      "description": "PHP is a popular general-purpose scripting language that is especially suited to web development.",
+      "contacts": [
+        {
+          "id": "5",
+          "title": "PHP Website",
+          "link": "https://www.php.net/"
+        }
+      ],
+      "admin": "user2",
+      "slug": "php",
+      "photoURL": "https://logos-download.com/wp-content/uploads/2016/09/PHP_logo.png",
+      "type": "open"
+    },
+    {
+      "id": 6,
+      "name": "Lua",
+      "description": "A Lua me traiu.",
+      "contacts": [
+        {
+          "id": "6",
+          "title": "Lua Website",
+          "link": "https://www.lua.org/"
+        }
+      ],
+      "contact2": "",
+      "contact3": "",
+      "admin": "user1",
+      "slug": "lua",
+      "photoURL": "https://media.discordapp.net/attachments/883460825069785158/933355367017107516/Lua_programming_language-Logo.wine.png",
+      "type": "moderate"
+    },
+    {
+      "id": 7,
+      "name": "Rust",
+      "description": "Meme language.",
+      "contacts": [
+        {
+          "id": "7",
+          "title": "Rust Website",
+          "link": "https://www.rust-lang.org/"
+        }
+      ],
+      "admin": "user1",
+      "slug": "rust",
+      "photoURL": "https://www.nicepng.com/png/full/308-3084680_rust-programming-language-rust-programming-language-logo.png",
+      "type": "managed"
+    }
+  ],
+  "followedCommunities": [
+    {
+      "id": 1,
+      "name": "Golang",
+      "description": "Build fast, reliable, and efficient software at scale!",
+      "contacts": [
+        {
+          "id": "1",
+          "title": "Go Website",
+          "link": "https://go.dev/"
+        }
+      ],
+      "admin": "user1",
+      "slug": "golang",
+      "photoURL": "https://static.javatpoint.com/go/images/go-tutorial.jpg",
+      "type": "open"
+    },
+    {
+      "id": 2,
+      "name": "Python",
+      "description": "Python is a programming language that lets you work quickly and integrate systems more effectively.",
+      "contacts": [
+        {
+          "id": "2",
+          "title": "Python Website",
+          "link": "https://www.python.org/"
+        }
+      ],
+      "admin": "user2",
+      "slug": "python",
+      "photoURL": "https://www.pinclipart.com/picdir/big/269-2691398_python-logo-clipart-transparent-background-png-download.png",
+      "type": "open"
+    },
+    {
+      "id": 6,
+      "name": "Lua",
+      "description": "A Lua me traiu.",
+      "contacts": [
+        {
+          "id": "6",
+          "title": "Lua Website",
+          "link": "https://www.lua.org/"
+        }
+      ],
+      "contact2": "",
+      "contact3": "",
+      "admin": "user1",
+      "slug": "lua",
+      "photoURL": "https://media.discordapp.net/attachments/883460825069785158/933355367017107516/Lua_programming_language-Logo.wine.png",
+      "type": "moderate"
+    }
+  ],
+  "users": [
+    {
+      "id": "user1",
+      "name": "Friedrich Nietzsche",
+      "username": "antichrist",
+      "occupation": "Philosopher",
+      "description": "Friedrich Wilhelm Nietzsche, 15 October 1844 – 25 August 1900) was a German philosopher, cultural critic and philologist whose work has exerted a profound influence on modern intellectual history. He began his career as a classical philologist before turning to philosophy. He became the youngest person ever to hold the Chair of Classical Philology at the University of Basel in 1869 at the age of 24. Nietzsche resigned in 1879 due to health problems that plagued him most of his life; he completed much of his core writing in the following decade. In 1889, at age 45, he suffered a collapse and afterward a complete loss of his mental faculties. He lived his remaining years in the care of his mother until her death in 1897 and then with his sister Elisabeth Förster-Nietzsche. Nietzsche died in 1900.",
+      "email": "antichrist@gmail.com",
+      "contact": {
+        "id": "1",
+        "title": "My Wiki",
+        "link": "https://en.wikipedia.org/wiki/Friedrich_Nietzsche"
+      },
+      "photoURL": "https://www.thefamouspeople.com/profiles/images/friedrich-nietzsche-22.jpg"
+    },
+    {
+      "id": "user2",
+      "name": "Otto von Bismarck",
+      "username": "ov_bismarck",
+      "occupation": "Chancellor",
+      "description": "",
+      "email": "ov_bismarck@gmail.com",
+      "contact": "ov_bismarck4343",
+      "photoURL": "https://40.media.tumblr.com/3dd748104a7aac85a17d6e0b484706b8/tumblr_mxq5y29p2u1rwjpnyo2_1280.jpg"
+    },
+    {
+      "id": "user3",
+      "name": "Arthur Schopenhauer",
+      "username": "as_hauer",
+      "occupation": "Philosopher",
+      "description": "",
+      "email": "as_hauer@gmail.com",
+      "contact": "as_hauer4343",
+      "photoURL": "https://www.biosiglos.com/wp-content/uploads/2008/08/arthur-schopenhauer.jpg"
+    },
+    {
+      "id": "user4",
+      "name": "Baruch Spinoza",
+      "username": "spinoza",
+      "occupation": "Philosopher",
+      "description": "",
+      "email": "spinoza@gmail.com",
+      "contact": "spinoza4343",
+      "photoURL": "https://1.bp.blogspot.com/-RoxZtepNzC8/VTZfiLNQieI/AAAAAAAAABc/1eho53Scpbw/s1600/Spinoza.jpg"
+    },
+    {
+      "id": "user5",
+      "name": "Winston Churchill",
+      "username": "w_churchill",
+      "occupation": "Prime Minister",
+      "description": "",
+      "email": "w_churchill@gmail.com",
+      "contact": "w_churchill4343",
+      "photoURL": "https://img.search.brave.com/jFq_gZpCVJlyJd6LJwvSA0cTegrf9KzDKcrNYTyOlJ4/rs:fit:1200:900:1/g:ce/aHR0cHM6Ly9pbWFn/ZXMuZ3VsZm5ld3Mu/Y29tLzIwMTkwMi9z/aXItd2luc3Rvbi1j/aHVyY2hpbGwtMzk2/OTczXzE5MjBfcmVz/b3VyY2VzMS5qcGc"
+    }
+  ],
+  "followers": [
+    {
+      "id": "user1",
+      "name": "Friedrich Nietzsche",
+      "username": "antichrist",
+      "occupation": "Philosopher",
+      "description": "",
+      "email": "antichrist@gmail.com",
+      "contact": "antichrist4343",
+      "photoURL": "https://www.thefamouspeople.com/profiles/images/friedrich-nietzsche-22.jpg"
+    },
+    {
+      "id": "user2",
+      "name": "Otto von Bismarck",
+      "username": "ov_bismarck",
+      "occupation": "Chancellor",
+      "description": "",
+      "email": "ov_bismarck@gmail.com",
+      "contact": "ov_bismarck4343",
+      "photoURL": "https://40.media.tumblr.com/3dd748104a7aac85a17d6e0b484706b8/tumblr_mxq5y29p2u1rwjpnyo2_1280.jpg"
+    },
+    {
+      "id": "user3",
+      "name": "Arthur Schopenhauer",
+      "username": "as_hauer",
+      "occupation": "Philosopher",
+      "description": "",
+      "email": "as_hauer@gmail.com",
+      "contact": "as_hauer4343",
+      "photoURL": "https://www.biosiglos.com/wp-content/uploads/2008/08/arthur-schopenhauer.jpg"
+    },
+    {
+      "id": "user4",
+      "name": "Baruch Spinoza",
+      "username": "spinoza",
+      "occupation": "Philosopher",
+      "description": "",
+      "email": "spinoza@gmail.com",
+      "contact": "spinoza4343",
+      "photoURL": "https://1.bp.blogspot.com/-RoxZtepNzC8/VTZfiLNQieI/AAAAAAAAABc/1eho53Scpbw/s1600/Spinoza.jpg"
+    },
+    {
+      "id": "user5",
+      "name": "Winston Churchill",
+      "username": "w_churchill",
+      "occupation": "Prime Minister",
+      "description": "",
+      "email": "w_churchill@gmail.com",
+      "contact": "w_churchill4343",
+      "photoURL": "https://img.search.brave.com/jFq_gZpCVJlyJd6LJwvSA0cTegrf9KzDKcrNYTyOlJ4/rs:fit:1200:900:1/g:ce/aHR0cHM6Ly9pbWFn/ZXMuZ3VsZm5ld3Mu/Y29tLzIwMTkwMi9z/aXItd2luc3Rvbi1j/aHVyY2hpbGwtMzk2/OTczXzE5MjBfcmVz/b3VyY2VzMS5qcGc"
+    }
+  ]
+}
