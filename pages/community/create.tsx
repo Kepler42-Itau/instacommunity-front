@@ -1,266 +1,164 @@
-import type { NextPage } from "next";
-import { useEffect, useState } from "react";
-import Head from "next/head";
-import { useRouter } from "next/router";
+import { Button, Center, Heading, Flex, Box } from "@chakra-ui/react";
+import NavBar from "../../components/NavBar";
+import { Formik, Form, FormikHelpers } from "formik";
 import {
-  Button,
-  Input,
-  VStack,
-  Center,
-  Flex,
-  Text,
-  InputLeftAddon,
-  Box,
-  FormControl,
-  FormLabel,
-  Textarea,
-  useToast,
-  InputGroup,
-} from "@chakra-ui/react";
-import NavBar from "../../../components/NavBar";
-import Community from "../../../models/Community";
-import ErrorResponse from "../../../models/ErrorResponse";
-import api from "../../../services/api";
+  FieldBox,
+  TypeFieldBox,
+  TextareaFieldBox,
+} from "../../components/FieldBox";
 
-const Create: NextPage = () => {
-  const [name, setName] = useState("");
-  const [contact, setContact] = useState("");
-  const [contact2, setContact2] = useState("");
-  const [contact3, setContact3] = useState("");
-  const [description, setDescription] = useState("");
-  const [creator, setCreator] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const toast = useToast();
-  const router = useRouter();
+interface CreateCommunityFormValues {
+  name: string;
+  description: string;
+  contactOne: string;
+  contactOneTitle: string;
+  contactTwo: string;
+  contactTwoTitle: string;
+  contactThree: string;
+  contactThreeTitle: string;
+  photoURL: string;
+  type: string;
+}
 
-  useEffect(() => {
-    setCreator(Number(localStorage.getItem('userId')));
-  }, [])
-
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setName(event.target.value);
-
-  const handleContactChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setContact(event.target.value);
-
-  const handleContact2Change = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setContact2(event.target.value);
-
-  const handleContact3Change = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setContact3(event.target.value);
-
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => setDescription(event.target.value);
-
-  const handleResponse = (res: Community | ErrorResponse) => {
-    if ("error" in res) {
-      toast({
-        title: "Este nome já existe",
-        description: "A comunidade não pôde ser criada.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-      setIsLoading(false);
-    } else {
-      router.push(`/communities/${res.id}`);
-    }
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
-    event.preventDefault();
-    let trimmedName = name.trim();
-    let trimmedDescription = description.trim();
-    let trimmedContact = contact.trim();
-    let trimmedContact2 = contact.trim();
-    let trimmedContact3 = contact.trim();
-
-    if (trimmedName.length < 1 || trimmedName.length > 400)
-      return toast({
-        title: "Nome inválido",
-        description: "O nome da comunidade deve ter entre 1 e 400 caracteres.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-
-    if (trimmedContact.length < 1) {
-      return toast({
-        title: "Adicione um canal de comunicação!",
-        description: "Um canal é necessário para a criação de sua comunidade.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    } else if (trimmedContact.length > 300) {
-      return toast({
-        title: "Canal de comunição inválido",
-        description:
-          "O link do canal de comunicação deve ter entre 1 e 400 caracteres.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-
-    if (trimmedContact2 != "" && trimmedContact2.length > 300) {
-      return toast({
-        title: "Canal de comunição II inválido",
-        description:
-          "O link do canal de comunicação deve ter entre 1 e 400 caracteres.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-
-    if (trimmedContact3 != "" && trimmedContact3.length > 300) {
-      return toast({
-        title: "Canal de comunição II inválido",
-        description:
-          "O link do canal de comunicação deve ter entre 1 e 400 caracteres.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-
-    if (trimmedDescription.length < 1) {
-      return toast({
-        title: "Adicione uma descrição!",
-        description:
-          "Uma descrição é necessária para a criação de sua comunidade.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    } else if (trimmedDescription.length > 300) {
-      return toast({
-        title: "Descrição inválida",
-        description:
-          "A descrição da comunidade deve ter entre 1 e 300 caracteres.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-
-    if (trimmedContact != "" && !trimmedContact.match(/^https?:\/\//gi)) {
-      trimmedContact = "http://" + trimmedContact;
-    }
-    if (trimmedContact2 != "" && !trimmedContact2.match(/^https?:\/\//gi)) {
-      trimmedContact2 = "http://" + trimmedContact2;
-    }
-    if (trimmedContact3 != "" && !trimmedContact3.match(/^https?:\/\//gi)) {
-      trimmedContact3 = "http://" + trimmedContact3;
-    }
-
-    setIsLoading(true);
-    const community: Community = {
-      name: trimmedName,
-      description: trimmedDescription,
-      contact: trimmedContact,
-      contact2: trimmedContact2,
-      contact3: trimmedContact3,
-      creator: creator
-    };
-    api.createCommunity(community).then(handleResponse);
-  };
-
+const CreateCommunityPage = () => {
   return (
-    <Box>
-      <Head>
-        <title>Criar Comunidade</title>
-      </Head>
+    <Box maxW="100vw" width="100%" mx="auto" px={{ base: 2, sm: 12, md: 17 }}>
       <NavBar />
-      <Flex>
-        <Center mt="3%" width="100%">
-          <VStack spacing="24px" width="40%">
-            <FormControl id="nome" isRequired>
-              <FormLabel>Nome</FormLabel>
-              <Input
-                placeholder="ex: Amigos do Cobol"
-                width="100%"
-                value={name}
-                onChange={handleNameChange}
-              />
-            </FormControl>
-            <FormControl id="contato" isRequired>
-              <FormLabel>Canal de comunicação I</FormLabel>
-              <InputGroup>
-                <InputLeftAddon>
-                  <Text>{"https://"}</Text>
-                </InputLeftAddon>
-                <Input
-                  placeholder="ex: aka.ms/COBOL"
-                  width="100%"
-                  value={contact}
-                  onChange={handleContactChange}
-                />
-              </InputGroup>
-            </FormControl>
-            <FormControl id="contato2">
-              <FormLabel>Canal de comunicação II</FormLabel>
-              <InputGroup>
-                <InputLeftAddon>
-                  <Text>{"https://"}</Text>
-                </InputLeftAddon>
-                <Input
-                  placeholder="Opcional"
-                  width="100%"
-                  value={contact2}
-                  onChange={handleContact2Change}
-                />
-              </InputGroup>
-            </FormControl>
-            <FormControl id="contato3">
-              <FormLabel>Canal de comunicação III</FormLabel>
-              <InputGroup>
-                <InputLeftAddon>
-                  <Text>{"https://"}</Text>
-                </InputLeftAddon>
-                <Input
-                  placeholder="Opcional"
-                  width="100%"
-                  value={contact3}
-                  onChange={handleContact3Change}
-                />
-              </InputGroup>
-            </FormControl>
-            <FormControl id="descricao" isRequired>
-              <FormLabel>Descrição</FormLabel>
-              <Textarea
-                placeholder="ex: Amigos desde 1876"
-                width="100%"
-                value={description}
-                onChange={handleDescriptionChange}
-              />
-            </FormControl>
-            <Center flexDirection="row" width="100%">
-              <Button
-                colorScheme="red"
-                mr="5%"
-                variant="outline"
-                onClick={() => router.push("/")}
-              >
-                Cancelar
-              </Button>{" "}
-              <Button
-                colorScheme="blue"
-                type="submit"
-                isLoading={isLoading}
-                loadingText="Criando Comunidade"
-                onClick={handleSubmit}
-              >
-                Enviar
-              </Button>
-            </Center>
-          </VStack>
-        </Center>
+      <Flex
+        flexDirection="column"
+        pt="2%"
+        pr={{ base: "2%", xl: "10%" }}
+        pl={{ base: "2%", xl: "10%" }}
+        pb="5%"
+      >
+        <Heading
+          mt="2%"
+          fontSize="3xl"
+          textAlign={{ base: "center", md: "left" }}
+        >
+          Criação de comunidade
+        </Heading>
+        <CreateCommunityForm />
       </Flex>
     </Box>
   );
 };
 
-export default Create;
+const CreateCommunityForm = () => {
+  return (
+    <>
+      <Formik
+        initialValues={{
+          name: "",
+          description: "",
+          contactOne: "",
+          contactOneTitle: "",
+          contactTwo: "",
+          contactTwoTitle: "",
+          contactThree: "",
+          contactThreeTitle: "",
+          photoURL: "",
+          type: "",
+        }}
+        onSubmit={(
+          values: CreateCommunityFormValues,
+          { setSubmitting, resetForm }: FormikHelpers<CreateCommunityFormValues>
+        ) => {
+          setTimeout(() => {
+            // TODO: Implement a real handleSubmit
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 500);
+        }}
+      >
+        {(props) => (
+          <Form>
+            <FieldBox
+              name={"name"}
+              title={"Name"}
+              isRequired={true}
+              placeholder={"Ex: Amigos do COBOL"}
+            />
+            <FieldBox
+              name={"photoURL"}
+              title={"Link da imagem"}
+              isRequired={true}
+              placeholder={"Ex: https://i.imgur.com/knVYL2s.png"}
+            />
+            <TypeFieldBox
+              name={"type"}
+              title={"Tipo da comunidade"}
+              isRequired={true}
+              placeholder={"Selecione o tipo da comunidade"}
+            />
+            <Flex>
+              <FieldBox
+                name={"contactOne"}
+                title={"Link do contato"}
+                isRequired={true}
+                placeholder={"Ex: https://aka.ms/COBOL"}
+              />
+              <Flex mr="1%" ml="1%" />
+              <FieldBox
+                name={"contactOneTitle"}
+                title={"Título do contato"}
+                isRequired={true}
+                placeholder={"Ex: Grupo do Teams"}
+              />
+            </Flex>
+            <Flex>
+              <FieldBox
+                name={"contactTwo"}
+                title={"Link do contato"}
+                isRequired={false}
+                placeholder={"Opcional"}
+              />
+              <Flex mr="1%" ml="1%" />
+              <FieldBox
+                name={"contactTwoTitle"}
+                title={"Título do contato"}
+                isRequired={false}
+                placeholder={"Opcional"}
+              />
+            </Flex>
+            <Flex>
+              <FieldBox
+                name={"contactThree"}
+                title={"Link do contato"}
+                isRequired={false}
+                placeholder={"Opcional"}
+              />
+              <Flex mr="1%" ml="1%" />
+              <FieldBox
+                name={"contactThreeTitle"}
+                title={"Título do contato"}
+                isRequired={false}
+                placeholder={"Opcional"}
+              />
+            </Flex>
+            <TextareaFieldBox
+              name={"description"}
+              title={"Description"}
+              isRequired={true}
+              placeholder={"Ex: Juntos desde o paleozoico"}
+            />
+            <Center mt="4%" mb="2%" width="100%">
+              <Button colorScheme="red" type="reset" mr="5%">
+                Cancel
+              </Button>
+              <Button
+                colorScheme="teal"
+                isLoading={props.isSubmitting}
+                type="submit"
+              >
+                Submit
+              </Button>
+            </Center>
+          </Form>
+        )}
+      </Formik>
+    </>
+  );
+};
+
+export default CreateCommunityPage;
