@@ -54,9 +54,9 @@ export const TypeFieldBox = ({
         >
           <FormLabel htmlFor={name}>{title}</FormLabel>
           <Select {...field} id={name} placeholder={placeholder}>
-            <option value={"open"}>Aberta</option>
-            <option value={"moderate"}>Moderada</option>
-            <option value={"managed"}>Gerenciada</option>
+            <option value={"OPEN"}>Aberta</option>
+            <option value={"MODERATED"}>Moderada</option>
+            <option value={"MANAGED"}>Gerenciada</option>
           </Select>
           <FormErrorMessage>{form.errors.name}</FormErrorMessage>
         </FormControl>

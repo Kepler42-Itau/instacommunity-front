@@ -4,6 +4,8 @@ import NavBar from "../../components/NavBar";
 import { Box, Flex, Heading, Center, Button } from "@chakra-ui/react";
 import { Formik, Form, FormikHelpers } from "formik";
 import { FieldBox, TextareaFieldBox } from "../../components/FieldBox";
+import { createUser, updateUser } from "../../lib/Api"
+import { useRouter } from "next/router";
 
 const UserSettingsPage = () => {
   const { userBackend } = useContext(UserContext);
@@ -35,14 +37,15 @@ interface UserSettingsValues {
   name: string;
   username: string;
   occupation?: string;
-  description?: string | null;
+  about?: string | null;
   contactLink: string | null;
   contactTitle: string | null;
   photoURL?: string | null;
 }
 
 const ChangeInfo = () => {
-  const { userBackend } = useContext(UserContext);
+  const { userBackend, setUserBackend } = useContext(UserContext);
+  const router = useRouter();
 
   return (
     <Formik
@@ -50,7 +53,7 @@ const ChangeInfo = () => {
         name: userBackend?.name as string,
         username: userBackend?.username as string,
         occupation: userBackend?.occupation as string,
-        description: userBackend?.description as string,
+        about: userBackend?.about as string,
         contactLink: userBackend?.contact?.link as string,
         contactTitle: userBackend?.contact?.title as string,
         photoURL: userBackend?.photoURL as string,
@@ -60,9 +63,37 @@ const ChangeInfo = () => {
         { setSubmitting, resetForm }: FormikHelpers<UserSettingsValues>
       ) => {
         setTimeout(() => {
-          // TODO: Implement a real handleSubmit
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
+          updateUser({
+            name: values.name,
+            username: values.username,
+            occupation: values.occupation,
+            about: values.about,
+            contact: {
+              link: values.contactLink,
+              title: values.contactTitle as string
+            },
+            photoURL: values.photoURL,
+            email: userBackend?.email as string,
+            id: userBackend?.id as string,
+          }).then((res) => {
+            if ("error" in res) {
+              setSubmitting(false);
+            } else {
+              setUserBackend({
+                name: values.name,
+                username: values.username,
+                occupation: values.occupation,
+                about: values.about,
+                contact: {
+                  link: values.contactLink,
+                  title: values.contactTitle as string
+                },
+                photoURL: values.photoURL,
+                email: userBackend?.email as string,
+                id: userBackend?.id as string,
+              })
+              router.push(`/user/${userBackend?.username}`);
+            }})
         }, 500);
       }}
     >
@@ -97,18 +128,18 @@ const ChangeInfo = () => {
             <FieldBox
               name={"contactTitle"}
               title={"Título do contato"}
-              isRequired={true}
+              isRequired={false}
               placeholder={"Ex: Grupo do WhatsApp"}
             />
           </Flex>
           <TextareaFieldBox
-            name={"description"}
-            title={"Description"}
+            name={"about"}
+            title={"Sobre"}
             isRequired={false}
             placeholder={"Ex: Oloco bicho!"}
           />
           <Center mt="4%" mb="2%" width="100%">
-            <Button colorScheme="red" type="reset" mr="5%">
+            <Button colorScheme="red" type="reset" mr="5%" onClick={() => router.push(`/user/${userBackend?.username}`)}>
               Cancel
             </Button>
             <Button
@@ -126,13 +157,16 @@ const ChangeInfo = () => {
 };
 
 const FirstLogin = () => {
+  const {user} = useContext(UserContext);
+  const router = useRouter();
+
   return (
     <Formik
       initialValues={{
         name: "",
         username: "",
         occupation: "",
-        description: "",
+        about: "",
         contactLink: "",
         contactTitle: "",
         photoURL: "",
@@ -143,8 +177,26 @@ const FirstLogin = () => {
       ) => {
         setTimeout(() => {
           // TODO: Implement a real handleSubmit
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
+          createUser({
+            name: values.name,
+            username: values.username,
+            occupation: values.occupation,
+            about: values.about,
+            contact: {
+              link: values.contactLink,
+              title: values.contactTitle as string
+            },
+            photoURL: values.photoURL,
+            email: user?.email as string,
+            id: user?.uid as string,
+          }).then((res) => {
+            if ("error" in res) {
+              setSubmitting(false);
+            } else {
+              router.push('/');
+            }
+          })
+
         }, 500);
       }}
     >
@@ -185,13 +237,13 @@ const FirstLogin = () => {
             <FieldBox
               name={"contactTitle"}
               title={"Título do contato"}
-              isRequired={true}
+              isRequired={false}
               placeholder={"Ex: Grupo do WhatsApp"}
             />
           </Flex>
           <TextareaFieldBox
-            name={"description"}
-            title={"Description"}
+            name={"about"}
+            title={"Sobre"}
             isRequired={false}
             placeholder={"Ex: Oloco bicho!"}
           />

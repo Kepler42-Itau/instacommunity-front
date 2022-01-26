@@ -7,7 +7,7 @@ import Head from "next/head";
 import theme from "../lib/Theme";
 import User from "../models/User";
 import { Box, Container, ScaleFade } from "@chakra-ui/react";
-import { getUser } from "../lib/MockApi";
+import { getUser } from "../lib/Api";
 import { auth } from "../lib/Firebase";
 
 interface MainProps {

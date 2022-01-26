@@ -5,7 +5,7 @@ interface User {
   name: string;
   username: string;
   occupation?: string;
-  description?: string | null;
+  about?: string | null;
   email: string;
   contact?: Contact | null;
   photoURL?: string | null;

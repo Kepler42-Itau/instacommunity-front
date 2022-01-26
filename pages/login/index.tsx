@@ -11,20 +11,23 @@ import { loginWithGoogle } from "../../lib/Firebase";
 import UserContext from "../../lib/UserContext";
 import { FcGoogle } from "react-icons/fc";
 import { GoogleButton } from "../../components/GoogleButton";
+import {getUser} from "../../lib/Api";
 
 const LoginPage = () => {
   const router = useRouter();
-  const { user, userBackend } = useContext(UserContext);
+  const { user, userBackend, setUserBackend } = useContext(UserContext);
 
   const textValue = useColorModeValue("gray.800", "white");
 
   useEffect(() => {
     if (user != null) {
-      if (userBackend != null) {
-        router.push("/user/settings");
-      } else {
-        router.push("/");
-      }
+      getUser(user.uid).then((res) => {
+        if ("error" in res) {
+          router.push("/user/settings");
+        } else {
+          router.push("/");
+        }
+      });
     }
   }, [user]);
 

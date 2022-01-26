@@ -6,6 +6,10 @@ import {
   TypeFieldBox,
   TextareaFieldBox,
 } from "../../components/FieldBox";
+import {createCommunity} from "../../lib/Api";
+import {useContext} from "react";
+import {useRouter} from "next/router";
+import UserContext from "../../lib/UserContext";
 
 interface CreateCommunityFormValues {
   name: string;
@@ -44,7 +48,18 @@ const CreateCommunityPage = () => {
   );
 };
 
+const convertToSlug = (text: string) => {
+  return text
+    .toLowerCase()
+    .replace(/-/g, " ")
+    .replace(/ +/g, "-")
+    .replace(/[^\w-]+/g, "");
+};
+
 const CreateCommunityForm = () => {
+  const {userBackend} = useContext(UserContext);
+  const router = useRouter();
+
   return (
     <>
       <Formik
@@ -65,9 +80,36 @@ const CreateCommunityForm = () => {
           { setSubmitting, resetForm }: FormikHelpers<CreateCommunityFormValues>
         ) => {
           setTimeout(() => {
-            // TODO: Implement a real handleSubmit
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
+            const slug = convertToSlug(values.name);
+            createCommunity({
+              name: values.name,
+              description: values.name,
+              contacts: [
+                {
+                  title: values.contactOneTitle,
+                  link: values.contactOne,
+                },
+                {
+                  title: values.contactTwoTitle,
+                  link: values.contactTwo,
+                },
+                {
+                  title: values.contactThreeTitle,
+                  link: values.contactThree,
+                },
+              ],
+              admin: userBackend?.id as string,
+              slug: slug,
+              photoURL: values.photoURL,
+              type: values.type,
+            }).then((res) => {
+              if ("error" in res) {
+                  setSubmitting(false);
+              }
+              else {
+                router.push(`/communtity/${slug}`);
+              }
+            })
           }, 500);
         }}
       >

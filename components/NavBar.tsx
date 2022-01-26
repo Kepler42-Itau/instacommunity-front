@@ -71,7 +71,7 @@ const SideButtons = ({ router, userBackend }: SideButtonsProps) => {
         <Button
           colorScheme="orange"
           mr={{ base: "1%", xl: "3%" }}
-          onClick={() => router.push("/communities/create")}
+          onClick={() => router.push("/community/create")}
         >
           Criar Comunidade
         </Button>
@@ -79,7 +79,6 @@ const SideButtons = ({ router, userBackend }: SideButtonsProps) => {
           name={userBackend?.name}
           src={userBackend?.photoURL as string}
           size="lg"
-          bg="white"
           cursor="pointer"
           userSelect="none"
           onClick={() => router.push(`/user/${userBackend?.username}`)}

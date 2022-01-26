@@ -18,8 +18,9 @@ import { EditIcon } from "@chakra-ui/icons";
 import User from "../../models/User";
 import Contact from "../../models/Contact";
 import Community from "../../models/Community";
-import { getFollowedCommunities, getUserByUsername } from "../../lib/MockApi";
+import { getFollowedCommunities, getUserByUsername } from "../../lib/Api";
 import UserContext from "../../lib/UserContext";
+import {logoutFromGoogle} from "../../lib/Firebase";
 
 const UserPage = ({
   user,
@@ -89,7 +90,6 @@ const UserItem = ({ user, communities, router }: UserItemProps) => {
         >
           <Avatar
             mr="auto"
-            bg="white"
             name={user.name}
             src={user.photoURL as string}
             size="2xl"
@@ -119,10 +119,12 @@ const UserItem = ({ user, communities, router }: UserItemProps) => {
         </Flex>
         {userBackend?.username === id && (
           <Flex>
+            <Button onClick={() => logoutFromGoogle().then(() => router.push('/login'))} size="lg" mr="4%" colorScheme="red">Logout</Button>
             <IconButton
               aria-label="Configurações de usuário"
               colorScheme="blue"
               size="lg"
+              onClick={() => router.push('/user/settings')}
               icon={<EditIcon />}
             />
           </Flex>
@@ -163,10 +165,10 @@ const UserItem = ({ user, communities, router }: UserItemProps) => {
       >
         <CommunitiesBox router={router} communities={communities} />
       </Box>
-      {user.description && (
+      {user.about && (
         <>
           <Text pt="2%" mb="1%" mt={{ base: "10%", md: "3%" }}>
-            Descrição:
+            Sobre:
           </Text>
           <Box
             mb={{ base: "10%", md: "0%" }}
@@ -179,7 +181,7 @@ const UserItem = ({ user, communities, router }: UserItemProps) => {
             borderRadius="lg"
           >
             <Text textAlign="justify" fontSize={{ base: "sm", md: "md" }}>
-              {user.description}
+              {user.about}
             </Text>
           </Box>
         </>
@@ -192,15 +194,14 @@ const UserItem = ({ user, communities, router }: UserItemProps) => {
         flexDirection={{ base: "column", md: "row" }}
         justifyContent="center"
       >
-        {user.contact && (
+        {(user.contact?.title || user.contact?.link) && (
           <Button
             colorScheme="blue"
             size="lg"
             mr={{ md: "2%" }}
             mb={{ base: "4%", md: "0%" }}
-            onClick={() => window.open(`${user.contact?.link}`, "_blank")}
-          >
-            {user.contact?.title}
+            onClick={ user.contact?.link ? () => window.open(`${user.contact?.link}`, "_blank") : undefined} >
+            {user.contact?.title ? user.contact?.title : user.contact?.link}
           </Button>
         )}
       </Flex>
@@ -220,7 +221,6 @@ const CommunitiesBox = ({ communities, router }: CommunitiesBoxProps) => {
         <Avatar
           size="lg"
           boxShadow="base"
-          bg="white"
           mr="2%"
           cursor="pointer"
           key={index}

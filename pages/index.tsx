@@ -3,7 +3,7 @@ import UserContext from "../lib/UserContext";
 import CommunityGrid from "../components/CommunityGrid";
 import NavBar from "../components/NavBar";
 import Community from "../models/Community";
-import { getFollowedCommunities, getCommunities } from "../lib/MockApi";
+import { getFollowedCommunities, getCommunities } from "../lib/Api";
 import { Flex, Box, Text } from "@chakra-ui/react";
 import { NextRouter, useRouter } from "next/router";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -74,7 +74,7 @@ const HomePage = ({
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const communityList = await getCommunities();
   // TODO: Remove this later
-  const xpto = communityList.slice(0, 5);
+  const xpto = communityList.slice(0, 4);
 
   return {
     props: { communityList: xpto },

@@ -23,7 +23,7 @@ import {
   unfollowCommunity,
   getCommunity,
   getCommunityFollowers,
-} from "../../lib/MockApi";
+} from "../../lib/Api";
 import UserContext from "../../lib/UserContext";
 
 const CommunityPage = ({
@@ -125,7 +125,6 @@ const CommunityItem = ({
         <Flex flex="1" justifyContent="start" mt="5%" ml={{ md: "auto" }}>
           <Avatar
             mr="auto"
-            bg="white"
             name={community.name}
             src={community.photoURL as string}
             size="2xl"
@@ -214,7 +213,6 @@ const FollowersBox = ({ followers }: FollowersBoxProps) => {
     <AvatarGroup size="md" max={3}>
       {followers.map((user: User, index: number) => (
         <Avatar
-          bg="white"
           key={index}
           name={user.name}
           src={user.photoURL as string}
