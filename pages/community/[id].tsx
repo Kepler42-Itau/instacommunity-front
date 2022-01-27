@@ -197,7 +197,7 @@ const CommunityItem = ({
         flexDirection={{ base: "column", md: "row" }}
         justifyContent="center"
       >
-        <ContactBox contacts={community.contacts} />
+        {isFollowing && <ContactBox contacts={community.contacts} />}
         <FollowersBox followers={followers} />
       </Flex>
     </Flex>
@@ -212,11 +212,7 @@ const FollowersBox = ({ followers }: FollowersBoxProps) => {
   return (
     <AvatarGroup size="md" max={3}>
       {followers.map((user: User, index: number) => (
-        <Avatar
-          key={index}
-          name={user.name}
-          src={user.photoURL as string}
-        />
+        <Avatar key={index} name={user.name} src={user.photoURL as string} />
       ))}
     </AvatarGroup>
   );
