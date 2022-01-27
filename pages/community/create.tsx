@@ -6,9 +6,9 @@ import {
   TypeFieldBox,
   TextareaFieldBox,
 } from "../../components/FieldBox";
-import {createCommunity} from "../../lib/Api";
-import {useContext} from "react";
-import {useRouter} from "next/router";
+import { createCommunity } from "../../lib/Api";
+import { useContext } from "react";
+import { useRouter } from "next/router";
 import UserContext from "../../lib/UserContext";
 
 interface CreateCommunityFormValues {
@@ -57,7 +57,7 @@ const convertToSlug = (text: string) => {
 };
 
 const CreateCommunityForm = () => {
-  const {userBackend} = useContext(UserContext);
+  const { userBackend } = useContext(UserContext);
   const router = useRouter();
 
   return (
@@ -104,12 +104,11 @@ const CreateCommunityForm = () => {
               type: values.type,
             }).then((res) => {
               if ("error" in res) {
-                  setSubmitting(false);
-              }
-              else {
+                setSubmitting(false);
+              } else {
                 router.push(`/communtity/${slug}`);
               }
-            })
+            });
           }, 500);
         }}
       >

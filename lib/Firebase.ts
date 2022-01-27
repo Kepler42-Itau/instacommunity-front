@@ -1,5 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCt697we7YRp-XdqPNDwVYjGGWVIFUYwFk",
@@ -7,7 +12,7 @@ const firebaseConfig = {
   projectId: "instacommunity-7136f",
   storageBucket: "instacommunity-7136f.appspot.com",
   messagingSenderId: "207030608151",
-  appId: "1:207030608151:web:04e10454c9f38a245b9752"
+  appId: "1:207030608151:web:04e10454c9f38a245b9752",
 };
 
 // Initialize Firebase
@@ -20,16 +25,15 @@ export async function loginWithGoogle() {
     .then((result) => {
       const user = result.user;
       console.log({ user });
-    }).catch((error) => {
-    const errorCode = error.code;
-    const email = error.email;
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    console.log({errorCode, email, credential});
-  });
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const email = error.email;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      console.log({ errorCode, email, credential });
+    });
 }
 
 export async function logoutFromGoogle() {
   await signOut(auth);
 }
-
-

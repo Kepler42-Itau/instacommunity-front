@@ -11,7 +11,7 @@ import { loginWithGoogle } from "../../lib/Firebase";
 import UserContext from "../../lib/UserContext";
 import { FcGoogle } from "react-icons/fc";
 import { GoogleButton } from "../../components/GoogleButton";
-import {getUser} from "../../lib/Api";
+import { getUser } from "../../lib/Api";
 
 const LoginPage = () => {
   const router = useRouter();

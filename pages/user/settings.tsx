@@ -4,7 +4,7 @@ import NavBar from "../../components/NavBar";
 import { Box, Flex, Heading, Center, Button } from "@chakra-ui/react";
 import { Formik, Form, FormikHelpers } from "formik";
 import { FieldBox, TextareaFieldBox } from "../../components/FieldBox";
-import { createUser, updateUser } from "../../lib/Api"
+import { createUser, updateUser } from "../../lib/Api";
 import { useRouter } from "next/router";
 
 const UserSettingsPage = () => {
@@ -70,7 +70,7 @@ const ChangeInfo = () => {
             about: values.about,
             contact: {
               link: values.contactLink,
-              title: values.contactTitle as string
+              title: values.contactTitle as string,
             },
             photoURL: values.photoURL,
             email: userBackend?.email as string,
@@ -86,14 +86,15 @@ const ChangeInfo = () => {
                 about: values.about,
                 contact: {
                   link: values.contactLink,
-                  title: values.contactTitle as string
+                  title: values.contactTitle as string,
                 },
                 photoURL: values.photoURL,
                 email: userBackend?.email as string,
                 id: userBackend?.id as string,
-              })
+              });
               router.push(`/user/${userBackend?.username}`);
-            }})
+            }
+          });
         }, 500);
       }}
     >
@@ -139,7 +140,12 @@ const ChangeInfo = () => {
             placeholder={"Ex: Oloco bicho!"}
           />
           <Center mt="4%" mb="2%" width="100%">
-            <Button colorScheme="red" type="reset" mr="5%" onClick={() => router.push(`/user/${userBackend?.username}`)}>
+            <Button
+              colorScheme="red"
+              type="reset"
+              mr="5%"
+              onClick={() => router.push(`/user/${userBackend?.username}`)}
+            >
               Cancel
             </Button>
             <Button
@@ -157,7 +163,7 @@ const ChangeInfo = () => {
 };
 
 const FirstLogin = () => {
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const router = useRouter();
 
   return (
@@ -184,7 +190,7 @@ const FirstLogin = () => {
             about: values.about,
             contact: {
               link: values.contactLink,
-              title: values.contactTitle as string
+              title: values.contactTitle as string,
             },
             photoURL: values.photoURL,
             email: user?.email as string,
@@ -193,10 +199,9 @@ const FirstLogin = () => {
             if ("error" in res) {
               setSubmitting(false);
             } else {
-              router.push('/');
+              router.push("/");
             }
-          })
-
+          });
         }, 500);
       }}
     >
