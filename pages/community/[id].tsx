@@ -25,7 +25,6 @@ import {
   getCommunityFollowers,
 } from "../../lib/Api";
 import UserContext from "../../lib/UserContext";
-import Footer from "../../components/Footer";
 
 const CommunityPage = ({
   community,
@@ -91,24 +90,6 @@ const CommunityItem = ({
     }
   }, [userBackend]);
 
-  const handleFollowClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    const communityId = id?.toString()!;
-    followCommunity(communityId, userBackend?.id as string).then((res) => {
-      if (res) setIsFollowing(true);
-      toast(res);
-    });
-  };
-
-  const handleUnfollowClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    const communityId = id?.toString()!;
-    unfollowCommunity(communityId, userBackend?.id as string).then((res) => {
-      if (res) setIsFollowing(false);
-      toast(res);
-    });
-  };
-
   return (
     <Flex
       width="100%"
@@ -151,29 +132,14 @@ const CommunityItem = ({
               community={community}
             />
           )}
-          {isFollowing ? (
-            <Button
-              title="Deixar de seguir"
-              colorScheme="blue"
-              variant="outline"
-              ml="2%"
-              size="lg"
-              onClick={handleUnfollowClick}
-            >
-              Seguindo
-            </Button>
-          ) : (
-            <Button
-              title="Seguir comunidade"
-              colorScheme="blue"
-              size="lg"
-              ml="2%"
-              onClick={handleFollowClick}
-            >
-              Seguir
-            </Button>
-          )}
         </Flex>
+        <FollowButton
+          id={id}
+          isFollowing={isFollowing}
+          setIsFollowing={setIsFollowing}
+          toast={toast}
+          type={community.type}
+        />
       </Center>
       <Box
         mt={{ base: "10%", md: "3%" }}
@@ -201,8 +167,92 @@ const CommunityItem = ({
         {isFollowing && <ContactBox contacts={community.contacts} />}
         <FollowersBox followers={followers} />
       </Flex>
-      <Footer />
     </Flex>
+  );
+};
+
+interface FollowButtonProps {
+  id: string | string[] | undefined;
+  isFollowing: boolean;
+  setIsFollowing: Function;
+  toast: Function;
+  type: string;
+}
+
+const FollowButton = ({
+  id,
+  isFollowing,
+  setIsFollowing,
+  toast,
+  type,
+}: FollowButtonProps) => {
+  const { userBackend } = useContext(UserContext);
+
+  const handleFollowClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    const communityId = id?.toString()!;
+    if (type == "MODERATED") {
+      // TODO: Implement the following code
+      // requestFollowCommunity(communityId, userBackend?.id as string).then((res) => {
+      // if ("error" in res) toast("Error");
+      // else toast("Requisição feita com sucesso");
+      //})
+    } else {
+      followCommunity(communityId, userBackend?.id as string).then((res) => {
+        if (res) setIsFollowing(true);
+        toast(res);
+      });
+    }
+  };
+
+  const handleUnfollowClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    const communityId = id?.toString()!;
+    unfollowCommunity(communityId, userBackend?.id as string).then((res) => {
+      if (res) setIsFollowing(false);
+      toast(res);
+    });
+  };
+
+  const UnfollowButton = () => {
+    return (
+      <Button
+        title="Deixar de seguir"
+        colorScheme="blue"
+        variant="outline"
+        ml="2%"
+        size="lg"
+        onClick={handleUnfollowClick}
+      >
+        Seguindo
+      </Button>
+    );
+  };
+
+  const FollowButton = () => {
+    return (
+      <Button
+        title="Seguir comunidade"
+        colorScheme="blue"
+        size="lg"
+        ml="2%"
+        onClick={handleFollowClick}
+      >
+        Seguir
+      </Button>
+    );
+  };
+
+  return (
+    <>
+      {type === "MANAGED" ? (
+        <></>
+      ) : isFollowing ? (
+        <UnfollowButton />
+      ) : (
+        <FollowButton />
+      )}
+    </>
   );
 };
 
