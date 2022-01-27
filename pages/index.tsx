@@ -7,6 +7,7 @@ import { getFollowedCommunities, getCommunities } from "../lib/Api";
 import { Flex, Box, Text } from "@chakra-ui/react";
 import { NextRouter, useRouter } from "next/router";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Footer from "../components/Footer";
 
 interface ContentProps {
   flex: number;
@@ -67,6 +68,7 @@ const HomePage = ({
           communityList={followedCommunityList}
         />
       </Flex>
+      <Footer />
     </Box>
   );
 };

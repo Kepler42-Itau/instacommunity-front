@@ -16,11 +16,11 @@ import {
 import NavBar from "../../components/NavBar";
 import { EditIcon } from "@chakra-ui/icons";
 import User from "../../models/User";
-import Contact from "../../models/Contact";
 import Community from "../../models/Community";
 import { getFollowedCommunities, getUserByUsername } from "../../lib/Api";
 import UserContext from "../../lib/UserContext";
-import {logoutFromGoogle} from "../../lib/Firebase";
+import { logoutFromGoogle } from "../../lib/Firebase";
+import Footer from "../../components/Footer";
 
 const UserPage = ({
   user,
@@ -54,6 +54,7 @@ const UserPage = ({
       >
         <UserItem user={user} communities={communities} router={router} />
       </Flex>
+      <Footer />
     </Box>
   );
 };
@@ -119,12 +120,21 @@ const UserItem = ({ user, communities, router }: UserItemProps) => {
         </Flex>
         {userBackend?.username === id && (
           <Flex>
-            <Button onClick={() => logoutFromGoogle().then(() => router.push('/login'))} size="lg" mr="4%" colorScheme="red">Logout</Button>
+            <Button
+              onClick={() =>
+                logoutFromGoogle().then(() => router.push("/login"))
+              }
+              size="lg"
+              mr="4%"
+              colorScheme="red"
+            >
+              Logout
+            </Button>
             <IconButton
               aria-label="Configurações de usuário"
               colorScheme="blue"
               size="lg"
-              onClick={() => router.push('/user/settings')}
+              onClick={() => router.push("/user/settings")}
               icon={<EditIcon />}
             />
           </Flex>
@@ -200,7 +210,12 @@ const UserItem = ({ user, communities, router }: UserItemProps) => {
             size="lg"
             mr={{ md: "2%" }}
             mb={{ base: "4%", md: "0%" }}
-            onClick={ user.contact?.link ? () => window.open(`${user.contact?.link}`, "_blank") : undefined} >
+            onClick={
+              user.contact?.link
+                ? () => window.open(`${user.contact?.link}`, "_blank")
+                : undefined
+            }
+          >
             {user.contact?.title ? user.contact?.title : user.contact?.link}
           </Button>
         )}

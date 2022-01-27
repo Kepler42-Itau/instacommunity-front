@@ -25,6 +25,7 @@ import {
   getCommunityFollowers,
 } from "../../lib/Api";
 import UserContext from "../../lib/UserContext";
+import Footer from "../../components/Footer";
 
 const CommunityPage = ({
   community,
@@ -200,6 +201,7 @@ const CommunityItem = ({
         {isFollowing && <ContactBox contacts={community.contacts} />}
         <FollowersBox followers={followers} />
       </Flex>
+      <Footer />
     </Flex>
   );
 };
