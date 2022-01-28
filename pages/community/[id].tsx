@@ -106,7 +106,13 @@ const CommunityItem = ({
         flexDirection={{ base: "column", md: "row" }}
         width="100%"
       >
-        <Flex flex="1" justifyContent="start" mt="5%" ml={{ md: "auto" }}>
+        <Flex
+          flex="1"
+          justifyContent="start"
+          mt={{ base: "5%", md: "0%" }}
+          ml={{ md: "auto" }}
+          mr={{ md: "2%" }}
+        >
           <Avatar
             mr="auto"
             name={community.name}
