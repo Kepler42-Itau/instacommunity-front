@@ -8,6 +8,7 @@ import {
   Heading,
   Text,
   Flex,
+  useDisclosure,
   Button,
   Box,
   Avatar,
@@ -18,6 +19,7 @@ import User from "../../models/User";
 import Contact from "../../models/Contact";
 import Community from "../../models/Community";
 import SettingsModal from "../../components/SettingsModal";
+import FollowersModal from "../../components/FollowersModal";
 import {
   followCommunity,
   unfollowCommunity,
@@ -83,6 +85,7 @@ const CommunityItem = ({
   const { id } = router.query;
   const { userBackend } = useContext(UserContext);
   const [isFollowing, setIsFollowing] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     if (followers.some((follower: User) => follower.id === userBackend?.id)) {
@@ -165,7 +168,13 @@ const CommunityItem = ({
         justifyContent="center"
       >
         {isFollowing && <ContactBox contacts={community.contacts} />}
-        <FollowersBox followers={followers} />
+        <FollowersModal
+          followers={followers}
+          isOpen={isOpen}
+          onClose={onClose}
+          router={router}
+        />
+        <FollowersBox followers={followers} onOpen={onOpen} />
       </Flex>
     </Flex>
   );
@@ -258,11 +267,12 @@ const FollowButton = ({
 
 interface FollowersBoxProps {
   followers: User[];
+  onOpen: () => void;
 }
 
-const FollowersBox = ({ followers }: FollowersBoxProps) => {
+const FollowersBox = ({ followers, onOpen }: FollowersBoxProps) => {
   return (
-    <AvatarGroup size="md" max={3}>
+    <AvatarGroup size="md" max={3} onClick={onOpen}>
       {followers.map((user: User, index: number) => (
         <Avatar key={index} name={user.name} src={user.photoURL as string} />
       ))}
