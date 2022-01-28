@@ -17,7 +17,7 @@ interface CommunityGridProps {
 
 const CommunityGrid = ({ communityList, router }: CommunityGridProps) => {
   return (
-    <SimpleGrid columns={1}>
+    <SimpleGrid columns={1} width="100%">
       {communityList.map((community: Community, index: number) => (
         <CommunityGridItem community={community} router={router} key={index} />
       ))}
