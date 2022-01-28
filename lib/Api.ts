@@ -89,7 +89,7 @@ export const getUserByUsername = async (
 export const getCommunityBySlug = async (
   slug: string
 ): Promise<Community | ErrorResponse> => {
-  const res = await fetch(makeURL(`/communities?community=${slug}`), {
+  const res = await fetch(makeURL(`/communities?slug=${slug}`), {
     method: "GET",
     headers: [["Content-Type", "application/json"]],
   });
