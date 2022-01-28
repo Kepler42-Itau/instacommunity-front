@@ -125,16 +125,16 @@ const CommunityItem = ({
             {community.name}
           </Heading>
         </Flex>
-        <Flex flex="1" ml="1%" justifyContent="end" mr={{ md: "auto" }}>
-          {userBackend?.id === community.admin && (
+        {userBackend?.id === community.admin && (
+          <Flex flex="1" ml="1%" justifyContent="end" mr={{ md: "auto" }}>
             <SettingsModal
               id={`${community.id}`}
               ml="auto"
               contacts={community.contacts}
               community={community}
             />
-          )}
-        </Flex>
+          </Flex>
+        )}
         <FollowButton
           id={`${community.id}`}
           isFollowing={isFollowing}
