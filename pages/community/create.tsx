@@ -1,11 +1,17 @@
-import { Button, Center, Heading, Flex, Box } from "@chakra-ui/react";
-import NavBar from "../../components/NavBar";
-import { Formik, Form, FormikHelpers } from "formik";
 import {
-  FieldBox,
-  TypeFieldBox,
-  TextareaFieldBox,
-} from "../../components/FieldBox";
+  Button,
+  Center,
+  Heading,
+  Select,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Flex,
+  Box,
+} from "@chakra-ui/react";
+import NavBar from "../../components/NavBar";
+import { Formik, Form, FormikHelpers, Field } from "formik";
+import { FieldBox, TextareaFieldBox } from "../../components/FieldBox";
 import { createCommunity } from "../../lib/Api";
 import { useContext } from "react";
 import { useRouter } from "next/router";
@@ -13,6 +19,7 @@ import UserContext from "../../lib/UserContext";
 
 interface CreateCommunityFormValues {
   name: string;
+  tag: string;
   description: string;
   contactOne: string;
   contactOneTitle: string;
@@ -66,6 +73,7 @@ const CreateCommunityForm = () => {
         initialValues={{
           name: "",
           description: "",
+          tag: "",
           contactOne: "",
           contactOneTitle: "",
           contactTwo: "",
@@ -132,6 +140,12 @@ const CreateCommunityForm = () => {
               isRequired={true}
               placeholder={"Selecione o tipo da comunidade"}
             />
+            {/* <TypeFieldBox
+              name={"tag"}
+              title={"Categoria da comunidade"}
+              isRequired={true}
+              placeholder={"Selecione uma categoria para a comunidade"}
+            /> */}
             <Flex>
               <FieldBox
                 name={"contactOne"}
@@ -199,6 +213,65 @@ const CreateCommunityForm = () => {
         )}
       </Formik>
     </>
+  );
+};
+
+interface FieldBoxProps {
+  name: string;
+  title: string;
+  placeholder: string;
+  isRequired: boolean;
+}
+
+const TypeFieldBox = ({
+  name,
+  title,
+  placeholder,
+  isRequired,
+}: FieldBoxProps) => {
+  return (
+    <Field name={name}>
+      {({ field, form }: any) => (
+        <FormControl
+          mt="3%"
+          isRequired={isRequired}
+          isInvalid={form.errors.name && form.touched.name}
+        >
+          <FormLabel htmlFor={name}>{title}</FormLabel>
+          <Select {...field} id={name} placeholder={placeholder}>
+            <option value={"OPEN"}>Aberta</option>
+            <option value={"MODERATED"}>Moderada</option>
+            <option value={"MANAGED"}>Gerenciada</option>
+          </Select>
+          <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+        </FormControl>
+      )}
+    </Field>
+  );
+};
+
+const TagsFieldBox = ({
+  name,
+  title,
+  placeholder,
+  isRequired,
+}: FieldBoxProps) => {
+  return (
+    <Field name={name}>
+      {({ field, form }: any) => (
+        <FormControl
+          mt="3%"
+          isRequired={isRequired}
+          isInvalid={form.errors.name && form.touched.name}
+        >
+          <FormLabel htmlFor={name}>{title}</FormLabel>
+          <Select {...field} id={name} placeholder={placeholder}>
+            // TODO: Add tags here manually
+          </Select>
+          <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+        </FormControl>
+      )}
+    </Field>
   );
 };
 
