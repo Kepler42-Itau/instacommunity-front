@@ -82,7 +82,6 @@ const CommunityItem = ({
   router,
   toast,
 }: CommunityItemProps) => {
-  const { id } = router.query;
   const { userBackend } = useContext(UserContext);
   const [isFollowing, setIsFollowing] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -129,7 +128,7 @@ const CommunityItem = ({
         <Flex flex="1" ml="1%" justifyContent="end" mr={{ md: "auto" }}>
           {userBackend?.id === community.admin && (
             <SettingsModal
-              id={id}
+              id={`${community.id}`}
               ml="auto"
               contacts={community.contacts}
               community={community}
@@ -137,7 +136,7 @@ const CommunityItem = ({
           )}
         </Flex>
         <FollowButton
-          id={id}
+          id={`${community.id}`}
           isFollowing={isFollowing}
           setIsFollowing={setIsFollowing}
           toast={toast}
