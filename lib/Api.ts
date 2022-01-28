@@ -86,6 +86,16 @@ export const getUserByUsername = async (
   return res.json();
 };
 
+export const getCommunityBySlug = async (
+  slug: string
+): Promise<Community | ErrorResponse> => {
+  const res = await fetch(makeURL(`/communities?community=${slug}`), {
+    method: "GET",
+    headers: [["Content-Type", "application/json"]],
+  });
+  return res.json();
+};
+
 export const updateUser = async (user: User): Promise<User | ErrorResponse> => {
   const idToken = await getToken();
   const res = await fetch(makeURL(`/users/${user.id}`), {
