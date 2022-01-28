@@ -309,7 +309,7 @@ const ContactBox = ({ contacts }: ContactBoxProps) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id;
-  const community = await getCommunity(id as string);
+  const community = await getCommunity(id as string); // TODO: Change this to fetch using slug.
   const followers = await getCommunityFollowers(id as string);
 
   return {

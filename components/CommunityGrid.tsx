@@ -33,7 +33,7 @@ interface CommunityGridItemProps {
 const CommunityGridItem = ({ community, router }: CommunityGridItemProps) => {
   return (
     <GridItem
-      onClick={() => router.push(`/community/${community.id}`)}
+      onClick={() => router.push(`/community/${community.slug}`)}
       cursor="pointer"
     >
       <Flex
