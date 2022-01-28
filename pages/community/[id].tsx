@@ -23,7 +23,7 @@ import FollowersModal from "../../components/FollowersModal";
 import {
   followCommunity,
   unfollowCommunity,
-  getCommunity,
+  getCommunityBySlug,
   getCommunityFollowers,
 } from "../../lib/Api";
 import UserContext from "../../lib/UserContext";
@@ -309,8 +309,8 @@ const ContactBox = ({ contacts }: ContactBoxProps) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id;
-  const community = await getCommunity(id as string); // TODO: Change this to fetch using slug.
-  const followers = await getCommunityFollowers(id as string);
+  const community = (await getCommunityBySlug(id as string)) as Community;
+  const followers = await getCommunityFollowers(`${community?.id}`);
 
   return {
     props: {
