@@ -91,7 +91,7 @@ const CreateCommunityForm = () => {
             const slug = convertToSlug(values.name);
             createCommunity({
               name: values.name,
-              description: values.name,
+              description: values.description,
               contacts: [
                 {
                   title: values.contactOneTitle,
