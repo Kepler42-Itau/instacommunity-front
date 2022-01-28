@@ -38,33 +38,6 @@ export const FieldBox = ({
   );
 };
 
-export const TypeFieldBox = ({
-  name,
-  title,
-  placeholder,
-  isRequired,
-}: FieldBoxProps) => {
-  return (
-    <Field name={name}>
-      {({ field, form }: any) => (
-        <FormControl
-          mt="3%"
-          isRequired={isRequired}
-          isInvalid={form.errors.name && form.touched.name}
-        >
-          <FormLabel htmlFor={name}>{title}</FormLabel>
-          <Select {...field} id={name} placeholder={placeholder}>
-            <option value={"OPEN"}>Aberta</option>
-            <option value={"MODERATED"}>Moderada</option>
-            <option value={"MANAGED"}>Gerenciada</option>
-          </Select>
-          <FormErrorMessage>{form.errors.name}</FormErrorMessage>
-        </FormControl>
-      )}
-    </Field>
-  );
-};
-
 export const TextareaFieldBox = ({
   name,
   title,
