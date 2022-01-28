@@ -290,18 +290,23 @@ const ContactBox = ({ contacts }: ContactBoxProps) => {
       mb={{ base: "10%", md: "0%" }}
       flex="2"
     >
-      {contacts.map((contact: Contact, index: number) => (
-        <Button
-          key={index}
-          colorScheme="blue"
-          size="lg"
-          mr={{ md: "2%" }}
-          mb={{ base: "4%", md: "0%" }}
-          onClick={() => window.open(`${contact.link}`, "_blank")}
-        >
-          {contact.title}
-        </Button>
-      ))}
+      {contacts
+        .filter((contact: Contact) => {
+          (contact.link && contact.title) != null &&
+            (contact.link !== "" || contact.title !== "");
+        })
+        .map((contact: Contact, index: number) => (
+          <Button
+            key={index}
+            colorScheme="blue"
+            size="lg"
+            mr={{ md: "2%" }}
+            mb={{ base: "4%", md: "0%" }}
+            onClick={() => window.open(`${contact.link}`, "_blank")}
+          >
+            {contact.title}
+          </Button>
+        ))}
     </Flex>
   );
 };
