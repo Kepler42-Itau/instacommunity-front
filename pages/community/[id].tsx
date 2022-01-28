@@ -291,10 +291,9 @@ const ContactBox = ({ contacts }: ContactBoxProps) => {
       flex="2"
     >
       {contacts
-        .filter((contact: Contact) => {
-          (contact.link && contact.title) != null &&
-            (contact.link !== "" || contact.title !== "");
-        })
+        .filter(
+          (contact: Contact) => contact.link !== "" || contact.title !== ""
+        )
         .map((contact: Contact, index: number) => (
           <Button
             key={index}
