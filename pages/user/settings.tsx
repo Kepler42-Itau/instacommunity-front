@@ -4,7 +4,7 @@ import NavBar from "../../components/NavBar";
 import { Box, Flex, Heading, Center, Button } from "@chakra-ui/react";
 import { Formik, Form, FormikHelpers } from "formik";
 import { FieldBox, TextareaFieldBox } from "../../components/FieldBox";
-import { createUser, updateUser } from "../../lib/Api";
+import { createUser, getUserByUsername, updateUser } from "../../lib/Api";
 import { useRouter } from "next/router";
 
 const UserSettingsPage = () => {
@@ -163,7 +163,7 @@ const ChangeInfo = () => {
 };
 
 const FirstLogin = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUserBackend } = useContext(UserContext);
   const router = useRouter();
 
   return (
@@ -199,6 +199,10 @@ const FirstLogin = () => {
             if ("error" in res) {
               setSubmitting(false);
             } else {
+              getUserByUsername(values.username).then((res) => {
+                if ("error" in res) {
+                } else setUserBackend(res);
+              });
               router.push("/");
             }
           });
