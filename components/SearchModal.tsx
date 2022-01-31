@@ -91,6 +91,7 @@ const SearchModal = () => {
               <ResultsModal
                 communityList={communitySearchResults}
                 userList={userSearchResults}
+                onClose={onClose}
               />
             </Container>
           </ModalBody>
@@ -104,9 +105,10 @@ const SearchModal = () => {
 interface ResultsProps {
   communityList: Community[] | null;
   userList: User[] | null;
+  onClose: () => void;
 }
 
-const ResultsModal = ({ communityList, userList }: ResultsProps) => {
+const ResultsModal = ({ communityList, userList, onClose }: ResultsProps) => {
   const router = useRouter();
 
   return (
@@ -120,7 +122,10 @@ const ResultsModal = ({ communityList, userList }: ResultsProps) => {
             pb={1}
             p={5}
             cursor="pointer"
-            onClick={() => router.push(`/community/${community.slug}`)}
+            onClick={() => {
+              router.push(`/community/${community.slug}`);
+              onClose();
+            }}
             boxShadow="base"
           >
             <Flex mb="3%">
@@ -149,7 +154,10 @@ const ResultsModal = ({ communityList, userList }: ResultsProps) => {
             pb={1}
             p={5}
             cursor="pointer"
-            onClick={() => router.push(`/user/${user.username}`)}
+            onClick={() => {
+              router.push(`/user/${user.username}`);
+              onClose();
+            }}
             boxShadow="base"
           >
             <Flex mb="3%">
