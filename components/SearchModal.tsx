@@ -78,8 +78,15 @@ const SearchModal = () => {
               <FormControl id="pesquisa" isRequired>
                 <Input size="md" value={searchTerm} onChange={handleChange} />
               </FormControl>
-              <IconButton ml="2%" aria-label='Search database' size="md"  onClick={handleSearch}  isLoading={isLoading} icon={<SearchIcon />} />
-          </Flex>
+              <IconButton
+                ml="2%"
+                aria-label="Search database"
+                size="md"
+                onClick={handleSearch}
+                isLoading={isLoading}
+                icon={<SearchIcon />}
+              />
+            </Flex>
             <Container maxW="container.xl" width="100%">
               <ResultsModal
                 communityList={communitySearchResults}
@@ -87,17 +94,7 @@ const SearchModal = () => {
               />
             </Container>
           </ModalBody>
-          <ModalFooter>
-            <Button
-              onClose={() => {
-                onClose();
-                setCommunitySearchResults(null);
-                setUserSearchResults(null);
-              }}
-            >
-              Cancelar
-            </Button>
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>
