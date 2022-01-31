@@ -318,8 +318,10 @@ const ContactBox = ({ contacts }: ContactBoxProps) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id;
-  const community = (await getCommunityBySlug(id as string)) as Community;
-  const followers = await getCommunityFollowers(`${community?.id}`);
+  const community = await getCommunityBySlug(id as string);
+  const followers = await getCommunityFollowers(
+    `${(community as Community)?.id}`
+  );
 
   return {
     props: {
