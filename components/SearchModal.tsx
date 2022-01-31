@@ -17,13 +17,10 @@ import {
   Flex,
   Container,
   useToast,
-  Textarea,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import Community from "../models/Community";
 import User from "../models/User";
-import ErrorResponse from "../models/ErrorResponse";
-import CommunityGrid from "./CommunityGrid";
 import { useRouter } from "next/router";
 import { searchCommunity } from "../lib/Api";
 
@@ -63,18 +60,27 @@ const SearchModal = () => {
       >
         <SearchIcon />
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          onClose();
+          setCommunitySearchResults(null);
+          setUserSearchResults(null);
+        }}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Pesquisa</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl id="pesquisa" isRequired>
-              <Input size="sm" value={searchTerm} onChange={handleChange} />
-              <Button onClick={handleSearch} isLoading={isLoading}>
+            <Flex flexDirection="row">
+              <FormControl id="pesquisa" isRequired>
+                <Input size="xl" value={searchTerm} onChange={handleChange} />
+              </FormControl>
+              <Button size="xl" onClick={handleSearch} isLoading={isLoading}>
                 <SearchIcon />
               </Button>
-            </FormControl>
+            </Flex>
             <Container maxW="container.xl" width="100%">
               <ResultsModal
                 communityList={communitySearchResults}
@@ -83,7 +89,15 @@ const SearchModal = () => {
             </Container>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Cancelar</Button>
+            <Button
+              onClose={() => {
+                onClose();
+                setCommunitySearchResults(null);
+                setUserSearchResults(null);
+              }}
+            >
+              Cancelar
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
