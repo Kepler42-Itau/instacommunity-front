@@ -141,7 +141,7 @@ export const searchCommunity = async (
   searchTerm: String
 ): Promise<Community[]> => {
   const idToken = await getToken();
-  const res = await fetch(makeURL(`/communities?searchTerm=${searchTerm}`), {
+  const res = await fetch(makeURL(`/communities?name=${searchTerm}`), {
     method: "GET",
     headers: generateHeaders(idToken),
   });
