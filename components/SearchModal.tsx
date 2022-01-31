@@ -74,12 +74,11 @@ const SearchModal = () => {
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Flex flexDirection="row">
-              <FormControl flex={1} id="pesquisa" isRequired>
+              <FormControl id="pesquisa" isRequired>
                 <Input size="xl" value={searchTerm} onChange={handleChange} />
               </FormControl>
               <Button
                 size="xl"
-                flex={2}
                 width="100%"
                 onClick={handleSearch}
                 isLoading={isLoading}
