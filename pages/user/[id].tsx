@@ -11,7 +11,7 @@ import {
   Button,
   Box,
   Avatar,
-  useToast,
+  useToast, Tooltip,
 } from "@chakra-ui/react";
 import NavBar from "../../components/NavBar";
 import { EditIcon } from "@chakra-ui/icons";
@@ -233,16 +233,18 @@ const CommunitiesBox = ({ communities, router }: CommunitiesBoxProps) => {
   return (
     <Flex>
       {communities.map((community: Community, index: number) => (
-        <Avatar
-          size="lg"
-          boxShadow="base"
-          mr="2%"
-          cursor="pointer"
-          key={index}
-          name={community.name}
-          src={community.photoURL as string}
-          onClick={() => router.push(`/community/${community.slug}`)}
-        />
+        <Tooltip label={community.name} aria-label={community.name}>
+          <Avatar
+                    size="lg"
+                    boxShadow="base"
+                    mr="2%"
+                    cursor="pointer"
+                    key={index}
+                    name={community.name}
+                    src={community.photoURL as string}
+                    onClick={() => router.push(`/community/${community.slug}`)}
+                  />
+        </Tooltip>
       ))}
     </Flex>
   );
@@ -251,7 +253,7 @@ const CommunitiesBox = ({ communities, router }: CommunitiesBoxProps) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id;
   const user = await getUserByUsername(id as string);
-  const communities = await getFollowedCommunities(id as string);
+  const communities = await getFollowedCommunities((user as User).id);
 
   return {
     props: {
