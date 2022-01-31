@@ -2,6 +2,7 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import React, { useState } from "react";
 import {
   Button,
+  IconButton,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -73,19 +74,12 @@ const SearchModal = () => {
           <ModalHeader>Pesquisa</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Flex flexDirection="row">
+            <Flex>
               <FormControl id="pesquisa" isRequired>
-                <Input size="xl" value={searchTerm} onChange={handleChange} />
+                <Input size="md" value={searchTerm} onChange={handleChange} />
               </FormControl>
-              <Button
-                size="xl"
-                width="100%"
-                onClick={handleSearch}
-                isLoading={isLoading}
-              >
-                <SearchIcon />
-              </Button>
-            </Flex>
+              <IconButton ml="2%" aria-label='Search database' size="md"  onClick={handleSearch}  isLoading={isLoading} icon={<SearchIcon />} />
+          </Flex>
             <Container maxW="container.xl" width="100%">
               <ResultsModal
                 communityList={communitySearchResults}
