@@ -132,7 +132,7 @@ const NavBar = () => {
         justifyContent="end"
         mr={{ base: "0%", xl: "auto" }}
       >
-        {user ? (
+        {user && userBackend ? (
           <SideButtons router={router} userBackend={userBackend as User} />
         ) : (
           <LoginButton router={router} />
