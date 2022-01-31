@@ -12,6 +12,7 @@ import { useContext } from "react";
 import { MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 import UserContext from "../lib/UserContext";
 import User from "../models/User";
+import SearchModal from "./SearchModal";
 
 interface LogoProps {
   router: NextRouter;
@@ -65,9 +66,7 @@ const SideButtons = ({ router, userBackend }: SideButtonsProps) => {
         <Button mr={{ base: "1%", xl: "3%" }} onClick={() => toggleColorMode()}>
           {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
         </Button>
-        <Button mr={{ base: "1%", xl: "3%" }}>
-          <SearchIcon />
-        </Button>
+        <SearchModal />
         <Button
           colorScheme="orange"
           mr={{ base: "1%", xl: "3%" }}
