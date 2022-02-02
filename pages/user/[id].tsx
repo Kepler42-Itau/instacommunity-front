@@ -233,7 +233,7 @@ const CommunitiesBox = ({ communities, router }: CommunitiesBoxProps) => {
   return (
     <Flex>
       {communities.map((community: Community, index: number) => (
-        <Tooltip label={community.name} aria-label={community.name}>
+        <Tooltip key={index} label={community.name} aria-label={community.name}>
           <Avatar
                     size="lg"
                     boxShadow="base"

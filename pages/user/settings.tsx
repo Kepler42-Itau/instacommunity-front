@@ -36,11 +36,11 @@ const UserSettingsPage = () => {
 interface UserSettingsValues {
   name: string;
   username: string;
-  occupation?: string;
-  about?: string | null;
-  contactLink: string | null;
-  contactTitle: string | null;
-  photoURL?: string | null;
+  occupation: string;
+  about: string;
+  contactLink: string;
+  contactTitle: string;
+  photoURL: string;
 }
 
 const ChangeInfo = () => {
@@ -60,7 +60,7 @@ const ChangeInfo = () => {
       }}
       onSubmit={(
         values: UserSettingsValues,
-        { setSubmitting, resetForm }: FormikHelpers<UserSettingsValues>
+        { setSubmitting }: FormikHelpers<UserSettingsValues>
       ) => {
         setTimeout(() => {
           updateUser({

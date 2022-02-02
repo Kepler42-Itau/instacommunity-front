@@ -266,7 +266,7 @@ const TagsFieldBox = ({
         >
           <FormLabel htmlFor={name}>{title}</FormLabel>
           <Select {...field} id={name} placeholder={placeholder}>
-            // TODO: Add tags here manually
+            {/* TODO: Add tags here manually */}
           </Select>
           <FormErrorMessage>{form.errors.name}</FormErrorMessage>
         </FormControl>
