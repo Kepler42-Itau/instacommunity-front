@@ -114,7 +114,7 @@ const CreateCommunityForm = () => {
               if ("error" in res) {
                 setSubmitting(false);
               } else {
-                router.push(`/community/${slug}`);
+                router.push(`/community/${res.slug}`);
               }
             });
           }, 500);
