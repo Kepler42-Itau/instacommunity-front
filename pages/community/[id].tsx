@@ -180,9 +180,7 @@ const CommunityItem = ({
           onClose={onClose}
           router={router}
         />
-        <Tooltip label="Lista de Seguidores" aria-label="Lista de Seguidores">
-          <FollowersBox followers={followers} onOpen={onOpen} />
-        </Tooltip>
+        <FollowersBox followers={followers} onOpen={onOpen} />
       </Flex>
     </Flex>
   );
@@ -280,11 +278,13 @@ interface FollowersBoxProps {
 
 const FollowersBox = ({ followers, onOpen }: FollowersBoxProps) => {
   return (
-    <AvatarGroup size="md" max={3} onClick={onOpen}>
-      {followers.map((user: User, index: number) => (
-        <Avatar key={index} name={user.name} src={user.photoURL as string} />
-      ))}
-    </AvatarGroup>
+    <Tooltip label="Lista de Seguidores" aria-label="Lista de Seguidores">
+      <AvatarGroup size="md" max={3} onClick={onOpen} cursor="pointer">
+        {followers.map((user: User, index: number) => (
+          <Avatar key={index} name={user.name} src={user.photoURL as string} />
+        ))}
+      </AvatarGroup>
+    </Tooltip>
   );
 };
 
