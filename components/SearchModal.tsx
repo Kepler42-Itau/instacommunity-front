@@ -63,6 +63,7 @@ const SearchModal = () => {
       </Button>
       <Modal
         isOpen={isOpen}
+        scrollBehavior="inside"
         onClose={() => {
           onClose();
           setCommunitySearchResults(null);
