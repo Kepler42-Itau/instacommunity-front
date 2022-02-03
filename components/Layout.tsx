@@ -46,7 +46,7 @@ const Main: React.FC<MainProps> = ({ children, router }) => {
               content="width=device-width, initial-scale=1"
             />
           </Head>
-          <Container maxW="container.xl" centerContent height="100%">
+          <Container maxW="container.xl" centerContent>
             {children}
           </Container>
         </ScaleFade>

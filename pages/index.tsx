@@ -58,7 +58,13 @@ const HomePage = ({
   }, [userBackend]);
 
   return (
-    <Box maxW="100vw" width="100%" mx="auto" px={{ base: 2, sm: 12, md: 17 }}>
+    <Box
+      maxW="100vw"
+      width="100%"
+      mx="auto"
+      height="100%"
+      px={{ base: 2, sm: 12, md: 17 }}
+    >
       <NavBar />
       <Flex flexDirection={{ base: "column", xl: "row" }} pt="2%" pb="5%">
         <MainContent flex={1} router={router} communityList={communityList} />
