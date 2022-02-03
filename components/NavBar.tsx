@@ -72,7 +72,7 @@ const SideButtons = ({ router, userBackend }: SideButtonsProps) => {
           mr={{ base: "1%", xl: "3%" }}
           onClick={() => router.push("/community/create")}
         >
-          Criar Comunidade
+          Criar Badge
         </Button>
         <Avatar
           name={userBackend?.name}

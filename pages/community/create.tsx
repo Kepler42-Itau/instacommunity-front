@@ -47,7 +47,7 @@ const CreateCommunityPage = () => {
           fontSize="3xl"
           textAlign={{ base: "center", md: "left" }}
         >
-          Criação de comunidade
+          Criação de badge
         </Heading>
         <CreateCommunityForm />
       </Flex>
@@ -136,15 +136,15 @@ const CreateCommunityForm = () => {
             />
             <TypeFieldBox
               name={"type"}
-              title={"Tipo da comunidade"}
+              title={"Tipo da badge"}
               isRequired={true}
-              placeholder={"Selecione o tipo da comunidade"}
+              placeholder={"Selecione o tipo da badge"}
             />
             {/* <TypeFieldBox
               name={"tag"}
-              title={"Categoria da comunidade"}
+              title={"Categoria da badge"}
               isRequired={true}
-              placeholder={"Selecione uma categoria para a comunidade"}
+              placeholder={"Selecione uma categoria para a badge"}
             /> */}
             <Flex>
               <FieldBox
