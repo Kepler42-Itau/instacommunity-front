@@ -10,6 +10,7 @@ import {
   ModalCloseButton,
   Avatar,
   Box,
+  Tooltip,
   Text,
   FormControl,
   ModalBody,
@@ -63,13 +64,15 @@ const SearchModal = () => {
 
   return (
     <>
-      <Button
-        aria-label="Pesquisa"
-        onClick={onOpen}
-        mr={{ base: "1%", xl: "3%" }}
-      >
-        <SearchIcon />
-      </Button>
+      <Tooltip label="Pesquisa">
+        <Button
+          aria-label="Pesquisa"
+          onClick={onOpen}
+          mr={{ base: "1%", xl: "3%" }}
+        >
+          <SearchIcon />
+        </Button>
+      </Tooltip>
       <Modal
         isOpen={isOpen}
         scrollBehavior="inside"
