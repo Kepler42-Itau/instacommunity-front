@@ -6,6 +6,7 @@ import {
   Center,
   AvatarGroup,
   Heading,
+  Tooltip,
   Text,
   Flex,
   useDisclosure,
@@ -173,12 +174,14 @@ const CommunityItem = ({
         justifyContent="center"
       >
         {isFollowing && <ContactBox contacts={community.contacts} />}
-        <FollowersModal
-          followers={followers}
-          isOpen={isOpen}
-          onClose={onClose}
-          router={router}
-        />
+        <Tooltip label="Lista de Seguidores" aria-label="Lista de Seguidores">
+          <FollowersModal
+            followers={followers}
+            isOpen={isOpen}
+            onClose={onClose}
+            router={router}
+          />
+        </Tooltip>
         <FollowersBox followers={followers} onOpen={onOpen} />
       </Flex>
     </Flex>
