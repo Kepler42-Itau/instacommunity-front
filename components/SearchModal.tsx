@@ -47,12 +47,12 @@ const SearchModal = () => {
       if ("error" in res) {
         // do something
       } else {
-        if (res === []) {
+        if (res.length === 0 || res == null) {
           toast({
             title: "Nenhum resultado",
             description: "Não foi encontrada nenhuma comunidade com este nome",
             status: "info",
-            duration: 900,
+            duration: 3000,
             isClosable: true,
           });
         }
