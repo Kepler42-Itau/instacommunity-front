@@ -47,7 +47,7 @@ const FollowersModal = ({
                   borderRadius="md"
                   pt="1%"
                   pb="1%"
-                  p="1%"
+                  p="6%"
                   mb="3%"
                   cursor="pointer"
                   onClick={() => router.push(`/user/${follower.username}`)}
