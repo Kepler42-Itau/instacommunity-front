@@ -7,10 +7,10 @@ import {
   ModalCloseButton,
   Text,
   ModalBody,
+  Tooltip,
   ModalFooter,
   Flex,
   Avatar,
-  Box,
 } from "@chakra-ui/react";
 import { NextRouter } from "next/router";
 
@@ -34,32 +34,42 @@ const FollowersModal = ({
         <ModalContent>
           <ModalHeader>Lista de Seguidores</ModalHeader>
           <ModalCloseButton />
-          <ModalBody pb={6}>
+          <ModalBody pb="6%">
             {followers.map((follower: User, index: number) => (
-              <Flex
-                key={index}
-                borderRadius="md"
-                pt={1}
-                pb={1}
-                p={5}
-                cursor="pointer"
-                onClick={() => router.push(`/user/${follower.username}`)}
-                boxShadow="base"
+              <Tooltip
+                label={`Ver perfil de ${follower.name}`}
+                aria-label={`Ver perfil de ${follower.name}`}
+                placement="bottom-start"
               >
-                <Flex mb="3%">
-                  <Avatar
-                    size="lg"
-                    name={follower.name}
-                    src={follower.photoURL as string}
-                  />
-                  <Box ml="3">
-                    <Text fontWeight="bold" mt="3%">
-                      {follower.name}
-                    </Text>
-                    <Text fontSize="sm">{follower.username}</Text>
-                  </Box>
+                <Flex
+                  _hover={{ shadow: "md" }}
+                  key={index}
+                  borderRadius="md"
+                  pt="1%"
+                  pb="1%"
+                  p="1%"
+                  mb="3%"
+                  cursor="pointer"
+                  onClick={() => router.push(`/user/${follower.username}`)}
+                  boxShadow="base"
+                >
+                  <Flex>
+                    <Avatar
+                      size="lg"
+                      name={follower.name}
+                      src={follower.photoURL as string}
+                    />
+                    <Flex ml="3" flexDirection="column" justifyContent="center">
+                      <Text fontWeight="bold" mt="3%" textAlign="left">
+                        {follower.name}
+                      </Text>
+                      <Text fontSize="sm" textAlign="left">
+                        {follower.username}
+                      </Text>
+                    </Flex>
+                  </Flex>
                 </Flex>
-              </Flex>
+              </Tooltip>
             ))}
           </ModalBody>
           <ModalFooter></ModalFooter>
