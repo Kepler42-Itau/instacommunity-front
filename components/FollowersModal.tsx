@@ -40,10 +40,10 @@ const FollowersModal = ({
                 label={`Ver perfil de ${follower.name}`}
                 aria-label={`Ver perfil de ${follower.name}`}
                 placement="bottom-start"
+                key={index}
               >
                 <Flex
                   _hover={{ shadow: "md" }}
-                  key={index}
                   borderRadius="md"
                   pt="1%"
                   pb="1%"
