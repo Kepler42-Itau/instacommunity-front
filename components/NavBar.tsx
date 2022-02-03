@@ -4,6 +4,7 @@ import {
   Flex,
   Container,
   Text,
+  Tooltip,
   Avatar,
   useColorMode,
 } from "@chakra-ui/react";
@@ -63,10 +64,17 @@ const SideButtons = ({ router, userBackend }: SideButtonsProps) => {
         width={{ md: "100%" }}
         justifyContent={{ md: "end" }}
       >
-        <Button mr={{ base: "1%", xl: "3%" }} onClick={() => toggleColorMode()}>
-          {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-        </Button>
-        <SearchModal />
+        <Tooltip label="Alterar aparência do site">
+          <Button
+            mr={{ base: "1%", xl: "3%" }}
+            onClick={() => toggleColorMode()}
+          >
+            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          </Button>
+        </Tooltip>
+        <Tooltip label="Pesquisa">
+          <SearchModal />
+        </Tooltip>
         <Button
           colorScheme="orange"
           mr={{ base: "1%", xl: "3%" }}
@@ -74,14 +82,16 @@ const SideButtons = ({ router, userBackend }: SideButtonsProps) => {
         >
           Criar Badge
         </Button>
-        <Avatar
-          name={userBackend?.name}
-          src={userBackend?.photoURL as string}
-          size="lg"
-          cursor="pointer"
-          userSelect="none"
-          onClick={() => router.push(`/user/${userBackend?.username}`)}
-        />
+        <Tooltip label="Visitar seu perfil">
+          <Avatar
+            name={userBackend?.name}
+            src={userBackend?.photoURL as string}
+            size="lg"
+            cursor="pointer"
+            userSelect="none"
+            onClick={() => router.push(`/user/${userBackend?.username}`)}
+          />
+        </Tooltip>
       </Center>
     </Container>
   );
