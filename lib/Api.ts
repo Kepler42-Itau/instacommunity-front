@@ -3,6 +3,7 @@ import User from "../models/User";
 import FollowRelation from "../models/FollowRelation";
 import ErrorResponse from "../models/ErrorResponse";
 import { makeURL, getToken, generateHeaders } from "./Utils";
+import Contact from "../models/Contact";
 
 export const createCommunity = async (
   community: Community
@@ -29,7 +30,7 @@ export const getFollowedCommunities = async (
 };
 
 export const getCommunities = async (): Promise<Community[]> => {
-  const res = await fetch(`http://localhost:8080/communities`, {
+  const res = await fetch(makeURL(`/communities`), {
     method: "GET",
     headers: [["Content-Type", "application/json"]],
   });
@@ -157,6 +158,19 @@ export const updateCommunity = async (community: Community, id: number) => {
     method: "PATCH",
     headers: generateHeaders(idToken),
     body: JSON.stringify(community),
+  });
+  if (res.ok) return res.json();
+  else {
+    return new Promise(() => {});
+  }
+};
+
+export const updateContact = async (communityId: number | string, contact: Contact) => {
+  const idToken = await getToken();
+  const res = await fetch(makeURL(`/communities/${communityId}/contacts/${contact.id}`), {
+    method: "PATCH",
+    headers: generateHeaders(idToken),
+    body: JSON.stringify(contact),
   });
   if (res.ok) return res.json();
   else {
