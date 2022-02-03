@@ -22,13 +22,7 @@ import ErrorResponse from "../models/ErrorResponse";
 import Contact from "../models/Contact";
 import { updateCommunity, updateContact } from "../lib/Api";
 
-
-interface SettingsProps {
-  contacts: Contact[],
-  community: Community
-}
-
-export default function SettingsModal(props: SettingsProps) {
+export default function SettingsModal(props: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [contact, setContact] = useState(props.contacts[0]);
   const [contact2, setContact2] = useState(props.contacts[1]);
@@ -38,38 +32,39 @@ export default function SettingsModal(props: SettingsProps) {
   const toast = useToast();
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setContact(old => ({
-        ...old,
-        title: event.target.value,
-    }))
+    setContact((old: Community) => ({
+      ...old,
+      title: event.target.value,
+    }));
   const handleTitleChange2 = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setContact2(old => ({
-        ...old,
-        title: event.target.value,
-    }))
+    setContact2((old: Community) => ({
+      ...old,
+      title: event.target.value,
+    }));
   const handleTitleChange3 = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setContact3(old => ({
-        ...old,
-        title: event.target.value,
-    }))
+    setContact3((old: Community) => ({
+      ...old,
+      title: event.target.value,
+    }));
   const handleLinkChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setContact(old => ({
-        ...old,
-        link: event.target.value,
-    }))
+    setContact((old: Community) => ({
+      ...old,
+      link: event.target.value,
+    }));
   const handleLinkChange2 = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setContact2(old => ({
-        ...old,
-        link: event.target.value,
-    }))
+    setContact2((old: Community) => ({
+      ...old,
+      link: event.target.value,
+    }));
   const handleLinkChange3 = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setContact3(old => ({
-        ...old,
-        link: event.target.value,
-    }))
+    setContact3((old: Community) => ({
+      ...old,
+      link: event.target.value,
+    }));
 
-  const handleDescriptionChange = ( event: React.ChangeEvent<HTMLTextAreaElement>) =>
-      setDescription(event.target.value);
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => setDescription(event.target.value);
 
   const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
@@ -140,52 +135,55 @@ export default function SettingsModal(props: SettingsProps) {
     };
 
     if (description != props.community.description) {
-        const community = {
-            ...props.community,
-            description: description,
-        }
-        updateCommunity(community, props.community.id as number)
-            .then(handleResponse);
+      const community = {
+        ...props.community,
+        description: description,
+      };
+      updateCommunity(community, props.community.id as number).then(
+        handleResponse
+      );
     }
 
     if (
-        trimmedContact != props.contacts[0].link ||
-        contact.title != props.contacts[0].title
+      trimmedContact != props.contacts[0].link ||
+      contact.title != props.contacts[0].title
     ) {
-        const newContact: Contact = {
-            id: props.contacts[0].id,
-            title: contact.title,
-            link: trimmedContact,
-        }
-        updateContact(props.community.id as number, newContact)
-            .then(handleResponse);
+      const newContact: Contact = {
+        id: props.contacts[0].id,
+        title: contact.title,
+        link: trimmedContact,
+      };
+      updateContact(props.community.id as number, newContact).then(
+        handleResponse
+      );
     }
 
     if (
-        trimmedContact2 != props.contacts[1].link ||
-        contact2.title != props.contacts[1].title
+      trimmedContact2 != props.contacts[1].link ||
+      contact2.title != props.contacts[1].title
     ) {
-        const newContact: Contact = {
-            id: props.contacts[1].id,
-            title: contact2.title,
-            link: trimmedContact2,
-        }
-        updateContact(props.community.id as number, newContact)
-            .then(handleResponse);
+      const newContact: Contact = {
+        id: props.contacts[1].id,
+        title: contact2.title,
+        link: trimmedContact2,
+      };
+      updateContact(props.community.id as number, newContact).then(
+        handleResponse
+      );
     }
 
-
     if (
-        trimmedContact3 != props.contacts[2].link ||
-        contact3.title != props.contacts[2].title
+      trimmedContact3 != props.contacts[2].link ||
+      contact3.title != props.contacts[2].title
     ) {
-        const newContact: Contact = {
-            id: props.contacts[2].id,
-            title: contact3.title,
-            link: trimmedContact3,
-        }
-        updateContact(props.community.id as number, newContact)
-            .then(handleResponse);
+      const newContact: Contact = {
+        id: props.contacts[2].id,
+        title: contact3.title,
+        link: trimmedContact3,
+      };
+      updateContact(props.community.id as number, newContact).then(
+        handleResponse
+      );
     }
 
     console.log({ trimmedContact, trimmedContact2, trimmedContact3 });

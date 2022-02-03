@@ -1,8 +1,8 @@
 import { auth } from "./Firebase";
 
 export const makeURL = (path = "/") => {
-  const host = "localhost";
-  const defaultUrl = `http://${host}:8080`;
+  const host = "api.instacommunity.net";
+  const defaultUrl = `https://${host}`;
   return `${defaultUrl}${path}`;
 };
 
