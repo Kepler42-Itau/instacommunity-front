@@ -11,7 +11,8 @@ import {
   Button,
   Box,
   Avatar,
-  useToast, Tooltip,
+  useToast,
+  Tooltip,
 } from "@chakra-ui/react";
 import NavBar from "../../components/NavBar";
 import { EditIcon } from "@chakra-ui/icons";
@@ -54,7 +55,6 @@ const UserPage = ({
       >
         <UserItem user={user} communities={communities} router={router} />
       </Flex>
-      <Footer />
     </Box>
   );
 };
@@ -231,19 +231,20 @@ interface CommunitiesBoxProps {
 
 const CommunitiesBox = ({ communities, router }: CommunitiesBoxProps) => {
   return (
+    // TODO: Change from Flex to AvatarGroup
     <Flex>
       {communities.map((community: Community, index: number) => (
         <Tooltip key={index} label={community.name} aria-label={community.name}>
           <Avatar
-                    size="lg"
-                    boxShadow="base"
-                    mr="2%"
-                    cursor="pointer"
-                    key={index}
-                    name={community.name}
-                    src={community.photoURL as string}
-                    onClick={() => router.push(`/community/${community.slug}`)}
-                  />
+            size="lg"
+            boxShadow="base"
+            mr="2%"
+            cursor="pointer"
+            key={index}
+            name={community.name}
+            src={community.photoURL as string}
+            onClick={() => router.push(`/community/${community.slug}`)}
+          />
         </Tooltip>
       ))}
     </Flex>
