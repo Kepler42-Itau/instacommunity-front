@@ -46,6 +46,15 @@ const SearchModal = () => {
       if ("error" in res) {
         // do something
       } else {
+        if (res === []) {
+          toast({
+            title: "Nenhum resultado",
+            description: "Não foi encontrada nenhuma comunidade com este nome",
+            status: "info",
+            duration: 900,
+            isClosable: true,
+          });
+        }
         setCommunitySearchResults(res);
       }
     });
